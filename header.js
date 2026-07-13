@@ -6,7 +6,7 @@
 
   var html =
       '<header class="hero">' +
-        '<div class="banner"><a href="index.html"><img src="BANNER.png" alt="LCES banner"></a></div>' +
+        '<div class="banner"><a href="./"><img src="BANNER.png" alt="LCES banner"></a></div>' +
         '<h1 class="subtitle"><span class="type-target">' + title + '</span></h1>' +
       '</header>' +
       '<div class="status-bar">' +
