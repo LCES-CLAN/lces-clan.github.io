@@ -145,7 +145,7 @@
     if (document.getElementById('platform-pc') && document.getElementById('platform-pc').checked) d.plat.push('PC');
     if (d.plat.length) d.plat = d.plat.join(' + '); else d.plat = '';
     submitDiscord(d).then(function() {
-      btn.textContent = 'Re-enlisted!'; fb.textContent = 'Signal received. Welcome back.'; fb.style.color = 'var(--green)';
+      btn.textContent = 'Re-enlisted!'; fb.textContent = '10-4. Now get to your beat, rookie.'; fb.style.color = 'var(--green)';
       setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = true; fb.textContent = ''; form.reset(); captchaPassed = false; curQ = null; renderCaptcha(); updateBtn(); }, 3000);
     }).catch(function() {
       btn.textContent = 'Error'; fb.textContent = 'Failed to send.'; fb.style.color = '#c55';
