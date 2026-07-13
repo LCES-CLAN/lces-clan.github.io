@@ -11,7 +11,7 @@
       '</header>' +
       '<div class="status-bar">' +
         '<span class="stat"><span class="dot dot-yellow blink"></span> System booting</span>' +
-        '<span class="stat"><span class="dot dot-blue"></span> Badges issued: <strong style="color:var(--text-bright)" id="badge-count">...</strong></span>' +
+        // '<span class="stat"><span class="dot dot-blue"></span> Badges issued: <strong style="color:var(--text-bright)" id="badge-count">...</strong></span>' +
         '<span class="stat"><span class="dot dot-green"></span> Officers 10-8</span>' +
         '<span class="stat"><span class="dot dot-blue blink-slow"></span> Recruiting old friends</span>' +
       '</div>' +
