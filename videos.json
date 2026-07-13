@@ -2,11 +2,15 @@
   {
     "title": "2008 Promotional Video",
     "youtubeId": "jx7mdvnYaNM",
+    "source": "youtube",
+    "localPath": "",
     "description": "LCES Promotional Video (2008)"
   },
   {
     "title": "2011 Promotional Video",
     "youtubeId": "75sIYxwYFgI",
+    "source": "youtube",
+    "localPath": "",
     "description": "LCES Promotional Video (2011)"
   }
 ]

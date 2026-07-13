@@ -1,118 +1,160 @@
-// Video Gallery & Lightbox — Evidence Locker
+// Evidence Locker — Inline Video Player with Navigation
 (function() {
   var container = document.getElementById('media-gallery-container');
   if (!container) return;
 
   var DATA_URL = 'videos.json';
+  var videosList = [];
+  var currentIndex = 0;
 
   function escapeAttr(str) {
     return String(str).replace(/"/g, '&quot;').replace(/&/g, '&amp;');
   }
 
-  function buildCard(video, index) {
-    var thumb = video.youtubeId
-      ? 'https://img.youtube.com/vi/' + encodeURIComponent(video.youtubeId) + '/hqdefault.jpg'
-      : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    var badge = index + 1;
-    return '<div class="media-card" data-id="' + escapeAttr(video.youtubeId) + '" data-title="' + escapeAttr(video.title) + '">' +
-        '<div class="card-thumb-wrap">' +
-          '<img src="' + escapeAttr(thumb) + '" alt="' + escapeAttr(video.title) + '" loading="lazy">' +
-          '<div class="card-overlay"><span class="play-icon">&#9654;</span></div>' +
-          '<span class="card-badge">EVIDENCE #' + badge + '</span>' +
-        '</div>' +
-        '<div class="card-title">' + escapeAttr(video.title) + '</div>' +
-      '</div>';
+  function getEmbedUrl(videoId) {
+    var origin = window.location.origin;
+    return 'https://www.youtube-nocookie.com/embed/' +
+      encodeURIComponent(videoId) +
+      '?autoplay=1&rel=0&modestbranding=1&origin=' +
+      encodeURIComponent(origin);
   }
 
-  function renderGallery(videos) {
+  function loadVideo(index) {
+    if (index < 0 || index >= videosList.length) return;
+    currentIndex = index;
+    var video = videosList[index];
+
+    // Update main player iframe
+    var iframe = container.querySelector('.evidence-player iframe');
+    iframe.src = getEmbedUrl(video.youtubeId);
+
+    // Update title
+    container.querySelector('.evidence-title').textContent = video.title;
+
+    // Update thumbnail active states
+    var thumbs = container.querySelectorAll('.evidence-thumb');
+    for (var i = 0; i < thumbs.length; i++) {
+      thumbs[i].classList.toggle('active', i === index);
+      thumbs[i].setAttribute('aria-current', i === index ? 'true' : 'false');
+    }
+
+    // Scroll active thumbnail into view
+    if (thumbs[index]) {
+      thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    // Update "Watch on YouTube" link
+    var link = container.querySelector('.evidence-watch-link');
+    link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
+
+    // Enable/disable nav buttons
+    container.querySelector('.evidence-prev').disabled = index === 0;
+    container.querySelector('.evidence-next').disabled = index === videosList.length - 1;
+  }
+
+  function render(videos) {
     var valid = [];
     for (var i = 0; i < videos.length; i++) {
       if (videos[i].youtubeId && videos[i].title) {
         valid.push(videos[i]);
       }
     }
+    videosList = valid;
 
     if (valid.length === 0) {
-      container.innerHTML = '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">No evidence logged yet. Add YouTube links to <code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code>.</p>';
+      container.innerHTML =
+        '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
+        'No evidence logged yet. Add YouTube links to ' +
+        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code>.' +
+        '</p>';
       return;
     }
 
-    var html = '<div class="media-gallery">';
+    // Build thumbnail HTML
+    var thumbsHtml = '';
     for (var j = 0; j < valid.length; j++) {
-      html += buildCard(valid[j], j);
+      var thumbUrl = 'https://img.youtube.com/vi/' +
+        encodeURIComponent(valid[j].youtubeId) + '/hqdefault.jpg';
+      thumbsHtml +=
+        '<button type="button" class="evidence-thumb' + (j === 0 ? ' active' : '') +
+        '" data-index="' + j + '"' +
+        ' aria-current="' + (j === 0 ? 'true' : 'false') + '"' +
+        ' aria-label="Play: ' + escapeAttr(valid[j].title) + '">' +
+          '<img src="' + thumbUrl + '" alt="" loading="lazy">' +
+          '<span class="evidence-thumb-num">' + (j + 1) + '</span>' +
+        '</button>';
     }
-    html += '</div>';
-    container.innerHTML = html;
 
-    var cards = container.querySelectorAll('.media-card');
-    for (var k = 0; k < cards.length; k++) {
-      cards[k].addEventListener('click', openLightbox);
+    var firstVideo = valid[0];
+
+    container.innerHTML =
+      '<div class="evidence-player">' +
+        '<iframe src="' + getEmbedUrl(firstVideo.youtubeId) + '"' +
+        ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>' +
+      '</div>' +
+      '<div class="evidence-bar">' +
+        '<button type="button" class="evidence-prev" disabled aria-label="Previous video">&larr;</button>' +
+        '<span class="evidence-title">' + escapeAttr(firstVideo.title) + '</span>' +
+        '<button type="button" class="evidence-next" aria-label="Next video">&rarr;</button>' +
+      '</div>' +
+      '<div class="evidence-thumbnails">' +
+        thumbsHtml +
+      '</div>' +
+      '<div class="evidence-actions">' +
+        '<a class="evidence-watch-link" href="https://www.youtube.com/watch?v=' +
+        encodeURIComponent(firstVideo.youtubeId) +
+        '" target="_blank" rel="noopener">Watch on YouTube &nearr;</a>' +
+      '</div>';
+
+    // ─── Event Binding ───
+
+    container.querySelector('.evidence-prev').addEventListener('click', function() {
+      if (currentIndex > 0) loadVideo(currentIndex - 1);
+    });
+
+    container.querySelector('.evidence-next').addEventListener('click', function() {
+      if (currentIndex < videosList.length - 1) loadVideo(currentIndex + 1);
+    });
+
+    var thumbBtns = container.querySelectorAll('.evidence-thumb');
+    for (var k = 0; k < thumbBtns.length; k++) {
+      thumbBtns[k].addEventListener('click', function() {
+        var idx = parseInt(this.getAttribute('data-index'), 10);
+        if (idx === currentIndex) {
+          // Restart current video
+          var iframe = container.querySelector('.evidence-player iframe');
+          iframe.src = getEmbedUrl(videosList[currentIndex].youtubeId);
+        } else {
+          loadVideo(idx);
+        }
+      });
     }
+
+    // Keyboard: left/right arrows when the section is focused
+    container.setAttribute('tabindex', '0');
+    container.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        e.preventDefault();
+        loadVideo(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' && currentIndex < videosList.length - 1) {
+        e.preventDefault();
+        loadVideo(currentIndex + 1);
+      }
+    });
   }
 
-  function openLightbox(e) {
-    var card = e.currentTarget;
-    var videoId = card.getAttribute('data-id');
-    var title = card.getAttribute('data-title');
-    if (!videoId) return;
-
-    var lb = document.getElementById('lightbox');
-    var iframe = lb.querySelector('.lightbox-video-wrapper iframe');
-    var lbTitle = lb.querySelector('.lightbox-title');
-
-    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0';
-    lbTitle.textContent = title;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    var lb = document.getElementById('lightbox');
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    var iframe = lb.querySelector('.lightbox-video-wrapper iframe');
-    iframe.src = '';
-  }
-
-  // Fetch and render
+  // Fetch video data
   fetch(DATA_URL)
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
-    .then(renderGallery)
+    .then(render)
     .catch(function() {
-      container.innerHTML = '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">Could not load evidence locker. Ensure <code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code> is present on the server.</p>';
+      container.innerHTML =
+        '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
+        'Could not load evidence locker. Ensure ' +
+        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code>' +
+        ' is present on the server.</p>';
     });
-
-  // Inject lightbox markup into body
-  var lbHTML =
-    '<div id="lightbox" class="lightbox">' +
-      '<div class="lightbox-content">' +
-        '<button class="lightbox-close" aria-label="Close video">&times;</button>' +
-        '<span class="lightbox-title"></span>' +
-        '<div class="lightbox-video-wrapper">' +
-          '<iframe src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
-        '</div>' +
-        '<div class="lightbox-tip">Press <kbd style="font-family:\'Share Tech Mono\',monospace;color:var(--white-dim);">Esc</kbd> to close</div>' +
-      '</div>' +
-    '</div>';
-
-  document.body.insertAdjacentHTML('beforeend', lbHTML);
-
-  // Close lightbox handlers
-  var lb = document.getElementById('lightbox');
-  var closeBtn = lb.querySelector('.lightbox-close');
-
-  closeBtn.addEventListener('click', closeLightbox);
-
-  // Click backdrop to close
-  lb.addEventListener('click', function(e) {
-    if (e.target === lb) closeLightbox();
-  });
-
-  // Escape key to close
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' || e.key === 'Esc') closeLightbox();
-  });
 })();
