@@ -114,13 +114,13 @@
   // ─── Submit to Discord ───
   function submitDiscord(d) {
     if (!WEBHOOK_URL) return fakeSubmit(d);
-    var emb = { title: 'New Re-enlistment Submission', color: 3066993, fields: [], timestamp: new Date().toISOString(), footer: { text: 'LCES Re-enlistment System' } };
-    if (d.gt) emb.fields.push({ name: 'Original GT', value: d.gt, inline: true });
-    if (d.cur) emb.fields.push({ name: 'Current GT', value: d.cur, inline: true });
+    var emb = { title: 'New Re-enlistment Submission', color: 3066993, fields: [], timestamp: new Date().toISOString(), footer: { text: 'Re-enlistment Form' } };
+    if (d.gt) emb.fields.push({ name: 'OG Gamertag', value: d.gt, inline: true });
+    if (d.cur) emb.fields.push({ name: 'New Gamertag', value: d.cur, inline: true });
     if (d.steam) emb.fields.push({ name: 'Steam', value: d.steam, inline: true });
     if (d.disc) emb.fields.push({ name: 'Discord', value: d.disc, inline: true });
     if (d.email) emb.fields.push({ name: 'Email', value: d.email, inline: true });
-    if (d.plat) emb.fields.push({ name: 'Platform', value: d.plat, inline: true });
+    if (d.plat) emb.fields.push({ name: 'Platforms', value: d.plat, inline: true });
     if (d.msg) emb.fields.push({ name: 'Message', value: d.msg });
     return fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [emb] }) }).then(function(r) { if (!r.ok) throw Error('Webhook ' + r.status); return true; });
   }
@@ -159,15 +159,15 @@
     c.innerHTML =
       '<form class="form-section" onsubmit="handleReEnlist(event)">' +
         '<div class="form-row">' +
-          '<div class="field"><label for="gt-original">Original 2008 Gamertag <span style="color:var(--green);opacity:0.7">*</span></label><input id="gt-original" type="text" placeholder="e.g. xX_LCES0ffic3r_Xx" required></div>' +
+          '<div class="field"><label for="gt-original">Original Xbox Gamertag <span style="color:var(--green);opacity:0.7">*</span></label><input id="gt-original" type="text" placeholder="e.g. xX_LCES0ffic3r_Xx" required></div>' +
           '<div class="field"><label for="gt-current">Current Xbox Gamertag <span class="optional">(optional)</span></label><input id="gt-current" type="text" placeholder="e.g. MyNewGamertag2026"></div>' +
         '</div>' +
         '<div class="form-row">' +
-          '<div class="field"><label for="steam-id">Steam ID or Friend Code <span class="optional">(optional)</span></label><input id="steam-id" type="text" placeholder="e.g. 76561198036277522 or 123456789"></div>' +
-          '<div class="field"><label for="discord-tag">Discord Tag <span class="optional">(optional)</span></label><input id="discord-tag" type="text" placeholder="e.g. @username"></div>' +
+          '<div class="field"><label for="steam-id">Steam ID/Friend Code <span class="optional">(optional)</span></label><input id="steam-id" type="text" placeholder="e.g. 76561198036277522 or 123456789"></div>' +
+          '<div class="field"><label for="discord-tag">Discord Username <span class="optional">(optional)</span></label><input id="discord-tag" type="text" placeholder="e.g. @username"></div>' +
         '</div>' +
         '<div class="form-row">' +
-          '<div class="field"><label for="email">Email <span class="optional">(optional)</span></label><input id="email" type="email" placeholder="e.g. user@example.com"></div>' +
+          '<div class="field"><label for="email">Email Address <span class="optional">(optional)</span></label><input id="email" type="email" placeholder="e.g. user@example.com"></div>' +
           '<div class="field"><label>I own GTA IV on: <span class="optional">(optional)</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional">(optional)</span></label><textarea id="message" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea></div>' +
