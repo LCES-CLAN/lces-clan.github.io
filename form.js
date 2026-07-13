@@ -172,7 +172,7 @@
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional">(optional)</span></label><textarea id="message" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea></div>' +
         '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
-        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>Re-enlist</button><span class="form-feedback" id="form-feedback"></span></div>' +
+        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span></div>' +
         '<span class="form-note">&#x1f512; Your info will be shared in the Discord for coordinating clan activities.</span>' +
       '</form>';
     renderCaptcha();
