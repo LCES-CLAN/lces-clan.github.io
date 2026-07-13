@@ -662,6 +662,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   font-family: 'Share Tech Mono', monospace;
   color: var(--text-dim); letter-spacing: 0.04em;
 }
+.footer p { text-wrap: pretty; }
 .footer .sig { color: var(--text-dim); margin-top: 0.2rem; opacity: 0.6; }
 
 /* ─── Scroll Reveal Animation ─── */
