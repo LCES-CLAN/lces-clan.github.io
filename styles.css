@@ -564,6 +564,9 @@ body::before {
   .evidence-thumb {
     width: 110px;
   }
+  .evidence-thumbnails {
+    gap: 1rem;
+  }
   .evidence-title {
     font-size: 0.6rem;
   }
