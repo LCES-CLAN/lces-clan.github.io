@@ -257,6 +257,16 @@ body::before {
   font-size: 0.75rem; color: var(--text-dim); margin-top: 0.6rem;
 }
 
+.panel-img {
+  width: 100%; max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 1.25rem auto;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 15px var(--blue-glow), 0 4px 20px var(--shadow);
+}
+
 
 
 /* ─── Big Quote Block ─── */
