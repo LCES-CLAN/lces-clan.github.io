@@ -408,7 +408,7 @@ body::before {
 
 .cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; position: relative; }
 
-/* Re-enlist form shared styles (loaded on both index.html and re-enlist.html via form.js) */
+/* Re-enlist form shared styles (loaded on both index.html and guestbook.html via form.js) */
 .btn.btn-reenlist {
   background: linear-gradient(180deg, var(--green), var(--green-dim));
   box-shadow: 0 2px 16px rgba(46,204,64,0.3);

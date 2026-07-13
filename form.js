@@ -1,4 +1,4 @@
-// Shared re-enlistment form — loaded on index.html and re-enlist.html
+// Shared re-enlistment form — loaded on index.html and guestbook.html
 (function() {
 
   // ════════════════════════════════════════════════════════════════
