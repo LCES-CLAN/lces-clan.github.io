@@ -109,10 +109,17 @@
 }
 
 @media (max-width: 480px) {
-  .roster-table { font-size: 0.7rem; }
+  .roster-table { font-size: 0.7rem; table-layout: fixed; }
   .roster-table th,
   .roster-table td { padding: 0.4rem 0.4rem; }
-  .roster-table .badge-num { display: none; }
+  /* Hide Badge column entirely — both header and data */
+  .roster-table .badge-num,
+  .roster-table th:nth-child(1) { display: none; }
+  /* Status column: just wide enough for dot + word */
+  .roster-table th:nth-child(3) { width: 85px; }
+  /* Gamertag: fill remaining space, break if too long */
+  .roster-table td:nth-child(2) { word-break: break-all; }
+  .roster-table td:nth-child(3) { white-space: nowrap; }
 }
 </style>
 </head>
