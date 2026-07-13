@@ -490,32 +490,17 @@ body::before {
   text-align: center;
 }
 
-/* Thumbnail strip */
+/* Thumbnail row (centered wrap for small counts) */
 .evidence-thumbnails {
   display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0.35rem 0 0.5rem;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-.evidence-thumbnails::-webkit-scrollbar {
-  height: 3px;
-}
-
-.evidence-thumbnails::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.evidence-thumbnails::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 2px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4.5rem;
+  padding: 0.5rem 0 0.5rem;
 }
 
 .evidence-thumb {
-  flex-shrink: 0;
-  width: 120px;
+  width: 150px;
   border: 2px solid transparent;
   border-radius: 4px;
   overflow: hidden;
@@ -577,7 +562,7 @@ body::before {
 
 @media (max-width: 480px) {
   .evidence-thumb {
-    width: 90px;
+    width: 110px;
   }
   .evidence-title {
     font-size: 0.6rem;
