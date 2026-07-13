@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCES: Re-enlistment Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="head.js"></script>
+<style>
+/* Re-enlist page specific styles — green accent overrides */
+.re-enlist-hero {
+  text-align: center;
+  padding: 1.5rem 0 1rem;
+}
+.re-enlist-hero .badge-icon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 20px rgba(46,204,64,0.3));
+  animation: badgePulse 3s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(46,204,64,0.3)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 35px rgba(46,204,64,0.5)); }
+}
+.re-enlist-hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-shadow: 0 0 20px rgba(26,138,255,0.2);
+  line-height: 1.2;
+}
+.re-enlist-hero h1 .green { color: var(--green); }
+.re-enlist-hero p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Green-accented form panel (reuses .panel + .form-section base styles) */
+.panel.re-enlist-panel {
+  background: linear-gradient(135deg, #0f1f3a, #0a1628);
+  position: relative;
+  overflow: hidden;
+}
+.panel.re-enlist-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(46,204,64,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.panel.re-enlist-panel .panel-label { color: var(--green); }
+.panel.re-enlist-panel .panel-label::before { content: ''; }
+
+.re-enlist-panel .form-section input:focus,
+.re-enlist-panel .form-section textarea:focus {
+  border-color: var(--green-dim);
+  box-shadow: 0 0 0 2px rgba(46,204,64,0.08);
+}
+
+
+</style>
+</head>
+<body>
+<div class="top-bar"></div><div class="bottom-bar"></div>
+<div class="wrapper">
+<div id="header" data-title="RE-ENLISTMENT"></div>
+<script src="header.js"></script>
+<script src="navbar.js"></script>
+
+  <div class="re-enlist-hero">
+    <span class="badge-icon">&#x1faf5;</span>
+    <h1>YOUR OLD BADGE <span class="green">IS WAITING</span></h1>
+    <p>Re-enlistment is open to all former members of LCES who want to patrol the streets of Liberty City again. Drop your credentials below and we&rsquo;ll get you on the roster with your old badge number.</p>
+  </div>
+
+  <div class="panel re-enlist-panel">
+    <div class="panel-label">RE-ENLISTMENT FORM</div>
+    <div id="enlist-form"></div>
+    <script src="form.js"></script>
+  </div>
+
+  <div class="divider"><span class="dot"></span> JOIN THE SQUAD <span class="dot"></span></div>
+
+  <section id="discord" class="cta-panel">
+    <span class="badge-icon">&#x1f4e1;</span>
+    <h2>CODE 3, CLEAR THE COMMS!!</h2>
+    <p>LCES operations will be coordinated through our Discord server. <br>Enter the precinct to collect your badge and coordinate patrols.</p>
+    <div class="cta-buttons">
+      <a href="https://discord.gg/gn2ASjNZc4" target="_blank" rel="noopener" class="btn">Join the Discord</a>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="footer.js"></script>
+  <script src="roster-data.js"></script>
+  <script src="badge-count.js"></script>
+</div>
+
+</body>
+</html>

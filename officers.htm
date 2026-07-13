@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCES: Officer Roster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="head.js"></script>
+<style>
+/* Officers page specific styles */
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  margin-top: 0.25rem;
+}
+.roster-table th {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.6rem;
+}
+.roster-table td {
+  padding: 0.55rem 0.6rem;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+.roster-table tr:last-child td {
+  border-bottom: none;
+}
+.roster-table tr:hover td {
+  background: rgba(26,138,255,0.03);
+}
+
+.roster-table .badge-num {
+  color: var(--blue-dim);
+  font-size: 0.65rem;
+  width: 1px;
+  white-space: nowrap;
+}
+.roster-table .gamertag {
+  color: var(--text-bright);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.roster-table .gamertag .censored {
+  color: var(--text-dim);
+  opacity: 0.5;
+  letter-spacing: 0.15em;
+}
+.roster-table .gamertag .active {
+  color: var(--green);
+}
+.roster-table .gamertag .reserved {
+  color: var(--text-dim);
+  opacity: 0.5;
+}
+.roster-table .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}
+.roster-table .status-dot.active {
+  background: var(--green);
+  box-shadow: 0 0 5px rgba(46,204,64,0.5);
+}
+.roster-table .status-dot.pending {
+  background: var(--blue-dim);
+  box-shadow: 0 0 5px var(--blue-glow);
+}
+.roster-table .status-dot.unavailable {
+  background: var(--text-dim);
+  opacity: 0.6;
+}
+.roster-table .status-dot.mia {
+  background: var(--text-dim);
+  opacity: 0.3;
+}
+.roster-table .status-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+.roster-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.roster-count strong {
+  color: var(--blue-bright);
+}
+
+@media (max-width: 480px) {
+  .roster-table { font-size: 0.7rem; }
+  .roster-table th,
+  .roster-table td { padding: 0.4rem 0.4rem; }
+  .roster-table .badge-num { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="top-bar"></div><div class="bottom-bar"></div>
+<div class="wrapper">
+<div id="header" data-title="OFFICER ROSTER"></div>
+<script src="header.js"></script>
+<script src="navbar.js"></script>
+
+  <div class="panel">
+    <div class="panel-label">OFFICER ROSTER</div>
+    <h2><span class="highlight">LIST OF BADGE NUMBERS</span></h2>
+    <p>Below is the recovered badge roster from the original LCES forums. Gamertags are partially censored until the officer reclaims their badge. <strong style="color:var(--green);">Green</strong> entries are active returning members!</p>
+    <table class="roster-table">
+      <thead>
+        <tr>
+          <th>Badge</th>
+          <th>Gamertag (2008)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="roster-body">
+        <!-- Data loaded from roster-data.js (censored) -->
+      </tbody>
+    </table>
+    <div class="roster-count"><span id="roster-count-display">0</span> officers active &bull; <span id="roster-total-display">0</span> badges on record</div>
+  </div>
+
+  <div class="divider"><span class="dot"></span> REUNITED <span class="dot"></span></div>
+
+  <section class="cta-panel">
+    <span class="badge-icon">&#x1faf5;</span>
+    <h2>SEE YOUR OLD BADGE?</h2>
+    <p>If you recognize your gamertag in the roster above, head over to the re-enlistment page to reclaim your badge and get back on patrol.</p>
+    <div class="cta-buttons">
+      <a href="re-enlist.htm" class="btn">Re-enlist Now</a>
+      <a href="index.htm" class="btn btn-secondary">Back to Home</a>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="footer.js"></script>
+  <script src="roster-data.js"></script>
+</div>
+
+<script>
+// Load roster from embedded data — roster.json is NOT deployed to GitHub Pages
+function renderRoster(data) {
+  var html = '';
+  data.forEach(function(entry) {
+    var statusDot, statusLabel;
+    if (entry.status === 'active') {
+      statusDot = 'active';
+      statusLabel = 'Active';
+    } else if (entry.display === 'RESERVED') {
+      statusDot = 'unavailable';
+      statusLabel = 'Unavailable';
+    } else if (entry.status === 'pending') {
+      statusDot = 'pending';
+      statusLabel = 'Pending';
+    } else {
+      statusDot = 'mia';
+      statusLabel = 'MIA';
+    }
+
+    var gamertagHtml;
+    if (entry.display.indexOf('*') !== -1) {
+      gamertagHtml = '<span class="censored">' + entry.display + '</span>';
+    } else if (entry.status === 'active') {
+      gamertagHtml = '<span class="active">' + entry.display + '</span>';
+    } else {
+      gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
+    }
+
+    html += '<tr>' +
+      '<td class="badge-num">#' + ('000' + entry.badge).slice(-3) + '</td>' +
+      '<td class="gamertag">' + gamertagHtml + '</td>' +
+      '<td><span class="status-dot ' + statusDot + '\"></span><span class="status-label">' + statusLabel + '</span></td>' +
+      '</tr>';
+  });
+
+  document.getElementById('roster-body').innerHTML = html;
+
+  var active = data.filter(function(e) { return e.status === 'active'; }).length;
+  document.getElementById('roster-count-display').textContent = active;
+  document.getElementById('roster-total-display').textContent = data.filter(function(e) { return e.display !== 'RESERVED'; }).length;
+  document.getElementById('badge-count').textContent = active;
+}
+
+if (window.__rosterData) {
+  renderRoster(window.__rosterData);
+} else {
+  document.getElementById('roster-body').innerHTML =
+    '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:2rem;">Roster data not loaded.</td></tr>';
+}
+</script>
+
+</body>
+</html>

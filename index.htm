@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCES: Liberty City Emergency Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="head.js"></script>
+</head>
+<body>
+<div class="top-bar"></div><div class="bottom-bar"></div>
+<div class="wrapper">
+<div id="header" data-title="LCES CLAN 2026"></div>
+<script src="header.js"></script>
+<script src="navbar.js"></script>
+<section class="panel reveal">
+    <h2>DEBRIEF AT THE PD, <span class="highlight">NOW!</span></h2>
+    <p>The goal of the <strong>LCES-26</strong> project is to finally regroup members of the original Xbox&nbsp;360 LCES clan &mdash; established in <strong>2008</strong>, almost two decades ago &mdash; for a patrol of good old <strong>Liberty City</strong>.</p>
+    <div class="motto"><em>&ldquo; To serve and protect &rdquo;</em></div>
+  </section>
+  <div class="divider"><span class="dot"></span> DOSSIER: LIBERTY CITY EMERGENCY SERVICES <span class="dot"></span></div>
+  <section class="panel reveal">
+    <div class="panel-label">CASE FILE: ARCHIVAL DATA &copy; 2008</div>
+    <div class="quote-block">
+    <p>LCES (Liberty City Emergency Services) is an Xbox&nbsp;360 <em>Grand Theft Auto IV</em> online clan. Our games consist of realistic crime chases. Our motto is <strong>&ldquo;to serve and protect&rdquo;</strong> &mdash; and that&rsquo;s what we do.</p>
+    <p>We play our games on the team deathmatch mode. On that mode, we limit the weapons to weaker weapons and have a team of cops and crooks. There are usually more cops than crooks. Proximity chat is selected and an island is chosen as the &ldquo;arena&rdquo;.</p>
+    <p>In the beginning of the game, the crooks chill until the cops get their police cars. Once the cops get their police cars, they patrol the area and obey all traffic laws. If they see a crime committed by the crook or get a tip from an &ldquo;anonymous&rdquo; caller, they respond with their sirens and use the proper radio communication.</p>
+    <p>At the area, they try to arrest the crook and take him to the jail for around 2&ndash;5 minutes &mdash; or if a firefight escalates, the cops will return fire. Basically, anything can happen that&rsquo;s realistic &mdash; there are even sometimes crooked cops.</p>
+    <div class="attribution">&mdash; Original LCES Website</div>
+    </div>
+  </section>
+  <section class="panel reveal">
+    <div class="panel-label">POST-MORTEM</div>
+    <h3 class="qa-heading">CAUSE OF DEATH</h3>
+    <ol class="reasons">
+      <li><strong>A brand-new, shiny GTA&nbsp;V that simply wasn&rsquo;t suited for our roleplay.</li>
+      <li><strong>Bureaucratic drama</strong> from being mostly teenagers taking a game too seriously.</li>
+      <li><strong>Shifting from Invisionfree to Zetaboards to Tapatalk</strong> made using the forums impossible.</li>
+    </ol>
+  </section>
+  <div class="divider"><span class="dot"></span> OPERATION: LCES-26 <span class="dot"></span></div>
+  <section class="panel reveal">
+    <div class="panel-label">FIELD NOTES</div>
+    <div class="qa-grid">
+      <div class="qa-item"><h3><span class="q">Q:</span> Why now?</h3><p>We are all in our thirties, forties now. The dust has settled, the teenage drama is long dead, and enough time has passed to say the itch to patrol Liberty City again never went away. Sure, there are massive, hyper-realistic RP servers and heavy LE mods for GTA&nbsp;V now, but the way we made it work back then with nothing but proximity chat and our imaginations was something unique and special.</p></div>
+      <div class="qa-item"><h3><span class="q">Q:</span> How will we handle the platform?</h3><p>It's simple: we&rsquo;ll patrol on <strong>GTA IV</strong>. This is the formula that worked for years, and because the game is so old now it&rsquo;s completely accessible to everyone. It runs on modern PCs without needing expensive hardware upgrades and also continues to work flawlessly on Xbox&nbsp;360 and newer Xboxes.</p></div>
+      <div class="qa-item"><h3><span class="q">Q:</span> What about GTA VI?</h3><p>What about it? GTA&nbsp;V has held the franchise hostage for over a decade and most of us checked out. But with GTA back in the spotlight, and V finally behind us, we can finally look at IV through a nostalgic and appreciative lens. We'll return to the streets where we started, and if we&rsquo;re lucky VI might lend itself to patrols better than V ever did. This could be the staging ground for a brand-new era of LCES.</p></div>
+    </div>
+  </section>
+  <div class="divider"><span class="dot"></span> ROLL CALL <span class="dot"></span></div>
+  <section class="cta-panel reveal">
+    <span class="badge-icon">&#x1faf5;</span>
+    <h2>YOUR OLD BADGE IS WAITING</h2>
+    <p>Drop your info below. The streets of Liberty City don&rsquo;t patrol themselves.</p>
+    <div class="cta-buttons"><a href="re-enlist.htm" class="btn">Sign the Guestbook</a><a href="https://discord.gg/gn2ASjNZc4" class="btn btn-secondary">Join the Discord</a></div>
+  </section>
+  <section id="guestbook" class="panel reveal">
+    <div class="panel-label">GUESTBOOK</div>
+    <h2>Re-enlistment Form</h2>
+    <div id="enlist-form"></div>
+    <script src="form.js"></script>
+  </section>
+  <div id="footer"></div>
+  <script src="footer.js"></script>
+  <script src="roster-data.js"></script>
+  <script src="badge-count.js"></script>
+</div>
+<script>
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:0.1,rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
