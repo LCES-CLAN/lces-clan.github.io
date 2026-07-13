@@ -19,14 +19,26 @@
       encodeURIComponent(origin);
   }
 
+  // Build the player (iframe or <video>) based on the video's source field
+  function buildPlayerContent(video) {
+    if (video.source === 'local' && video.localPath) {
+      return '<video controls autoplay playsinline preload="auto">' +
+        '<source src="' + escapeAttr(video.localPath) + '" type="video/mp4">' +
+        'Your browser does not support the video element.' +
+        '</video>';
+    }
+    return '<iframe src="' + getEmbedUrl(video.youtubeId) + '"' +
+      ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+  }
+
   function loadVideo(index) {
     if (index < 0 || index >= videosList.length) return;
     currentIndex = index;
     var video = videosList[index];
 
-    // Update main player iframe
-    var iframe = container.querySelector('.evidence-player iframe');
-    iframe.src = getEmbedUrl(video.youtubeId);
+    // Replace the entire player contents
+    var player = container.querySelector('.evidence-player');
+    player.innerHTML = buildPlayerContent(video);
 
     // Update title
     container.querySelector('.evidence-title').textContent = video.title;
@@ -89,8 +101,7 @@
 
     container.innerHTML =
       '<div class="evidence-player">' +
-        '<iframe src="' + getEmbedUrl(firstVideo.youtubeId) + '"' +
-        ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>' +
+        buildPlayerContent(firstVideo) +
       '</div>' +
       '<div class="evidence-bar">' +
         '<button type="button" class="evidence-prev" disabled aria-label="Previous video">&larr;</button>' +
@@ -121,9 +132,8 @@
       thumbBtns[k].addEventListener('click', function() {
         var idx = parseInt(this.getAttribute('data-index'), 10);
         if (idx === currentIndex) {
-          // Restart current video
-          var iframe = container.querySelector('.evidence-player iframe');
-          iframe.src = getEmbedUrl(videosList[currentIndex].youtubeId);
+          // Restart current video — rebuild the player
+          loadVideo(currentIndex);
         } else {
           loadVideo(idx);
         }
