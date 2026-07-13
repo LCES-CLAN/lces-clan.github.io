@@ -11,6 +11,7 @@ Usage:
     python roster.py edit <badge#> [--status s]       Change status or display
                             [--display d]
     python roster.py delete <badge#>                  Remove a badge entry
+    python roster.py export                           Generate roster-data.js (gamertags for active only)
 
 Status values: reclaimed, pending, mia
 
@@ -222,6 +223,32 @@ def cmd_bulk_import(args):
     censored = len(gamertags) - reclaimed
     print(f"  [OK] Imported {len(gamertags)} badge(s): {reclaimed} reclaimed, {censored} censored")
 
+def cmd_export(args):
+    """
+    Generate roster-data.js from roster.json for public deployment.
+    Only active/re-enlisted officers include their full gamertag.
+    """
+    data = load()
+    clean = []
+    for entry in data:
+        e = {
+            "badge": entry["badge"],
+            "display": entry["display"],
+            "status": entry["status"]
+        }
+        if entry["status"] == "active":
+            e["gamertag"] = entry["gamertag"]
+        clean.append(e)
+    out_path = "roster-data.js"
+    with open(out_path, "w") as f:
+        f.write("// LCES Roster Data — public snapshot (gamertag shown only for active officers)\n")
+        f.write("// roster.json is the master file — NOT deployed to GitHub Pages.\n")
+        f.write("// Regenerate this file with: python roster.py export\n")
+        f.write("window.__rosterData = " + json.dumps(clean, indent=2) + ";\n")
+        f.write("\n")
+    print(f"  [OK] Exported {len(clean)} entries to {out_path}")
+
+
 def cmd_delete(args):
     pos, flags = pop_flags(args)
     if not pos:
@@ -254,7 +281,7 @@ def main():
         return
     cmd = args[0]
     cmd_args = args[1:]
-    cmds = {"list": cmd_list, "add": cmd_add, "bulk-import": cmd_bulk_import, "reclaim": cmd_reclaim, "edit": cmd_edit, "delete": cmd_delete}
+    cmds = {"list": cmd_list, "add": cmd_add, "bulk-import": cmd_bulk_import, "reclaim": cmd_reclaim, "edit": cmd_edit, "export": cmd_export, "delete": cmd_delete}
     if cmd in cmds:
         cmds[cmd](cmd_args)
     else:

@@ -126,7 +126,7 @@
   <div class="panel">
     <div class="panel-label">OFFICER ROSTER</div>
     <h2><span class="highlight">LIST OF BADGE NUMBERS</span></h2>
-    <p>Below is the recovered badge roster from the original LCES forums. Gamertags are partially censored until the officer reclaims their badge. <strong style="color:var(--green);">Green</strong> entries are active returning members!</p>
+    <p>Below is the recovered badge roster from the original LCES forums. Gamertags are partially censored until the officer reclaims their badge. <strong style="color:var(--green);">Green</strong> entries show the full gamertag of active returning members!</p>
     <table class="roster-table">
       <thead>
         <tr>
@@ -180,10 +180,11 @@ function renderRoster(data) {
     }
 
     var gamertagHtml;
-    if (entry.display.indexOf('*') !== -1) {
+    if (entry.status === 'active') {
+      var tag = entry.gamertag || entry.display;
+      gamertagHtml = '<span class="active">' + tag + '</span>';
+    } else if (entry.display.indexOf('*') !== -1) {
       gamertagHtml = '<span class="censored">' + entry.display + '</span>';
-    } else if (entry.status === 'active') {
-      gamertagHtml = '<span class="active">' + entry.display + '</span>';
     } else {
       gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
     }
