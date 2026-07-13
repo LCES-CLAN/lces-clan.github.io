@@ -495,6 +495,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
 .footer {
   text-align: center; padding: 1.5rem 0 2.5rem;
   font-size: 0.65rem;
+  font-weight: 400;
   font-family: 'Share Tech Mono', monospace;
   color: var(--text-dim); letter-spacing: 0.04em;
 }
