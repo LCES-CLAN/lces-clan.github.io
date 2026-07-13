@@ -114,7 +114,7 @@
   // ─── Submit to Discord ───
   function submitDiscord(d) {
     if (!WEBHOOK_URL) return fakeSubmit(d);
-    var emb = { title: 'New Re-enlistment Submission', color: 3066993, fields: [], timestamp: new Date().toISOString(), footer: { text: 'Re-enlistment Form' } };
+    var emb = { title: 'New Guestbook Submission', color: 3066993, fields: [], timestamp: new Date().toISOString(), footer: { text: 'Re-enlistment Form' } };
     if (d.gt) emb.fields.push({ name: 'OG Gamertag', value: d.gt, inline: true });
     if (d.cur) emb.fields.push({ name: 'New Gamertag', value: d.cur, inline: true });
     if (d.steam) emb.fields.push({ name: 'Steam', value: d.steam, inline: true });
@@ -146,10 +146,10 @@
     if (d.plat.length) d.plat = d.plat.join(' + '); else d.plat = '';
     submitDiscord(d).then(function() {
       btn.textContent = 'Re-enlisted!'; fb.textContent = 'Signal received. Welcome back.'; fb.style.color = 'var(--green)';
-      setTimeout(function() { btn.textContent = orig || 'Re-enlist'; btn.disabled = true; fb.textContent = ''; form.reset(); captchaPassed = false; curQ = null; renderCaptcha(); updateBtn(); }, 3000);
+      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = true; fb.textContent = ''; form.reset(); captchaPassed = false; curQ = null; renderCaptcha(); updateBtn(); }, 3000);
     }).catch(function() {
       btn.textContent = 'Error'; fb.textContent = 'Failed to send.'; fb.style.color = '#c55';
-      setTimeout(function() { btn.textContent = orig || 'Re-enlist'; btn.disabled = !captchaPassed; }, 2000);
+      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = !captchaPassed; }, 2000);
     });
   };
 
