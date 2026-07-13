@@ -6,8 +6,8 @@
     { href: './',   label: 'Home' },
     { href: 're-enlist.html', label: 'Re-enlist', cta: true },
     { href: 'officers.html', label: 'Officers' },
-    { href: 'forums.lcesclan.net', label: 'Forums Archive', external: true },
-    { href: 'discord.lcesclan.net', label: 'Discord', external: true }
+    { href: 'https://forums.lcesclan.net', label: 'Forums Archive', external: true },
+    { href: 'https://discord.lcesclan.net', label: 'Discord', external: true }
   ];
 
   var html = '<nav class="nav-bar">';
