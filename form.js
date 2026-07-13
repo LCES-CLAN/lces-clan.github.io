@@ -1,4 +1,4 @@
-// Shared re-enlistment form — loaded on index.htm and re-enlist.htm
+// Shared re-enlistment form — loaded on index.html and re-enlist.html
 (function() {
 
   // ════════════════════════════════════════════════════════════════

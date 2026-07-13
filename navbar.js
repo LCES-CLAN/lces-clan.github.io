@@ -1,11 +1,11 @@
 // Shared navigation bar — loaded on every page
 (function() {
-  var page = window.location.pathname.split('/').pop() || 'index.htm';
+  var page = window.location.pathname.split('/').pop() || 'index.html';
 
   var links = [
-    { href: 'index.htm',   label: 'Home' },
-    { href: 're-enlist.htm', label: 'Re-enlist', cta: true },
-    { href: 'officers.htm', label: 'Officers' },
+    { href: 'index.html',   label: 'Home' },
+    { href: 're-enlist.html', label: 'Re-enlist', cta: true },
+    { href: 'officers.html', label: 'Officers' },
     { href: 'https://www.tapatalk.com/groups/lces', label: 'Forums Archive', external: true },
     { href: 'https://discord.gg/gn2ASjNZc4', label: 'Discord', external: true }
   ];
