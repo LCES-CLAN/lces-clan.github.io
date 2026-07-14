@@ -99,6 +99,14 @@
   background: var(--blue-dim);
   box-shadow: 0 0 5px var(--blue-glow);
 }
+.roster-table .status-dot.tenfour {
+  background: var(--blue);
+  box-shadow: 0 0 6px var(--blue-glow);
+}
+.roster-table .status-dot.detected {
+  background: #f0c040;
+  box-shadow: 0 0 5px rgba(240,192,64,0.5);
+}
 .roster-table .status-dot.unavailable {
   background: var(--text-dim);
   opacity: 0.6;
@@ -188,10 +196,16 @@ function renderRoster(data) {
     var statusDot, statusLabel;
     if (entry.status === 'active') {
       statusDot = 'active';
-      statusLabel = 'Active';
+      statusLabel = '10-8';
     } else if (entry.display === 'RESERVED') {
       statusDot = 'unavailable';
       statusLabel = 'Unavailable';
+    } else if (entry.status === 'tenfour') {
+      statusDot = 'tenfour';
+      statusLabel = '10-4';
+    } else if (entry.status === 'detected') {
+      statusDot = 'detected';
+      statusLabel = '10-1';
     } else if (entry.status === 'pending') {
       statusDot = 'pending';
       statusLabel = 'Pending';

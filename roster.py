@@ -13,13 +13,13 @@ Usage:
     python roster.py delete <badge#>                  Remove a badge entry
     python roster.py export                           Generate roster-data.js (gamertags for active only)
 
-Status values: reclaimed, pending, mia
+Status values: reclaimed, pending, mia, tenfour, detected
 
 Examples:
     python roster.py add "xX_LCES_Own3r_Xx"
     python roster.py bulk-import old_roster.txt --reclaim 1
     python roster.py reclaim 1 --gamertag "xX_LCES_Own3r_Xx"
-    python roster.py edit 2 --display "LCES_***_2008" --status pending
+    python roster.py edit 2 --display "LCES_***_2008" --status tenfour
     python roster.py list
 """
 
@@ -69,7 +69,7 @@ def censor_display(gamertag, keep_front=3, keep_back=2):
     return gamertag[:keep_front] + "*" * mid + gamertag[-keep_back:]
 
 def status_dot(status):
-    dots = {"reclaimed": "\033[92m*\033[0m", "pending": "\033[94m*\033[0m", "mia": "\033[90m*\033[0m"}
+    dots = {"active": "\033[92m*\033[0m", "reclaimed": "\033[92m*\033[0m", "tenfour": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "pending": "\033[94m*\033[0m", "mia": "\033[90m*\033[0m"}
     return dots.get(status, "\033[90m*\033[0m")
 
 def fmt(s):
@@ -108,12 +108,12 @@ def cmd_list(args):
 def cmd_add(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py add <gamertag> [--status pending|mia] [--display <text>]")
+        print("  Usage: python roster.py add <gamertag> [--status reclaimed|pending|mia|tenfour|detected] [--display <text>]")
         return
     gamertag = pos[0]
     status = flags.get("status", "pending").lower()
-    if status not in ("reclaimed", "pending", "mia"):
-        print(f"  [!] Invalid status '{status}'. Use: reclaimed, pending, mia")
+    if status not in ("reclaimed", "pending", "mia", "tenfour", "detected"):
+        print(f"  [!] Invalid status '{status}'. Use: reclaimed, pending, mia, tenfour, detected")
         return
     display = flags.get("display")
     data = load()
@@ -149,7 +149,7 @@ def cmd_reclaim(args):
 def cmd_edit(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py edit <badge#> [--status reclaimed|pending|mia] [--display <text>]")
+        print("  Usage: python roster.py edit <badge#> [--status reclaimed|pending|mia|tenfour|detected] [--display <text>]")
         return
     try:
         badge_num = int(pos[0])
@@ -163,7 +163,7 @@ def cmd_edit(args):
         return
     if "status" in flags:
         s = flags["status"].lower()
-        if s in ("reclaimed", "pending", "mia"):
+        if s in ("reclaimed", "pending", "mia", "tenfour", "detected"):
             entry["status"] = s
         else:
             print(f"  [!] Invalid status '{s}'")
