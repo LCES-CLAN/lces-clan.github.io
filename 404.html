@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="10-7 — The page you're looking for is out of service. Return to LCES-26 headquarters.">
+
+<!-- Social Embed Cards -->
+<meta property="og:site_name" content="LCES 2026 - Liberty City Emergency Services">
+<meta property="og:type" content="website">
+<meta property="og:title" content="10-7 — Page Not Found | LCES-26">
+<meta property="og:description" content="The page you're looking for has been marked 10-7. Return to LCES-26 headquarters.">
+<meta property="og:url" content="https://lcesclan.net/404.html">
+<meta property="og:image" content="https://lcesclan.net/banner-card.png">
+<meta property="og:image:width" content="1210">
+<meta property="og:image:height" content="620">
+<meta property="og:image:alt" content="LCES Clan 2026 — Liberty City Emergency Services">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="10-7 — Page Not Found | LCES-26">
+<meta name="twitter:description" content="The page you're looking for has been marked 10-7. Return to LCES-26 headquarters.">
+<meta name="twitter:image" content="https://lcesclan.net/banner-card.png">
+<meta name="twitter:image:alt" content="LCES Clan 2026 — Liberty City Emergency Services">
+
+<title>10-7 — Page Not Found | LCES-26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="head.js"></script>
+<style>
+/* 404 specific styles */
+.error-hero {
+  text-align: center;
+  padding: 2.5rem 0 1.5rem;
+  position: relative;
+}
+.error-code {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(3.5rem, 12vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--blue-bright);
+  text-shadow: 0 0 40px rgba(26,138,255,0.3), 0 0 80px rgba(26,138,255,0.1);
+  letter-spacing: 0.05em;
+  animation: errorFlicker 4s ease-in-out infinite;
+}
+.error-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(0.85rem, 2.5vw, 1.15rem);
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  opacity: 0.7;
+}
+.error-label {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--blue-dim);
+  letter-spacing: 0.15em;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.2rem 0.6rem;
+  margin-top: 0.75rem;
+  opacity: 0.5;
+}
+
+/* Slow, menacing flicker for the 404 code */
+@keyframes errorFlicker {
+  0%, 100% { opacity: 1; text-shadow: 0 0 40px rgba(26,138,255,0.3), 0 0 80px rgba(26,138,255,0.1); }
+  30% { opacity: 1; text-shadow: 0 0 40px rgba(26,138,255,0.3), 0 0 80px rgba(26,138,255,0.1); }
+  31% { opacity: 0.5; text-shadow: 0 0 10px rgba(26,138,255,0.1); }
+  32% { opacity: 1; text-shadow: 0 0 40px rgba(26,138,255,0.3), 0 0 80px rgba(26,138,255,0.1); }
+  35% { opacity: 1; }
+  36% { opacity: 0.3; text-shadow: none; }
+  37% { opacity: 1; text-shadow: 0 0 40px rgba(26,138,255,0.3), 0 0 80px rgba(26,138,255,0.1); }
+}
+
+.error-details {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.error-details strong {
+  color: var(--text-bright);
+}
+.error-details .code-ref {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--blue);
+  font-size: 0.9rem;
+}
+
+/* Subtle scan-line overlay for the panel */
+.panel.error-panel {
+  position: relative;
+  overflow: hidden;
+}
+.panel.error-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(26,138,255,0.015) 2px,
+    rgba(26,138,255,0.015) 4px
+  );
+  pointer-events: none;
+}
+
+.quick-nav {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+.quick-nav a {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.quick-nav a:hover {
+  color: var(--blue-bright);
+  border-color: var(--blue-dim);
+  background: rgba(26,138,255,0.08);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .error-hero { padding: 1.5rem 0 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="top-bar"></div><div class="bottom-bar"></div>
+<div class="wrapper">
+<div id="header" data-title="10-7"></div>
+<script src="header.js"></script>
+<script src="navbar.js"></script>
+
+  <div class="panel error-panel reveal">
+    <div class="panel-label">DISPATCH LOG · 10-7</div>
+
+    <div class="error-hero">
+      <div class="error-code">10-7</div>
+      <div class="error-sub">Out of Service</div>
+      <span class="error-label">Signal Lost · 404</span>
+    </div>
+
+    <div class="error-details">
+      <p>The page you're looking for has been marked <strong class="code-ref">10-7</strong> — it's out of service.</p>
+      <p>It may have been <strong>reassigned</strong>, <strong>relocated</strong>, or <strong>never dispatched</strong> to begin with. Check your coordinates and try again.</p>
+    </div>
+
+    <div class="cta-buttons" style="margin-top: 1.5rem;">
+      <a href="./" class="btn">Return to HQ</a>
+      <a href="officers.html" class="btn btn-secondary">Roster</a>
+    </div>
+  </div>
+
+  <div class="divider"><span class="dot"></span> STILL ON PATROL <span class="dot"></span></div>
+
+  <section class="cta-panel reveal">
+    <span class="badge-icon">📡</span>
+    <h2>SIGNAL ACQUIRED</h2>
+    <p>You're still connected to LCES-26. The main channels are open below.</p>
+    <div class="quick-nav">
+      <a href="./">Home</a>
+      <a href="officers.html">Officers</a>
+      <a href="guestbook.html">Re-enlist</a>
+      <a href="https://forums.lcesclan.net" target="_blank" rel="noopener">Forums</a>
+      <a href="https://discord.lcesclan.net" target="_blank" rel="noopener">Discord</a>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="footer.js"></script>
+
+  <!-- Analytics (silent if whitelisted) -->
+  <script src="analytics/config.js"></script>
+  <script src="analytics/visitor.js"></script>
+  <script src="analytics/whitelist.js"></script>
+  <script src="analytics/dispatch.js"></script>
+  <script src="analytics/tracker.js"></script>
+  <script src="analytics.js"></script>
+</div>
+
+<script>
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:0.1,rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
