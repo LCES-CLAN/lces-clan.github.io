@@ -153,7 +153,8 @@
 }
 .roster-table .status-dot.active {
   background: var(--green);
-  box-shadow: 0 0 28px rgba(46,204,64,1), 0 0 75px rgba(46,204,64,0.75), 0 0 130px rgba(46,204,64,0.45);
+  box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30);
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 .roster-table .status-dot.pending {
   background: var(--blue-dim);
@@ -162,7 +163,7 @@
 .roster-table .status-dot.tenfour {
   background: #66ccff;
   box-shadow: 0 0 10px rgba(102,204,255,1), 0 0 51px rgba(102,204,255,0.92), 0 0 90px rgba(102,204,255,0.50);
-  animation: blink 0.4s step-end infinite;
+  animation: blink 0.3s step-end infinite;
 }
 .roster-table .status-dot.detected {
   background: var(--blue);
@@ -252,7 +253,7 @@
   transform: scale(1.35);
 }
 .legend-item:hover .legend-dot.dot-active {
-  box-shadow: 0 0 14px rgba(46,204,64,0.9);
+  box-shadow: 0 0 18px rgba(46,204,64,1), 0 0 40px rgba(46,204,64,0.55);
 }
 .legend-item:hover .legend-dot.dot-tenfour {
   box-shadow: 0 0 10px rgba(102,204,255,0.9);
@@ -287,13 +288,13 @@
 }
 .legend-dot.dot-active {
   background: var(--green);
-  box-shadow: 0 0 8px rgba(46,204,64,0.7);
+  box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40);
   animation: sigdip 4s ease-in-out infinite;
 }
 .legend-dot.dot-tenfour {
   background: #66ccff;
   box-shadow: 0 0 6px rgba(102,204,255,0.6);
-  animation: blink 0.4s step-end infinite;
+  animation: blink 0.3s step-end infinite;
 }
 .legend-dot.dot-detected {
   background: var(--blue);
@@ -312,10 +313,16 @@
 
 /* Subtle occasional signal dip for legend green dot */
 @keyframes sigdip {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
-  48% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
-  50% { opacity: 0.55; box-shadow: 0 0 3px rgba(46,204,64,0.2); }
-  52% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
+  48% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
+  50% { opacity: 0.55; box-shadow: 0 0 4px rgba(46,204,64,0.3), 0 0 10px rgba(46,204,64,0.15); }
+  52% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
+}
+
+/* Breathing pulse for 10-8 on-duty dots */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); }
+  50% { box-shadow: 0 0 28px rgba(46,204,64,0.80), 0 0 65px rgba(46,204,64,0.55), 0 0 110px rgba(46,204,64,0.30), 0 0 170px rgba(46,204,64,0.15); }
 }
 
 /* Force break on mobile after item 3 (between yellow and blue dots) */
@@ -451,7 +458,7 @@ function renderRoster(data) {
     }
 
     var dotStyle = '';
-    if (statusDot === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.4).toFixed(2) + 's"';
+    if (statusDot === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.3).toFixed(2) + 's"';
     else if (statusDot === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
 
     var rowClass = '';
