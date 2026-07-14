@@ -64,9 +64,9 @@ def censor_display(gamertag, keep_front=3, keep_back=2):
     if 'reserved' in gamertag.lower():
         return gamertag
     if len(gamertag) <= keep_front + keep_back + 1:
-        return gamertag[:keep_front] + "*" * (len(gamertag) - keep_front)
+        return gamertag[:keep_front] + "▪" * (len(gamertag) - keep_front)
     mid = len(gamertag) - keep_front - keep_back
-    return gamertag[:keep_front] + "*" * mid + gamertag[-keep_back:]
+    return gamertag[:keep_front] + "▪" * mid + gamertag[-keep_back:]
 
 def status_dot(status):
     dots = {"active": "\033[92m*\033[0m", "reclaimed": "\033[92m*\033[0m", "tenfour": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "pending": "\033[94m*\033[0m", "mia": "\033[90m*\033[0m"}
@@ -100,7 +100,7 @@ def cmd_list(args):
     print(f"  {'-'*5}  {'-'*25} {'-'*10}  {'-'*30}")
     for e in sorted(data, key=lambda x: x["badge"]):
         d = e.get("display", e["gamertag"])
-        styled = f"\033[2m{d}\033[0m" if "*" in d else f"\033[92m{d}\033[0m"
+        styled = f"\033[2m{d}\033[0m" if "▪" in d else f"\033[92m{d}\033[0m"
         print(f"  #{e['badge']:03d}    {e['gamertag']:<25} {status_dot(e['status'])} {e['status']:<7}  {styled}")
     reclaimed = sum(1 for e in data if e["status"] == "reclaimed")
     print(f"\n  {reclaimed} of {len(data)} badge(s) reclaimed\n")

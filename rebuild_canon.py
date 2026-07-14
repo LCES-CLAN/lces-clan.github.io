@@ -289,9 +289,9 @@ def censor_display(gamertag, keep_front=3, keep_back=2):
     if 'reserved' in gamertag.lower():
         return gamertag
     if len(gamertag) <= keep_front + keep_back + 1:
-        return gamertag[:keep_front] + "*" * (len(gamertag) - keep_front)
+        return gamertag[:keep_front] + "▪" * (len(gamertag) - keep_front)
     mid = len(gamertag) - keep_front - keep_back
-    return gamertag[:keep_front] + "*" * mid + gamertag[-keep_back:]
+    return gamertag[:keep_front] + "▪" * mid + gamertag[-keep_back:]
 
 
 def load_existing():
