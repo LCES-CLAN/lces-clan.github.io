@@ -151,11 +151,6 @@
   margin-right: 0.3rem;
   vertical-align: middle;
 }
-.roster-table .status-dot.active {
-  background: var(--green);
-  box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30);
-  animation: pulse-glow 4s ease-in-out infinite;
-}
 .roster-table .status-dot.pending {
   background: var(--blue-dim);
   box-shadow: 0 0 3px rgba(12,74,138,0.4);
@@ -164,11 +159,6 @@
   background: #66ccff;
   box-shadow: 0 0 6px rgba(102,204,255,1), 0 0 16px rgba(102,204,255,0.55), 0 0 30px rgba(102,204,255,0.15);
   animation: blink 0.3s step-end infinite;
-}
-.roster-table .status-dot.detected {
-  background: var(--blue);
-  box-shadow: 0 0 5px var(--blue-glow);
-  animation: blink 2s step-end infinite;
 }
 .roster-table .status-dot.unavailable {
   background: var(--text-dim);
@@ -319,11 +309,7 @@
   52% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
 }
 
-/* Breathing pulse for 10-8 on-duty dots */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); }
-  50% { box-shadow: 0 0 28px rgba(46,204,64,0.80), 0 0 65px rgba(46,204,64,0.55), 0 0 110px rgba(46,204,64,0.30), 0 0 170px rgba(46,204,64,0.15); }
-}
+/* pulse-glow keyframes moved to styles.css (shared) */
 
 /* Force break on mobile after item 3 (between yellow and blue dots) */
 .legend-break {
@@ -424,7 +410,7 @@ function renderRoster(data) {
   data.forEach(function(entry) {
     var statusDot, statusLabel;
     if (entry.status === 'active' || entry.status === 'reclaimed') {
-      statusDot = 'active';
+      statusDot = 'dot-10-8';
       statusLabel = '10-8';
     } else if (entry.display === 'RESERVED') {
       statusDot = 'unavailable';
@@ -433,7 +419,7 @@ function renderRoster(data) {
       statusDot = 'tenfour';
       statusLabel = '10-4';
     } else if (entry.status === 'detected') {
-      statusDot = 'detected';
+      statusDot = 'dot-10-2';
       statusLabel = '10-2';
     } else if (entry.status === 'pending') {
       statusDot = 'pending';
@@ -458,8 +444,8 @@ function renderRoster(data) {
     }
 
     var dotStyle = '';
-    if (statusDot === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.3).toFixed(2) + 's"';
-    else if (statusDot === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
+    if (entry.status === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.3).toFixed(2) + 's"';
+    else if (entry.status === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
 
     var rowClass = '';
     if (entry.status === 'active' || entry.status === 'reclaimed') {
@@ -490,7 +476,7 @@ function renderRoster(data) {
 
   // Active signal blink for 10-8 dots — strong but with brief, random signal dips
   setTimeout(function() {
-    var activeDots = document.querySelectorAll('#roster-body .status-dot.active');
+    var activeDots = document.querySelectorAll('#roster-body .status-dot.dot-10-8');
     activeDots.forEach(function(dot) {
       (function schedule() {
         var delay = 600 + Math.random() * 2400;

@@ -115,14 +115,17 @@ body::before {
 .status-bar .stat { display: flex; align-items: center; gap: 0.35rem; }
 .status-bar .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
 
-.dot-blue   { background: var(--blue); box-shadow: 0 0 5px var(--blue-glow); }
-.dot-green  { background: var(--green); box-shadow: 0 0 5px rgba(46,204,64,0.5); }
+.dot-10-8   { background: var(--green); box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); animation: pulse-glow 4s ease-in-out infinite; }
+.dot-10-2   { background: var(--blue); box-shadow: 0 0 5px var(--blue-glow); animation: blink 2s step-end infinite; }
 .dot-yellow { background: #f0c040; box-shadow: 0 0 5px rgba(240,192,64,0.5); }
 .dot-white  { background: var(--white-dim); }
 .blink { animation: blink 1.5s step-end infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
-.blink-slow { animation: blink-slow 3s step-end infinite; }
-@keyframes blink-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+/* Breathing pulse for 10-8 green dots (canonical from officers.html) */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); }
+  50% { box-shadow: 0 0 28px rgba(46,204,64,0.80), 0 0 65px rgba(46,204,64,0.55), 0 0 110px rgba(46,204,64,0.30), 0 0 170px rgba(46,204,64,0.15); }
+}
 
 /* ─── Navigation Bar ─── */
 .nav-bar {
