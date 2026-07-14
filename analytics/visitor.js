@@ -79,32 +79,82 @@
       };
     },
 
-    // Async — fetches IP + city/region/country from ipapi.co.
+    // ── IP & Geolocation — fallback chain ─────────────────────────
+    // Tries multiple APIs in order. Ad blockers often kill the first one.
+    // Each entry: { url, parse(response_json) → { ip, city, region, country, org } }
+    _geoApis: [
+      {
+        // ipapi.co — full geolocation, HTTPS, 30k req/month free
+        url: 'https://ipapi.co/json/',
+        parse: function(d) {
+          return {
+            ip: d.ip || 'unknown',
+            city: d.city || '',
+            region: d.region || '',
+            country: d.country_name || '',
+            org: d.org || ''
+          };
+        }
+      },
+      {
+        // ipwho.is — full geolocation, HTTPS, no key needed
+        url: 'https://ipwho.is/',
+        parse: function(d) {
+          return {
+            ip: d.ip || 'unknown',
+            city: d.city || '',
+            region: d.region || '',
+            country: d.country || '',
+            org: (d.connection && d.connection.org) || ''
+          };
+        }
+      },
+      {
+        // ipify — IP only (no geolocation), HTTPS, extremely reliable
+        url: 'https://api.ipify.org?format=json',
+        parse: function(d) {
+          return {
+            ip: d.ip || 'unknown',
+            city: '', region: '', country: '', org: ''
+          };
+        }
+      }
+    ],
+
+    // Try each API in sequence until one succeeds.
     // Returns a Promise resolving to { ip, city, region, country, org }.
-    // Falls back to { ip: 'unknown' } on failure.
     getGeo: function() {
       if (this._geoCache) return Promise.resolve(this._geoCache);
 
-      var cfg = LCES.Analytics.Config;
-      return fetch(cfg.geoApiUrl)
-        .then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.json();
-        })
-        .then(function(d) {
-          var geo = {
-            ip:      d.ip      || 'unknown',
-            city:    d.city    || '',
-            region:  d.region  || '',
-            country: d.country_name || '',
-            org:     d.org     || ''
-          };
-          LCES.Analytics.Visitor._geoCache = geo;
-          return geo;
-        })
-        .catch(function() {
+      var apis = this._geoApis;
+      var idx = 0;
+      var Visitor = this;
+
+      function tryNext() {
+        if (idx >= apis.length) {
+          console.warn('[LCES Analytics] All IP APIs failed — falling back to unknown.');
           return { ip: 'unknown', city: '', region: '', country: '', org: '' };
-        });
+        }
+        var api = apis[idx++];
+        return fetch(api.url)
+          .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(function(d) {
+            var geo = api.parse(d);
+            if (!geo.ip || geo.ip === 'unknown') throw new Error('No IP in response');
+            Visitor._geoCache = geo;
+            console.log('[LCES Analytics] IP resolved via ' + api.url);
+            return geo;
+          })
+          .catch(function(err) {
+            console.warn('[LCES Analytics] ' + api.url + ' failed: ' + err.message);
+            return tryNext();
+          });
+      }
+
+      return tryNext();
     }
   };
 })();
