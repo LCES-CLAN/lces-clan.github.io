@@ -85,7 +85,7 @@ window.__rosterData = [
   {
     "badge": 17,
     "display": "PTY***",
-    "status": "detected"
+    "status": "tenfour"
   },
   {
     "badge": 18,
