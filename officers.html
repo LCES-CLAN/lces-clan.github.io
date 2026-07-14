@@ -194,7 +194,7 @@ function renderRoster(data) {
   var html = '';
   data.forEach(function(entry) {
     var statusDot, statusLabel;
-    if (entry.status === 'active') {
+    if (entry.status === 'active' || entry.status === 'reclaimed') {
       statusDot = 'active';
       statusLabel = '10-8';
     } else if (entry.display === 'RESERVED') {
