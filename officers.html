@@ -133,6 +133,7 @@
   color: var(--text-dim);
   opacity: 0.5;
   letter-spacing: 0.15em;
+  vertical-align: middle;
 }
 
 .roster-table .gamertag .active {
@@ -189,11 +190,13 @@
   color: #76bcf0;
   text-shadow: 0 0 4px rgba(102,204,255,0.10);
   letter-spacing: 0.15em;
+  vertical-align: middle;
 }
 .roster-table .gamertag .detected-gt {
   color: #6a8098;
   letter-spacing: 0.15em;
   opacity: 0.82;
+  vertical-align: middle;
 }
 
 .roster-count {
@@ -408,7 +411,7 @@
 function renderRoster(data) {
   var html = '';
   data.forEach(function(entry) {
-    entry.display = entry.display.replace(/\*/g, '█');
+            entry.display = entry.display.replace(/\*/g, '░');
     var statusDot, statusLabel;
     if (entry.status === 'active' || entry.status === 'reclaimed') {
       statusDot = 'dot-10-8';
@@ -438,7 +441,7 @@ function renderRoster(data) {
       gamertagHtml = '<span class="tenfour-gt">' + entry.display + '</span>';
     } else if (entry.status === 'detected') {
       gamertagHtml = '<span class="detected-gt">' + entry.display + '</span>';
-    } else if (entry.display.indexOf('█') !== -1) {
+            } else if (entry.display.indexOf('░') !== -1) {
       gamertagHtml = '<span class="censored">' + entry.display + '</span>';
     } else {
       gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
