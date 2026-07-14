@@ -4,7 +4,7 @@
 window.__rosterData = [
   {
     "badge": 1,
-    "display": "NC Sh*****",
+    "display": "NC Sh***** (H**per)",
     "status": "pending"
   },
   {
@@ -24,7 +24,7 @@ window.__rosterData = [
   },
   {
     "badge": 5,
-    "display": "Ch*d**87",
+    "display": "C*ad48*7",
     "status": "pending"
   },
   {
@@ -320,7 +320,7 @@ window.__rosterData = [
   },
   {
     "badge": 64,
-    "display": "Kfp**in",
+    "display": "Kfp***n",
     "status": "detected"
   },
   {
@@ -450,7 +450,7 @@ window.__rosterData = [
   },
   {
     "badge": 90,
-    "display": "BLA*****63",
+    "display": "BLA****863",
     "status": "pending"
   },
   {
@@ -460,7 +460,7 @@ window.__rosterData = [
   },
   {
     "badge": 92,
-    "display": "o4w*****rd",
+    "display": "o4w******d",
     "status": "pending"
   },
   {
@@ -470,7 +470,7 @@ window.__rosterData = [
   },
   {
     "badge": 94,
-    "display": "Mon********94",
+    "display": "Mon*****F**94",
     "status": "pending"
   },
   {
@@ -535,17 +535,17 @@ window.__rosterData = [
   },
   {
     "badge": 107,
-    "display": "XxV****13",
+    "display": "XxVi***13",
     "status": "tenfour"
   },
   {
     "badge": 108,
-    "display": "Pyr***45",
+    "display": "Pyro***5",
     "status": "pending"
   },
   {
     "badge": 109,
-    "display": "A-R**",
+    "display": "*-R*d",
     "status": "pending"
   },
   {
@@ -965,7 +965,7 @@ window.__rosterData = [
   },
   {
     "badge": 193,
-    "display": "Sno********20",
+    "display": "Sno**S***y*20",
     "status": "pending"
   },
   {
