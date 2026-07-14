@@ -278,6 +278,27 @@ function renderRoster(data) {
 
   document.getElementById('roster-body').innerHTML = html;
 
+  // Active signal blink for 10-8 dots — strong but with brief, random signal dips
+  setTimeout(function() {
+    var activeDots = document.querySelectorAll('#roster-body .status-dot.active');
+    activeDots.forEach(function(dot) {
+      (function schedule() {
+        var delay = 600 + Math.random() * 2400;
+        setTimeout(function() {
+          // Quick signal dip: dim opacity + kill glow
+          dot.style.opacity = '0.25';
+          dot.style.boxShadow = '0 0 4px rgba(46,204,64,0.3)';
+          var dipDuration = 30 + Math.random() * 40;
+          setTimeout(function() {
+            dot.style.opacity = '';
+            dot.style.boxShadow = '';
+            schedule();
+          }, dipDuration);
+        }, delay);
+      })();
+    });
+  }, 100);
+
   var active = data.filter(function(e) { return e.status === 'active'; }).length;
   document.getElementById('roster-count-display').textContent = active;
   document.getElementById('roster-total-display').textContent = data.filter(function(e) { return e.display !== 'RESERVED'; }).length;
