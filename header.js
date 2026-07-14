@@ -58,11 +58,11 @@
     var dot108 = document.querySelector('.status-bar .dot-10-8');
     if (!dot108) return;
     (function schedule() {
-      var delay = 600 + Math.random() * 2400;
+      var delay = 1000 + Math.random() * 3000;
       setTimeout(function() {
         dot108.style.opacity = '0.25';
         dot108.style.boxShadow = '0 0 4px rgba(46,204,64,0.3)';
-        var dipDuration = 30 + Math.random() * 40;
+        var dipDuration = 20 + Math.random() * 30;
         setTimeout(function() {
           dot108.style.opacity = '';
           dot108.style.boxShadow = '';
