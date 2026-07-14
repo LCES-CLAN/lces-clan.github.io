@@ -89,6 +89,20 @@
   box-shadow: 0 0 0 2px rgba(46,204,64,0.08);
 }
 
+.discord-icon {
+  width: 4.7rem;
+  height: 5rem;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 0.75rem;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+#discord:hover .discord-icon {
+  filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
+  transform: scale(1.1);
+}
 
 </style>
 </head>
@@ -114,7 +128,7 @@
   <div class="divider"><span class="dot"></span> ENTER THE PRECINCT <span class="dot"></span></div>
 
   <section id="discord" class="cta-panel">
-    <span class="badge-icon">&#x1f4e1;</span>
+    <img src="discord.png" alt="Discord" class="badge-icon discord-icon">
     <h2>CODE 3, CLEAR THE COMMS!!</h2>
     <p>LCES operations are coordinated over Discord. <br>Join the server to collect your badge and gun.</p>
     <div class="cta-buttons">
