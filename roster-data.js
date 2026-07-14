@@ -14,7 +14,7 @@ window.__rosterData = [
   },
   {
     "badge": 3,
-    "display": "stev**kb6***",
+    "display": "steven******",
     "status": "pending"
   },
   {
