@@ -239,47 +239,47 @@ window.__rosterData = [
   },
   {
     "badge": 48,
-    "display": "Bor********or",
+    "display": "Born*A*S****r",
     "status": "detected"
   },
   {
     "badge": 49,
-    "display": "inf*******rt",
+    "display": "inf*****d***",
     "status": "detected"
   },
   {
     "badge": 50,
-    "display": "Guy************al",
+    "display": "Guy***5**Of*****l",
     "status": "pending"
   },
   {
     "badge": 51,
-    "display": "Pre**********ve",
+    "display": "Pre********l*ve",
     "status": "pending"
   },
   {
     "badge": 52,
-    "display": "Hom*******ox",
+    "display": "Hom******Box",
     "status": "pending"
   },
   {
     "badge": 53,
-    "display": "Alk*******i0",
+    "display": "Alk*a1****i0",
     "status": "pending"
   },
   {
     "badge": 54,
-    "display": "STR*****97",
+    "display": "STRY****97",
     "status": "pending"
   },
   {
     "badge": 55,
-    "display": "dar*****ve",
+    "display": "d*r*m***ve",
     "status": "pending"
   },
   {
     "badge": 56,
-    "display": "Mr.*****py",
+    "display": "Mr.S****py",
     "status": "pending"
   },
   {
@@ -289,7 +289,7 @@ window.__rosterData = [
   },
   {
     "badge": 58,
-    "display": "red***ds",
+    "display": "re***rds",
     "status": "pending"
   },
   {
@@ -385,7 +385,7 @@ window.__rosterData = [
   },
   {
     "badge": 77,
-    "display": "Fir*****47",
+    "display": "Firem**e**",
     "status": "pending"
   },
   {
@@ -450,7 +450,7 @@ window.__rosterData = [
   },
   {
     "badge": 90,
-    "display": "x O******** x",
+    "display": "x *Ram****z x",
     "status": "pending"
   },
   {
