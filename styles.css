@@ -240,7 +240,7 @@ body::before {
 }
 .panel-label::before { content: '▶'; font-size: 0.4rem; color: var(--blue); }.panel h2 {
   font-family: 'Orbitron', monospace;
-  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-size: clamp(1.1rem, 3.2vw, 1.35rem);
   font-weight: 700;
   color: var(--text-bright);
   margin-bottom: 0.75rem;
