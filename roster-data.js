@@ -19,12 +19,12 @@ window.__rosterData = [
   },
   {
     "badge": 4,
-    "display": "CALIK*****33",
+    "display": "CALIKILL****",
     "status": "pending"
   },
   {
     "badge": 5,
-    "display": "C*ad48*7",
+    "display": "Chad****",
     "status": "pending"
   },
   {
@@ -34,7 +34,7 @@ window.__rosterData = [
   },
   {
     "badge": 7,
-    "display": "Ber**t13",
+    "display": "B*rg*t*3",
     "status": "pending"
   },
   {
@@ -44,12 +44,12 @@ window.__rosterData = [
   },
   {
     "badge": 9,
-    "display": "JJM**10*",
+    "display": "JJM***00",
     "status": "pending"
   },
   {
     "badge": 10,
-    "display": "DrGr******mb49",
+    "display": "DrGreen*******",
     "status": "pending"
   },
   {
@@ -64,12 +64,12 @@ window.__rosterData = [
   },
   {
     "badge": 13,
-    "display": "Kil*2th****0",
+    "display": "Kill2t******",
     "status": "pending"
   },
   {
     "badge": 14,
-    "display": "Mel*d*k",
+    "display": "M*l*d*k",
     "status": "pending"
   },
   {
@@ -109,7 +109,7 @@ window.__rosterData = [
   },
   {
     "badge": 22,
-    "display": "Che**R****g8*",
+    "display": "ChevyRa******",
     "status": "detected"
   },
   {
@@ -129,12 +129,12 @@ window.__rosterData = [
   },
   {
     "badge": 26,
-    "display": "Cpt*R*y******SC",
+    "display": "Cpt Re*****s **",
     "status": "pending"
   },
   {
     "badge": 27,
-    "display": "Rea*****G***st",
+    "display": "Rea* *** G****",
     "status": "pending"
   },
   {
@@ -179,27 +179,27 @@ window.__rosterData = [
   },
   {
     "badge": 36,
-    "display": "ll ********ll",
+    "display": "*l Car***l l*",
     "status": "pending"
   },
   {
     "badge": 37,
-    "display": "Cow**********ne",
+    "display": "Cow***D ***6ine",
     "status": "pending"
   },
   {
     "badge": 38,
-    "display": "V T***** V",
+    "display": "* Tay*** *",
     "status": "pending"
   },
   {
     "badge": 39,
-    "display": "tom******07",
+    "display": "tomst*r28**",
     "status": "pending"
   },
   {
     "badge": 40,
-    "display": "adi*****bo",
+    "display": "adir****bo",
     "status": "pending"
   },
   {
