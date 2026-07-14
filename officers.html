@@ -235,6 +235,7 @@
 .legend-dot.dot-active {
   background: var(--green);
   box-shadow: 0 0 8px rgba(46,204,64,0.7);
+  animation: sigdip 4s ease-in-out infinite;
 }
 .legend-dot.dot-tenfour {
   background: #66ccff;
@@ -255,6 +256,14 @@
   opacity: 0.6;
 }
 /* .dot-mia removed — not a valid status */
+
+/* Subtle occasional signal dip for legend green dot */
+@keyframes sigdip {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
+  48% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
+  50% { opacity: 0.55; box-shadow: 0 0 3px rgba(46,204,64,0.2); }
+  52% { opacity: 1; box-shadow: 0 0 8px rgba(46,204,64,0.7); }
+}
 
 /* Force break on mobile after item 3 (between yellow and blue dots) */
 .legend-break {
