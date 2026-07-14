@@ -408,7 +408,7 @@
 function renderRoster(data) {
   var html = '';
   data.forEach(function(entry) {
-    entry.display = entry.display.replace(/\*/g, '▪');
+    entry.display = entry.display.replace(/\*/g, '█');
     var statusDot, statusLabel;
     if (entry.status === 'active' || entry.status === 'reclaimed') {
       statusDot = 'dot-10-8';
@@ -438,7 +438,7 @@ function renderRoster(data) {
       gamertagHtml = '<span class="tenfour-gt">' + entry.display + '</span>';
     } else if (entry.status === 'detected') {
       gamertagHtml = '<span class="detected-gt">' + entry.display + '</span>';
-    } else if (entry.display.indexOf('▪') !== -1) {
+    } else if (entry.display.indexOf('█') !== -1) {
       gamertagHtml = '<span class="censored">' + entry.display + '</span>';
     } else {
       gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
