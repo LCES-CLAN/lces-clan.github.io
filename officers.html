@@ -121,10 +121,6 @@
   background: var(--text-dim);
   opacity: 0.6;
 }
-.roster-table .status-dot.mia {
-  background: var(--text-dim);
-  opacity: 0.3;
-}
 .roster-table .status-label {
   font-size: 0.65rem;
   color: var(--text-dim);
@@ -170,7 +166,111 @@
   color: var(--blue-bright);
 }
 
+/* ─── Status Dot Legend ─── */
+.roster-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text);
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(0,0,0,0.15);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.03em;
+  cursor: default;
+  transition: color 0.2s ease;
+  opacity: 0.85;
+}
+.legend-item:hover {
+  color: var(--text-bright);
+  opacity: 1;
+}
+.legend-item:hover .legend-dot {
+  transform: scale(1.35);
+}
+.legend-item:hover .legend-dot.dot-active {
+  box-shadow: 0 0 14px rgba(46,204,64,0.9);
+}
+.legend-item:hover .legend-dot.dot-tenfour {
+  box-shadow: 0 0 10px rgba(102,204,255,0.9);
+}
+.legend-item:hover .legend-dot.dot-detected {
+  box-shadow: 0 0 8px rgba(184,152,48,0.7);
+}
+.legend-item:hover .legend-dot.dot-pending {
+  box-shadow: 0 0 6px rgba(12,74,138,0.7);
+}
+.legend-item:hover .legend-dot.dot-unavail {
+  opacity: 1;
+  box-shadow: 0 0 6px rgba(102,128,160,0.3);
+}
+.legend-desc {
+  opacity: 1;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s ease;
+}
+.legend-desc::before {
+  content: '—';
+  margin-right: 0.25rem;
+  opacity: 0.5;
+}
+.legend-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.legend-dot.dot-active {
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(46,204,64,0.7);
+}
+.legend-dot.dot-tenfour {
+  background: #66ccff;
+  box-shadow: 0 0 6px rgba(102,204,255,0.6);
+  animation: blink 0.4s step-end infinite;
+}
+.legend-dot.dot-detected {
+  background: #b89830;
+  box-shadow: 0 0 3px rgba(184,152,48,0.35);
+  animation: blink 2s step-end infinite;
+}
+.legend-dot.dot-pending {
+  background: var(--blue-dim);
+  box-shadow: 0 0 2px rgba(12,74,138,0.3);
+}
+.legend-dot.dot-unavail {
+  background: var(--text-dim);
+  opacity: 0.6;
+}
+/* .dot-mia removed — not a valid status */
+
+/* Force break on mobile after item 3 (between yellow and blue dots) */
+.legend-break {
+  display: none;
+}
+
 @media (max-width: 480px) {
+  .roster-legend {
+    gap: 0.6rem 1.2rem;
+    padding: 0.5rem 0.4rem;
+  }
+  .legend-break {
+    display: block;
+    width: 100%;
+    height: 0;
+  }
   .roster-table { font-size: 0.7rem; }
   .roster-table th,
   .roster-table td { padding: 0.4rem 0.35rem; }
@@ -192,12 +292,23 @@
   <div class="panel">
     <div class="panel-label">OFFICER ROSTER</div>
     <h2><span class="highlight">LIST OF BADGE NUMBERS</span></h2>
-    <p>Below is the recovered badge roster from the original LCES forums. Gamertags are partially censored until the officer reclaims their badge. <strong style="color:var(--green);">Green</strong> entries show the full gamertag of active returning members!</p>
+    <p>Below is the recovered badge roster from the original LCES forums. <br>Gamertags are partially censored until the officer reclaims their badge.</p>
+
+    <!-- Status Dot Legend -->
+    <div class="roster-legend">
+      <span class="legend-item"><span class="legend-dot dot-active"></span><span class="legend-desc">On Duty</span></span>
+      <span class="legend-item"><span class="legend-dot dot-tenfour"></span><span class="legend-desc">Replied</span></span>
+      <span class="legend-item"><span class="legend-dot dot-detected"></span><span class="legend-desc">Online Recently</span></span>
+      <span class="legend-break"></span>
+      <span class="legend-item"><span class="legend-dot dot-pending"></span><span class="legend-desc">MIA</span></span>
+      <span class="legend-item"><span class="legend-dot dot-unavail"></span><span class="legend-desc">Reserved</span></span>
+    </div>
+
     <table class="roster-table">
       <thead>
         <tr>
           <th>Badge</th>
-          <th>Gamertag (Old)</th>
+          <th>Original Gamertag</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -247,8 +358,8 @@ function renderRoster(data) {
       statusDot = 'pending';
       statusLabel = 'Pending';
     } else {
-      statusDot = 'mia';
-      statusLabel = 'MIA';
+      statusDot = 'unavailable';
+      statusLabel = 'Unavailable';
     }
 
     var gamertagHtml;
@@ -270,7 +381,7 @@ function renderRoster(data) {
     else if (statusDot === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
 
     html += '<tr>' +
-      '<td class="badge-num' + (entry.status === 'pending' || entry.display === 'RESERVED' || entry.status === 'mia' ? ' badge-dim' : '') + '">#' + entry.badge + '</td>' +
+      '<td class="badge-num' + (entry.status === 'pending' || entry.display === 'RESERVED' ? ' badge-dim' : '') + '">#' + entry.badge + '</td>' +
       '<td class="gamertag">' + gamertagHtml + '</td>' +
       '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' || entry.status === 'reclaimed' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>' +
       '</tr>';
