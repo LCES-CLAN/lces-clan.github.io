@@ -107,6 +107,22 @@
   color: #1a6aaa;
   text-shadow: none;
 }
+.roster-table .badge-num.badge-pending {
+  color: #1865a0;
+  text-shadow: none;
+}
+.roster-table .badge-num.badge-detected {
+  color: #2a94f5;
+  text-shadow: none;
+}
+.roster-table .badge-num.badge-tenfour {
+  color: #76bcf0;
+  text-shadow: 0 0 6px rgba(102,204,255,0.25);
+}
+.roster-table .badge-num.badge-active {
+  color: var(--green);
+  text-shadow: 0 0 10px rgba(94,224,112,0.35), 0 0 30px rgba(46,204,64,0.08);
+}
 .roster-table .gamertag {
   color: var(--text-bright);
   font-family: 'Inter', sans-serif;
@@ -121,7 +137,7 @@
 
 .roster-table .gamertag .active {
   color: var(--green);
-  text-shadow: 0 0 10px rgba(94,224,112,0.7), 0 0 30px rgba(46,204,64,0.25);
+  text-shadow: 0 0 10px rgba(94,224,112,0.35), 0 0 30px rgba(46,204,64,0.08);
 }
 .roster-table .gamertag .reserved {
   color: var(--text-dim);
@@ -137,7 +153,7 @@
 }
 .roster-table .status-dot.active {
   background: var(--green);
-  box-shadow: 0 0 14px rgba(46,204,64,0.9), 0 0 40px rgba(46,204,64,0.5), 0 0 70px rgba(46,204,64,0.25);
+  box-shadow: 0 0 28px rgba(46,204,64,1), 0 0 75px rgba(46,204,64,0.75), 0 0 130px rgba(46,204,64,0.45);
 }
 .roster-table .status-dot.pending {
   background: var(--blue-dim);
@@ -145,7 +161,7 @@
 }
 .roster-table .status-dot.tenfour {
   background: #66ccff;
-  box-shadow: 0 0 8px rgba(102,204,255,0.9), 0 0 20px rgba(102,204,255,0.45);
+  box-shadow: 0 0 14px rgba(102,204,255,1), 0 0 40px rgba(102,204,255,0.65);
   animation: blink 0.4s step-end infinite;
 }
 .roster-table .status-dot.detected {
@@ -164,7 +180,7 @@
 }
 .roster-table .status-label.tenfour-text {
   color: #76bcf0;
-  text-shadow: 0 0 6px rgba(102,204,255,0.40);
+  text-shadow: 0 0 6px rgba(102,204,255,0.25);
   font-weight: 700;
   opacity: 1;
 }
@@ -172,7 +188,7 @@
   color: var(--green);
   font-weight: 700;
   opacity: 1;
-  text-shadow: 0 0 6px rgba(94,224,112,0.6);
+  text-shadow: 0 0 6px rgba(94,224,112,0.25);
 }
 .roster-table .status-label.detected-text {
   color: #6e8090;
@@ -181,7 +197,7 @@
 }
 .roster-table .gamertag .tenfour-gt {
   color: #76bcf0;
-  text-shadow: 0 0 6px rgba(102,204,255,0.40);
+  text-shadow: 0 0 6px rgba(102,204,255,0.25);
   letter-spacing: 0.15em;
 }
 .roster-table .gamertag .detected-gt {
@@ -444,8 +460,20 @@ function renderRoster(data) {
     } else if (entry.status === 'tenfour') {
       rowClass = ' class="row-tenfour"';
     }
+    var badgeClass = 'badge-num';
+    if (entry.display === 'RESERVED') {
+      badgeClass += ' badge-dim';
+    } else if (entry.status === 'pending') {
+      badgeClass += ' badge-pending';
+    } else if (entry.status === 'tenfour') {
+      badgeClass += ' badge-tenfour';
+    } else if (entry.status === 'active' || entry.status === 'reclaimed') {
+      badgeClass += ' badge-active';
+    } else if (entry.status === 'detected') {
+      badgeClass += ' badge-detected';
+    }
     html += '<tr' + rowClass + '>' +
-      '<td class="badge-num' + (entry.status === 'pending' || entry.display === 'RESERVED' ? ' badge-dim' : '') + '">#' + entry.badge + '</td>' +
+      '<td class="' + badgeClass + '">#' + entry.badge + '</td>' +
       '<td class="gamertag">' + gamertagHtml + '</td>' +
       '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' || entry.status === 'reclaimed' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>' +
       '</tr>';
