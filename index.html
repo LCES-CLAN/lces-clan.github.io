@@ -89,8 +89,13 @@
   <div id="footer"></div>
   <script src="footer.js"></script>
   <script src="videos.js"></script>
-  <script src="roster-data.js"></script>
-  <script src="badge-count.js"></script>
+  <script src="roster-data.js"></script>  <script src="badge-count.js"></script>
+  <script src="analytics/config.js"></script>
+  <script src="analytics/visitor.js"></script>
+  <script src="analytics/whitelist.js"></script>
+  <script src="analytics/dispatch.js"></script>
+  <script src="analytics/tracker.js"></script>
+  <script src="analytics.js"></script>
 </div>
 <script>
 const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:0.1,rootMargin:"0px 0px -40px 0px"});

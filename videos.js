@@ -62,6 +62,9 @@
     // Enable/disable nav buttons
     container.querySelector('.evidence-prev').disabled = index === 0;
     container.querySelector('.evidence-next').disabled = index === videosList.length - 1;
+
+    // Analytics hook
+    if (window.LCES && window.LCES.trackVideoPlay) window.LCES.trackVideoPlay(video.title);
   }
 
   function render(videos) {
