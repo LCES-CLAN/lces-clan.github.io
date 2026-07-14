@@ -61,11 +61,16 @@
 
 .roster-table .badge-num {
   color: var(--blue);
-  font-size: 0.78rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.84rem;
   font-weight: 700;
   width: 1px;
   white-space: nowrap;
-  text-shadow: 0 0 8px rgba(26,138,255,0.3);
+  text-align: right;
+}
+.roster-table .badge-num.badge-dim {
+  color: #1a6aaa;
+  text-shadow: none;
 }
 .roster-table .gamertag {
   color: var(--text-bright);
@@ -80,6 +85,7 @@
 }
 .roster-table .gamertag .active {
   color: var(--green);
+  text-shadow: 0 0 10px rgba(46,204,64,0.4);
 }
 .roster-table .gamertag .reserved {
   color: var(--text-dim);
@@ -95,20 +101,20 @@
 }
 .roster-table .status-dot.active {
   background: var(--green);
-  box-shadow: 0 0 5px rgba(46,204,64,0.5);
+  box-shadow: 0 0 14px rgba(46,204,64,0.9), 0 0 40px rgba(46,204,64,0.5), 0 0 70px rgba(46,204,64,0.25);
 }
 .roster-table .status-dot.pending {
   background: var(--blue-dim);
-  box-shadow: 0 0 5px var(--blue-glow);
+  box-shadow: 0 0 3px rgba(12,74,138,0.4);
 }
 .roster-table .status-dot.tenfour {
-  background: var(--blue);
-  box-shadow: 0 0 18px var(--blue-glow), 0 0 40px rgba(26,138,255,0.7), 0 0 70px rgba(26,138,255,0.35);
-  animation: blink 0.6s step-end infinite;
+  background: #66ccff;
+  box-shadow: 0 0 8px rgba(102,204,255,0.9), 0 0 20px rgba(102,204,255,0.45);
+  animation: blink 0.4s step-end infinite;
 }
 .roster-table .status-dot.detected {
-  background: #f0c040;
-  box-shadow: 0 0 7px rgba(240,192,64,0.55), 0 0 16px rgba(240,192,64,0.25);
+  background: #b89830;
+  box-shadow: 0 0 3px rgba(184,152,48,0.35);
   animation: blink 2s step-end infinite;
 }
 .roster-table .status-dot.unavailable {
@@ -122,6 +128,32 @@
 .roster-table .status-label {
   font-size: 0.65rem;
   color: var(--text-dim);
+  opacity: 0.5;
+}
+.roster-table .status-label.tenfour-text {
+  color: #80ccff;
+  text-shadow: 0 0 6px rgba(102,204,255,0.5);
+  font-weight: 700;
+  opacity: 1;
+}
+.roster-table .status-label.active-text {
+  color: var(--green);
+  font-weight: 700;
+  opacity: 1;
+}
+.roster-table .status-label.detected-text {
+  color: #6e8090;
+  font-weight: 700;
+  opacity: 1;
+}
+.roster-table .gamertag .tenfour-gt {
+  color: #80ccff;
+  text-shadow: 0 0 6px rgba(102,204,255,0.5);
+  letter-spacing: 0.15em;
+}
+.roster-table .gamertag .detected-gt {
+  color: #6e8090;
+  letter-spacing: 0.15em;
 }
 
 .roster-count {
@@ -146,6 +178,7 @@
   /* Long gamertags: break to prevent overflow */
   .roster-table td:nth-child(2) { word-break: break-all; }
   .roster-table td:nth-child(3) { white-space: nowrap; }
+  .roster-table .badge-num { font-size: 0.76rem; }
 }
 </style>
 </head>
@@ -222,16 +255,24 @@ function renderRoster(data) {
     if (entry.status === 'active') {
       var tag = entry.gamertag || entry.display;
       gamertagHtml = '<span class="active">' + tag + '</span>';
+    } else if (entry.status === 'tenfour') {
+      gamertagHtml = '<span class="tenfour-gt">' + entry.display + '</span>';
+    } else if (entry.status === 'detected') {
+      gamertagHtml = '<span class="detected-gt">' + entry.display + '</span>';
     } else if (entry.display.indexOf('*') !== -1) {
       gamertagHtml = '<span class="censored">' + entry.display + '</span>';
     } else {
       gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
     }
 
+    var dotStyle = '';
+    if (statusDot === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.4).toFixed(2) + 's"';
+    else if (statusDot === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
+
     html += '<tr>' +
-      '<td class="badge-num">#' + ('000' + entry.badge).slice(-3) + '</td>' +
+      '<td class="badge-num' + (entry.status === 'pending' || entry.display === 'RESERVED' || entry.status === 'mia' ? ' badge-dim' : '') + '">#' + entry.badge + '</td>' +
       '<td class="gamertag">' + gamertagHtml + '</td>' +
-      '<td><span class="status-dot ' + statusDot + '\"></span><span class="status-label">' + statusLabel + '</span></td>' +
+      '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' || entry.status === 'reclaimed' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>' +
       '</tr>';
   });
 
