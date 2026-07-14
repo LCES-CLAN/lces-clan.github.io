@@ -408,6 +408,7 @@
 function renderRoster(data) {
   var html = '';
   data.forEach(function(entry) {
+    entry.display = entry.display.replace(/\*/g, '▪');
     var statusDot, statusLabel;
     if (entry.status === 'active' || entry.status === 'reclaimed') {
       statusDot = 'dot-10-8';
