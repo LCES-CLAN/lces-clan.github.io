@@ -72,8 +72,26 @@
 .roster-table tr:last-child td {
   border-bottom: none;
 }
+/* ─── Row Lit States ─── */
+/* Any row hovered: glow at brightness X */
 .roster-table tr:hover td {
-  background: rgba(26,138,255,0.03);
+  background: rgba(26,138,255,0.04);
+}
+/* 10-8 rows lit by default at Y (brighter base) */
+.roster-table tr.row-active td {
+  background: rgba(26,138,255,0.09);
+}
+/* 10-8 rows on hover get even brighter (A) */
+.roster-table tr.row-active:hover td {
+  background: rgba(26,138,255,0.20);
+}
+/* Base lit: 10-4 rows lit by default */
+.roster-table tr.row-tenfour td {
+  background: rgba(102,204,255,0.04);
+}
+/* Double lit: 10-4 rows on hover */
+.roster-table tr.row-tenfour:hover td {
+  background: rgba(102,204,255,0.09);
 }
 
 .roster-table .badge-num {
@@ -151,7 +169,6 @@
 }
 .roster-table .status-label.active-text {
   color: var(--green);
-  font-size: 2rem;
   font-weight: 700;
   opacity: 1;
 }
@@ -416,7 +433,13 @@ function renderRoster(data) {
     if (statusDot === 'tenfour') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.037) % 0.4).toFixed(2) + 's"';
     else if (statusDot === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 0.137) % 2).toFixed(2) + 's"';
 
-    html += '<tr>' +
+    var rowClass = '';
+    if (entry.status === 'active' || entry.status === 'reclaimed') {
+      rowClass = ' class="row-active"';
+    } else if (entry.status === 'tenfour') {
+      rowClass = ' class="row-tenfour"';
+    }
+    html += '<tr' + rowClass + '>' +
       '<td class="badge-num' + (entry.status === 'pending' || entry.display === 'RESERVED' ? ' badge-dim' : '') + '">#' + entry.badge + '</td>' +
       '<td class="gamertag">' + gamertagHtml + '</td>' +
       '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' || entry.status === 'reclaimed' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>' +
