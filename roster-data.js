@@ -1,5 +1,5 @@
-// LCES Roster Data ï¿½ public snapshot (gamertag shown only for active officers)
-// roster.json is the master file ï¿½ NOT deployed to GitHub Pages.
+// LCES Roster Data — public snapshot (gamertag shown only for active officers)
+// roster.json is the master file — NOT deployed to GitHub Pages.
 // Regenerate this file with: python roster.py export
 window.__rosterData = [
   {
@@ -44,7 +44,7 @@ window.__rosterData = [
   },
   {
     "badge": 9,
-    "display": "JJM**100",
+    "display": "JJM**10*",
     "status": "pending"
   },
   {
@@ -69,7 +69,7 @@ window.__rosterData = [
   },
   {
     "badge": 14,
-    "display": "Mel**ik",
+    "display": "Mel*d*k",
     "status": "pending"
   },
   {
@@ -79,7 +79,7 @@ window.__rosterData = [
   },
   {
     "badge": 16,
-    "display": "Jon**A****ws",
+    "display": "Jon**An****s",
     "status": "pending"
   },
   {
@@ -104,7 +104,7 @@ window.__rosterData = [
   },
   {
     "badge": 21,
-    "display": "Ewe**",
+    "display": "Ew**t",
     "status": "pending"
   },
   {
@@ -234,12 +234,12 @@ window.__rosterData = [
   },
   {
     "badge": 47,
-    "display": "Kil****11",
+    "display": "K***a0611",
     "status": "detected"
   },
   {
     "badge": 48,
-    "display": "Born*A*S****r",
+    "display": "Born A S*****",
     "status": "detected"
   },
   {
@@ -760,12 +760,12 @@ window.__rosterData = [
   },
   {
     "badge": 152,
-    "display": "fir*******************41",
-    "status": "pending"
+    "display": "firec**41617/ic*ma*61741",
+    "status": "detected"
   },
   {
     "badge": 153,
-    "display": "lon******00",
+    "display": "lon*h****00",
     "status": "pending"
   },
   {
@@ -780,7 +780,7 @@ window.__rosterData = [
   },
   {
     "badge": 156,
-    "display": "cas***56",
+    "display": "cas**156",
     "status": "pending"
   },
   {
