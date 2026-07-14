@@ -29,7 +29,7 @@
     if (geo.country) parts.push(geo.country);
     var loc = parts.join(', ') || 'Unknown';
     // Append ISP/org if available
-    if (geo.org) loc += '  •  ' + geo.org;
+    if (geo.org) loc += '\n• ' + geo.org;
     return loc;
   }
 
@@ -48,6 +48,8 @@
 
     // Session start timestamp (used for duration calculations)
     _sessionStart: Date.now(),
+    // Page view throttle tracker (keyed by page label → last send timestamp)
+    _pageViewThrottle: {},
 
     // ── Helper: get the visitor ID for any event ───────────────────
     _vid: function() {
@@ -58,6 +60,15 @@
     // ── Page View ──────────────────────────────────────────────────
     pageView: function(geo, snapshot) {
       var label = pageLabel(snapshot.page);
+
+      // Throttle: skip if we sent a page view for this page too recently
+      // (prevents spamming the webhook on rapid reloads / many tabs)
+      var now = Date.now();
+      var last = this._pageViewThrottle[label];
+      var throttleMs = LCES.Analytics.Config.pageViewThrottleMs || 30000;
+      if (last && (now - last) < throttleMs) return;
+      this._pageViewThrottle[label] = now;
+
       LCES.Analytics.Dispatch.send({
         title: '👁️  Page View',
         color: C.blue,

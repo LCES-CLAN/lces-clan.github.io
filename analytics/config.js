@@ -35,6 +35,8 @@
     // Minimum ms between webhook posts (Discord allows ~5/2s).
     dispatchDelayMs: 1500,
     // How long to wait before considering a scroll event "settled".
-    scrollDebounceMs: 2000
+    scrollDebounceMs: 2000,
+    // Min ms between page views from the same visitor+page (throttle reloads/tabs).
+    pageViewThrottleMs: 30000
   };
 })();
