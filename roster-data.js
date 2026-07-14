@@ -1,5 +1,5 @@
-// LCES Roster Data ï¿½ public snapshot (gamertag shown only for active officers)
-// roster.json is the master file ï¿½ NOT deployed to GitHub Pages.
+// LCES Roster Data — public snapshot (gamertag shown only for active officers)
+// roster.json is the master file — NOT deployed to GitHub Pages.
 // Regenerate this file with: python roster.py export
 window.__rosterData = [
   {
@@ -110,7 +110,7 @@ window.__rosterData = [
   {
     "badge": 22,
     "display": "Che**R****g8*",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 23,
@@ -245,7 +245,7 @@ window.__rosterData = [
   {
     "badge": 49,
     "display": "inf*******rt",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 50,
@@ -321,7 +321,7 @@ window.__rosterData = [
   {
     "badge": 64,
     "display": "Kfp**in",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 65,
@@ -426,7 +426,7 @@ window.__rosterData = [
   {
     "badge": 85,
     "display": "hof******ve",
-    "status": "pending"
+    "status": "tenfour"
   },
   {
     "badge": 86,
@@ -531,7 +531,7 @@ window.__rosterData = [
   {
     "badge": 106,
     "display": "XxV****13",
-    "status": "pending"
+    "status": "tenfour"
   },
   {
     "badge": 107,
@@ -1216,7 +1216,7 @@ window.__rosterData = [
   {
     "badge": 243,
     "display": "Byz******95",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 244,

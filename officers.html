@@ -60,10 +60,12 @@
 }
 
 .roster-table .badge-num {
-  color: var(--blue-dim);
-  font-size: 0.65rem;
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 700;
   width: 1px;
   white-space: nowrap;
+  text-shadow: 0 0 8px rgba(26,138,255,0.3);
 }
 .roster-table .gamertag {
   color: var(--text-bright);
@@ -101,11 +103,13 @@
 }
 .roster-table .status-dot.tenfour {
   background: var(--blue);
-  box-shadow: 0 0 6px var(--blue-glow);
+  box-shadow: 0 0 18px var(--blue-glow), 0 0 40px rgba(26,138,255,0.7), 0 0 70px rgba(26,138,255,0.35);
+  animation: blink 0.6s step-end infinite;
 }
 .roster-table .status-dot.detected {
   background: #f0c040;
-  box-shadow: 0 0 5px rgba(240,192,64,0.5);
+  box-shadow: 0 0 7px rgba(240,192,64,0.55), 0 0 16px rgba(240,192,64,0.25);
+  animation: blink 2s step-end infinite;
 }
 .roster-table .status-dot.unavailable {
   background: var(--text-dim);
@@ -205,7 +209,7 @@ function renderRoster(data) {
       statusLabel = '10-4';
     } else if (entry.status === 'detected') {
       statusDot = 'detected';
-      statusLabel = '10-1';
+      statusLabel = '10-2';
     } else if (entry.status === 'pending') {
       statusDot = 'pending';
       statusLabel = 'Pending';
