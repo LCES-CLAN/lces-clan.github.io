@@ -85,7 +85,7 @@ window.__rosterData = [
   {
     "badge": 17,
     "display": "PTY***",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 18,
@@ -235,12 +235,12 @@ window.__rosterData = [
   {
     "badge": 47,
     "display": "Kil****11",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 48,
     "display": "Bor********or",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 49,
@@ -361,7 +361,7 @@ window.__rosterData = [
   {
     "badge": 72,
     "display": "Low****t9",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 73,
