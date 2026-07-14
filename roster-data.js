@@ -4,7 +4,7 @@
 window.__rosterData = [
   {
     "badge": 1,
-    "display": "NC Sh***** (H**per)",
+    "display": "NC Sh***** (Harper)",
     "status": "pending"
   },
   {
