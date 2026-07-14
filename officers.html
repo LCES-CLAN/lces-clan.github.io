@@ -165,6 +165,11 @@
   background: var(--text-dim);
   opacity: 0.6;
 }
+.roster-table .status-dot.dot-10-2 {
+  background: #1565a8;
+  box-shadow: 0 0 3px rgba(21,101,168,0.3);
+  animation: blink-roster-10-2 2s step-end infinite;
+}
 .roster-table .status-label {
   font-size: 0.85rem;
   color: var(--text-dim);
@@ -310,6 +315,12 @@
   48% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
   50% { opacity: 0.55; box-shadow: 0 0 4px rgba(46,204,64,0.3), 0 0 10px rgba(46,204,64,0.15); }
   52% { opacity: 1; box-shadow: 0 0 12px rgba(46,204,64,0.85), 0 0 28px rgba(46,204,64,0.40); }
+}
+
+/* Dimmer, longer-off blink for roster 10-2 signal dots */
+@keyframes blink-roster-10-2 {
+  0%, 39% { opacity: 1; }
+  40%, 100% { opacity: 0.08; }
 }
 
 /* pulse-glow keyframes moved to styles.css (shared) */
