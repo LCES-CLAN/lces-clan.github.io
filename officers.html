@@ -33,24 +33,41 @@
   width: 100%;
   border-collapse: collapse;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.78rem;
+  font-size: 0.97rem;
   margin-top: 0.25rem;
 }
 .roster-table th {
   text-align: left;
-  padding: 0.5rem 0.6rem;
   color: var(--text-dim);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
+}
+.roster-table th:nth-child(1) {
+  padding: 0.5rem 3rem 0.5rem 2rem;
+}
+.roster-table th:nth-child(2) {
+  padding: 0.5rem 1.5rem 0.5rem 0.6rem;
+}
+.roster-table td:nth-child(2) {
+  padding: 0.55rem 1.5rem 0.55rem 0.6rem;
+}
+.roster-table th:nth-child(3) {
+  padding: 0.5rem 0.2rem 0.5rem 0;
 }
 .roster-table td {
   padding: 0.55rem 0.6rem;
   color: var(--text);
   border-bottom: 1px solid rgba(255,255,255,0.03);
   vertical-align: middle;
+}
+.roster-table td:nth-child(1) {
+  padding: 0.55rem 3rem 0.55rem 2rem;
+}
+.roster-table td:nth-child(3) {
+  padding: 0.55rem 0.2rem 0.55rem 0;
 }
 .roster-table tr:last-child td {
   border-bottom: none;
@@ -62,7 +79,7 @@
 .roster-table .badge-num {
   color: var(--blue);
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.84rem;
+  font-size: 1.04rem;
   font-weight: 700;
   width: 1px;
   white-space: nowrap;
@@ -122,7 +139,7 @@
   opacity: 0.6;
 }
 .roster-table .status-label {
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   color: var(--text-dim);
   opacity: 0.5;
 }
@@ -134,6 +151,7 @@
 }
 .roster-table .status-label.active-text {
   color: var(--green);
+  font-size: 2rem;
   font-weight: 700;
   opacity: 1;
 }
@@ -174,7 +192,7 @@
   gap: 2rem;
   flex-wrap: wrap;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color: var(--text);
   margin: 0.25rem 0 0.75rem;
   padding: 0.4rem 0.6rem;
@@ -216,7 +234,7 @@
 }
 .legend-desc {
   opacity: 1;
-  font-size: 0.55rem;
+  font-size: 0.72rem;
   letter-spacing: 0.04em;
   transition: opacity 0.2s ease;
 }
@@ -280,14 +298,19 @@
     width: 100%;
     height: 0;
   }
-  .roster-table { font-size: 0.7rem; }
+  .roster-table { font-size: 0.85rem; }
   .roster-table th,
   .roster-table td { padding: 0.4rem 0.35rem; }
-  /* Keep all 3 columns — badge shrinks via width:1px / nowrap */
+  .roster-table th:nth-child(1),
+  .roster-table td:nth-child(1) { padding: 0.4rem 0.6rem 0.4rem 0.5rem; }
+  .roster-table th:nth-child(2),
+  .roster-table td:nth-child(2) { padding: 0.4rem 0.5rem 0.4rem 0.35rem; }
+  .roster-table th:nth-child(3),
+  .roster-table td:nth-child(3) { padding: 0.4rem 0.2rem 0.4rem 0.2rem; }
   /* Long gamertags: break to prevent overflow */
   .roster-table td:nth-child(2) { word-break: break-all; }
   .roster-table td:nth-child(3) { white-space: nowrap; }
-  .roster-table .badge-num { font-size: 0.76rem; }
+  .roster-table .badge-num { font-size: 0.9rem; }
 }
 </style>
 </head>
@@ -300,8 +323,8 @@
 
   <div class="panel">
     <div class="panel-label">OFFICER ROSTER</div>
-    <h2><span class="highlight">LIST OF BADGE NUMBERS</span></h2>
-    <p>Below is the recovered badge roster from the original LCES forums. Gamertags are partially censored until the officer reclaims their badge.</p>
+    <h2 style="text-align:center"><span class="highlight">LIST OF BADGE NUMBERS</span></h2>
+    <p style="text-align:center">Below is the recovered&nbsp;badge&nbsp;roster from the original&nbsp;LCES&nbsp;forums.<br>Gamertags are partially&nbsp;censored until the officer reclaims their&nbsp;badge.</p>
 
     <!-- Status Dot Legend -->
     <div class="roster-legend">
@@ -356,7 +379,7 @@ function renderRoster(data) {
       statusLabel = '10-8';
     } else if (entry.display === 'RESERVED') {
       statusDot = 'unavailable';
-      statusLabel = 'Unavailable';
+      statusLabel = '10-7';
     } else if (entry.status === 'tenfour') {
       statusDot = 'tenfour';
       statusLabel = '10-4';
