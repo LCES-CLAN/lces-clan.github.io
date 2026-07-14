@@ -49,6 +49,12 @@
     // Session start timestamp (used for duration calculations)
     _sessionStart: Date.now(),
 
+    // ── Helper: get the visitor ID for any event ───────────────────
+    _vid: function() {
+      var v = LCES.Analytics.Visitor;
+      return v && v.getId ? v.getId() : '?';
+    },
+
     // ── Page View ──────────────────────────────────────────────────
     pageView: function(geo, snapshot) {
       var label = pageLabel(snapshot.page);
@@ -57,6 +63,7 @@
         color: C.blue,
         fields: [
           { name: 'Page',      value: label,              inline: true  },
+          { name: 'Visitor',   value: '`' + snapshot.visitorId + '`', inline: true },
           { name: 'IP',        value: fmtIP(geo.ip),      inline: true  },
           { name: 'Location',  value: fmtLocation(geo),    inline: true  },
           { name: 'Referrer',  value: snapshot.referrer,   inline: false },
@@ -75,6 +82,7 @@
         title: '🔍  Badge Lookup',
         color: C.green,
         fields: [
+          { name: 'Visitor', value: '`' + this._vid() + '`', inline: true },
           { name: 'Badge #' + badgeNum, value: gamertag || '(censored)', inline: true }
         ],
         timestamp: new Date().toISOString(),
@@ -87,6 +95,9 @@
       LCES.Analytics.Dispatch.send({
         title: '📝  Re-enlistment Form Started',
         color: C.gold,
+        fields: [
+          { name: 'Visitor', value: '`' + this._vid() + '`', inline: true }
+        ],
         timestamp: new Date().toISOString(),
         footer: FOOTER
       });
@@ -97,6 +108,9 @@
       LCES.Analytics.Dispatch.send({
         title: '✅  Re-enlistment Form Submitted',
         color: C.green,
+        fields: [
+          { name: 'Visitor', value: '`' + this._vid() + '`', inline: true }
+        ],
         timestamp: new Date().toISOString(),
         footer: FOOTER
       });
@@ -108,6 +122,7 @@
         title: '💬  Discord Link Clicked',
         color: C.orange,
         fields: [
+          { name: 'Visitor', value: '`' + this._vid() + '`', inline: true },
           { name: 'From', value: source || 'unknown', inline: true }
         ],
         timestamp: new Date().toISOString(),
@@ -121,6 +136,7 @@
         title: '▶️  Video Played',
         color: C.purple,
         fields: [
+          { name: 'Visitor', value: '`' + this._vid() + '`', inline: true },
           { name: 'Title', value: title || 'unknown', inline: true }
         ],
         timestamp: new Date().toISOString(),
@@ -139,6 +155,7 @@
         title: '📋  Session Summary',
         color: C.grey,
         fields: [
+          { name: 'Visitor',  value: '`' + this._vid() + '`',          inline: true },
           { name: 'Page',     value: label,                              inline: true },
           { name: 'Duration', value: duration + 's',                     inline: true },
           { name: 'Scrolled', value: maxScrollPct + '%',                 inline: true }
