@@ -1,5 +1,5 @@
-// LCES Roster Data — public snapshot (gamertag shown only for active officers)
-// roster.json is the master file — NOT deployed to GitHub Pages.
+// LCES Roster Data ï¿½ public snapshot (gamertag shown only for active officers)
+// roster.json is the master file ï¿½ NOT deployed to GitHub Pages.
 // Regenerate this file with: python roster.py export
 window.__rosterData = [
   {
@@ -430,7 +430,7 @@ window.__rosterData = [
   },
   {
     "badge": 86,
-    "display": "Hoffa*G****e",
+    "display": "Hoffa*g****e",
     "status": "tenfour"
   },
   {
