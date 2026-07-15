@@ -810,7 +810,7 @@ window.__rosterData = [
   },
   {
     "badge": 162,
-    "display": "ACa********de",
+    "display": "*Canadian****",
     "status": "tenfour"
   },
   {
