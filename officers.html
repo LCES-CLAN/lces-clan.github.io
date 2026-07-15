@@ -411,7 +411,7 @@
         <!-- Data loaded from roster-data.js (censored) -->
       </tbody>
     </table>
-    <div class="roster-count"><span id="roster-count-display">0</span> officers active &bull; <span id="roster-total-display">0</span> badges on record</div>
+    <div class="roster-count"><!-- <span id="roster-count-display">0</span> officers active &bull; --> <span id="roster-total-display">0</span> badges on record</div>
   </div>
 
   <div class="divider"><span class="dot"></span> REUNITED <span class="dot"></span></div>
@@ -531,7 +531,8 @@ function renderRoster(data) {
   }, 100);
 
   var active = data.filter(function(e) { return e.status === 'active'; }).length;
-  document.getElementById('roster-count-display').textContent = active;
+  var countEl = document.getElementById('roster-count-display');
+  if (countEl) countEl.textContent = active;
   document.getElementById('roster-total-display').textContent = data.filter(function(e) { return e.display !== 'RESERVED'; }).length;
   document.getElementById('badge-count').textContent = active;
 }
