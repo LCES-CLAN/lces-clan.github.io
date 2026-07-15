@@ -20,12 +20,12 @@ window.__rosterData = [
   {
     "badge": 4,
     "display": "CALIKILL****",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 5,
     "display": "Chad****",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 6,
@@ -65,7 +65,7 @@ window.__rosterData = [
   {
     "badge": 13,
     "display": "Kill2t******",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 14,
@@ -811,7 +811,7 @@ window.__rosterData = [
   {
     "badge": 162,
     "display": "ACa********de",
-    "status": "pending"
+    "status": "tenfour"
   },
   {
     "badge": 163,
