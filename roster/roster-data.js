@@ -545,7 +545,7 @@ window.__rosterData = [
   },
   {
     "badge": 109,
-    "display": "A-R**",
+    "display": "A R**",
     "status": "mia"
   },
   {
@@ -595,7 +595,7 @@ window.__rosterData = [
   },
   {
     "badge": 119,
-    "display": "MR.***OS",
+    "display": "MR ***OS",
     "status": "mia"
   },
   {
