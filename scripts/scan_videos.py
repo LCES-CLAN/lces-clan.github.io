@@ -188,36 +188,39 @@ def parse_categories_array(text):
 
 
 def build_updated_categories(existing_cats, discovered_folders):
-    """Merge discovered folder names into the existing category list.
+    """Merge discovered folders into the existing category list.
 
-    Existing entries are kept as-is (preserving custom config like title, files).
-    New folders are appended as simple {"folder": name} entries.
-    Duplicate detection is case-insensitive (folder == FOLDER == Folder).
+    * Existing entries are kept (preserves custom config like title, files).
+    * New folders are appended as simple {"folder": name} entries.
+    * Case-insensitive matching prevents duplicates (folder == FOLDER == Folder).
+    * If a duplicate exists, the entry's folder name is updated to match disk casing.
     """
-    result = list(existing_cats)
+    seen = set()
+    result = []
 
-    # Track seen folder names case-insensitively
-    seen = {}
+    # Dedup existing entries keeping the first occurrence, update casing later
     for c in existing_cats:
         if 'folder' in c:
-            seen[c['folder'].lower()] = c['folder']
+            lower = c['folder'].lower()
+            if lower not in seen:
+                seen.add(lower)
+                result.append(dict(c))
+        else:
+            result.append(dict(c))
 
     added = 0
     for fi in discovered_folders:
         lower = fi['folder'].lower()
-        if lower not in seen:
-            result.append({'folder': fi['folder']})
-            seen[lower] = fi['folder']
-            added += 1
+        if lower in seen:
+            # Update existing entry's casing to match filesystem
+            for c in result:
+                if 'folder' in c and c['folder'].lower() == lower:
+                    c['folder'] = fi['folder']
+                    break
         else:
-            # Update folder name to match the filesystem casing if different
-            existing_lower = seen[lower]
-            if existing_lower != fi['folder']:
-                # Find and update the existing entry to match disk casing
-                for c in result:
-                    if 'folder' in c and c['folder'].lower() == lower:
-                        c['folder'] = fi['folder']
-                        break
+            result.append({'folder': fi['folder']})
+            seen.add(lower)
+            added += 1
 
     return result, added
 
@@ -277,7 +280,11 @@ def update_media_html(discovered_folders, dry_run=False):
         for line in new_script_content.split('\n')
     )
 
-    new_html = html[:script_start] + '  <script>\n' + new_indented + '\n' + '  </script>' + html[script_end:]
+    # Preserve the original indentation before the <script> tag
+    line_start = html.rfind('\n', 0, script_start)
+    tag_indent = html[line_start + 1:script_start] if line_start != -1 else ''
+
+    new_html = html[:script_start] + tag_indent + '<script>\n' + new_indented + '\n' + tag_indent + '</script>' + html[script_end:]
 
     if added:
         plural = '' if added == 1 else 's'
