@@ -189,7 +189,7 @@ window.__rosterData = [
   },
   {
     "badge": 38,
-    "display": "* Tay*** *",
+    "display": "**Taylor**",
     "status": "mia"
   },
   {
@@ -209,7 +209,7 @@ window.__rosterData = [
   },
   {
     "badge": 42,
-    "display": "bu*t*** uk",
+    "display": "burtoni***",
     "status": "mia"
   },
   {
