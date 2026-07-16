@@ -304,7 +304,7 @@ window.__rosterData = [
   },
   {
     "badge": 61,
-    "display": "/F**T*8/F**TFIREFIGHTER",
+    "display": "F**T*8/F**TFIREFIGHTER",
     "status": "mia"
   },
   {
