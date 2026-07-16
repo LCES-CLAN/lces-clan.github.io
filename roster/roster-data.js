@@ -530,7 +530,7 @@ window.__rosterData = [
   },
   {
     "badge": 106,
-    "display": "x i****** x",
+    "display": "**iSnipe***",
     "status": "mia"
   },
   {
