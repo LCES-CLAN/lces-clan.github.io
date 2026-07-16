@@ -314,9 +314,9 @@ window.__rosterData = [
   },
   {
     "badge": 63,
-    "display": "l33t 0wn3r",
+    "display": "l33t 0wn3r/Genetically Different",
     "status": "active",
-    "gamertag": "l33t 0wn3r"
+    "gamertag": "l33t 0wn3r/Genetically Different"
   },
   {
     "badge": 64,
