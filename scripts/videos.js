@@ -1,4 +1,7 @@
-// Inline Video Player with Navigation
+// Inline Video Player with Navigation — supports YouTube playlists via index.json.
+// Set "playlistId" in assets/videos/{category}/index.json to auto-fetch videos
+// from a YouTube playlist. Falls back from YouTube Data API to RSS feed, and
+// manual "videos" entries are always merged in first.
 (function() {
   var container = document.getElementById('media-gallery-container');
   if (!container) return;
@@ -7,6 +10,10 @@
   var DATA_URL = 'assets/videos/' + category + '/index.json';
   var videosList = [];
   var currentIndex = 0;
+
+  // ── Configuration ────────────────────────────────────────────────
+  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || '';
+  var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   function escapeAttr(str) {
     return String(str).replace(/"/g, '&quot;').replace(/&/g, '&amp;');
@@ -66,6 +73,85 @@
 
     // Analytics hook
     if (window.LCES && window.LCES.trackVideoPlay) window.LCES.trackVideoPlay(video.title);
+  }
+
+  // ── YouTube Playlist Fetching ──────────────────────────────────────
+  function fetchPlaylistVideos(playlistId) {
+    // Tier 1: YouTube Data API v3
+    function tryYouTubeAPI() {
+      if (!YOUTUBE_API_KEY) {
+        return Promise.reject(new Error('No API key configured'));
+      }
+      var url = 'https://www.googleapis.com/youtube/v3/playlistItems' +
+        '?part=snippet' +
+        '&maxResults=50' +
+        '&playlistId=' + encodeURIComponent(playlistId) +
+        '&key=' + encodeURIComponent(YOUTUBE_API_KEY);
+
+      return fetch(url)
+        .then(function(res) {
+          if (!res.ok) throw new Error('YouTube API returned HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          if (!data.items || !data.items.length) {
+            throw new Error('No items returned from YouTube API');
+          }
+          return data.items.map(function(item) {
+            var snippet = item.snippet;
+            return {
+              title: snippet.title,
+              youtubeId: snippet.resourceId.videoId,
+              source: 'youtube'
+            };
+          });
+        });
+    }
+
+    // Tier 2: RSS feed via CORS proxy
+    function tryRSSFeed() {
+      var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
+        encodeURIComponent(playlistId);
+      var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
+
+      return fetch(proxyUrl)
+        .then(function(res) {
+          if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
+          return res.text();
+        })
+        .then(function(xmlText) {
+          var parser = new DOMParser();
+          var xml = parser.parseFromString(xmlText, 'text/xml');
+          var entries = xml.querySelectorAll('entry');
+          if (!entries.length) throw new Error('No entries in RSS feed');
+
+          var videos = [];
+          for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var titleEl = entry.querySelector('title');
+            // YouTube RSS uses the yt:videoId namespace element.
+            // Use getElementsByTagName for reliable XML namespace handling.
+            var videoIdEl = entry.getElementsByTagName('yt:videoId')[0] || entry.getElementsByTagName('videoId')[0];
+            if (titleEl && videoIdEl) {
+              videos.push({
+                title: titleEl.textContent,
+                youtubeId: videoIdEl.textContent,
+                source: 'youtube'
+              });
+            }
+          }
+          if (!videos.length) throw new Error('Could not parse any videos from RSS feed');
+          return videos;
+        });
+    }
+
+    return tryYouTubeAPI().catch(function(apiErr) {
+      console.warn('[videos.js] YouTube API failed, trying RSS feed fallback:', apiErr.message);
+      return tryRSSFeed().catch(function(rssErr) {
+        console.error('[videos.js] RSS feed fallback also failed:', rssErr.message);
+        return [];
+      });
+    });
   }
 
   function render(videos) {
@@ -157,19 +243,42 @@
     });
   }
 
-  // Fetch video data — reads the promotional folder's index.json directly
+  // Fetch video data — reads the category folder's index.json
   fetch(DATA_URL)
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
     .then(function(data) {
-      if (!data.videos || data.videos.length === 0) {
+      // If a playlistId is specified, fetch playlist videos and merge
+      if (data.playlistId) {
+        return fetchPlaylistVideos(data.playlistId).then(function(playlistVideos) {
+          // Merge: manual videos first, then playlist (skip duplicates)
+          var existingIds = {};
+          var merged = [];
+          var manualVideos = data.videos || [];
+          for (var m = 0; m < manualVideos.length; m++) {
+            if (manualVideos[m].youtubeId) existingIds[manualVideos[m].youtubeId] = true;
+            merged.push(manualVideos[m]);
+          }
+          for (var p = 0; p < playlistVideos.length; p++) {
+            if (!existingIds[playlistVideos[p].youtubeId]) {
+              existingIds[playlistVideos[p].youtubeId] = true;
+              merged.push(playlistVideos[p]);
+            }
+          }
+          return merged;
+        });
+      }
+      return data.videos || [];
+    })
+    .then(function(videos) {
+      if (!videos || videos.length === 0) {
         throw new Error('No videos in ' + category + ' category');
       }
-      render(data.videos);
+      render(videos);
     })
-    .catch(function() {
+    .catch(function(err) {
       container.innerHTML =
         '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
         'Could not load evidence locker. Ensure ' +

@@ -2,9 +2,29 @@
 // Reads per-folder index.json files from assets/videos/{folder}/index.json.
 // Category folders are defined in media.html via window.__mediaCategories.
 // Each folder's index.json can override titles, order, and YouTube embeds.
+//
+// YouTube Playlist Support:
+//   Set "playlistId" in your index.json to auto-fetch videos from a YouTube playlist.
+//   The system tries three methods in order:
+//     1. YouTube Data API v3 (requires YOUTUBE_API_KEY below)
+//     2. RSS feed via CORS proxy (no key needed, but less reliable)
+//     3. Manual "videos" array in index.json (always takes precedence)
+//
+// Get a free API key: https://console.cloud.google.com/apis/credentials
+//   -> Create project -> Enable "YouTube Data API v3" -> Create API key
+
 (function() {
   var container = document.getElementById('media-categories');
   if (!container) return;
+
+  // ── Configuration ──────────────────────────────────────────────────
+  // Set your YouTube Data API v3 key here for reliable playlist fetching.
+  // Leave empty to rely on RSS-feed fallback (no key needed).
+  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || '';
+
+  // Public CORS proxy used as fallback when no API key is configured.
+  // You can override this via window.__CORS_PROXY.
+  var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   var MAX_VISIBLE = 8;
 
@@ -215,6 +235,115 @@
     container.setAttribute('data-index-' + categoryId, '0');
   }
 
+  // ── YouTube Playlist Fetching ──────────────────────────────────────
+  // Fetches videos from a YouTube playlist using a three-tier approach:
+  //   1. YouTube Data API v3 (if API key is set)
+  //   2. RSS feed via CORS proxy (no key needed)
+  //   3. Returns empty array if all methods fail
+  function fetchPlaylistVideos(playlistId) {
+    // Tier 1: YouTube Data API v3
+    function tryYouTubeAPI() {
+      if (!YOUTUBE_API_KEY) {
+        return Promise.reject(new Error('No API key configured'));
+      }
+      var url = 'https://www.googleapis.com/youtube/v3/playlistItems' +
+        '?part=snippet' +
+        '&maxResults=50' +
+        '&playlistId=' + encodeURIComponent(playlistId) +
+        '&key=' + encodeURIComponent(YOUTUBE_API_KEY);
+
+      return fetch(url)
+        .then(function(res) {
+          if (!res.ok) throw new Error('YouTube API returned HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          if (!data.items || !data.items.length) {
+            throw new Error('No items returned from YouTube API');
+          }
+          return data.items.map(function(item) {
+            var snippet = item.snippet;
+            return {
+              title: snippet.title,
+              youtubeId: snippet.resourceId.videoId,
+              source: 'youtube'
+            };
+          });
+        });
+    }
+
+    // Tier 2: RSS feed via CORS proxy
+    function tryRSSFeed() {
+      var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
+        encodeURIComponent(playlistId);
+      var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
+
+      return fetch(proxyUrl)
+        .then(function(res) {
+          if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
+          return res.text();
+        })
+        .then(function(xmlText) {
+          var parser = new DOMParser();
+          var xml = parser.parseFromString(xmlText, 'text/xml');
+          var entries = xml.querySelectorAll('entry');
+          if (!entries.length) throw new Error('No entries in RSS feed');
+
+          var videos = [];
+          for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var titleEl = entry.querySelector('title');
+            // YouTube RSS uses the yt:videoId namespace element.
+            // Use getElementsByTagName for reliable XML namespace handling.
+            var videoIdEl = entry.getElementsByTagName('yt:videoId')[0] || entry.getElementsByTagName('videoId')[0];
+            if (titleEl && videoIdEl) {
+              videos.push({
+                title: titleEl.textContent,
+                youtubeId: videoIdEl.textContent,
+                source: 'youtube'
+              });
+            }
+          }
+          if (!videos.length) throw new Error('Could not parse any videos from RSS feed');
+          return videos;
+        });
+    }
+
+    // Run: API first, fallback to RSS, last resort empty array
+    return tryYouTubeAPI().catch(function(apiErr) {
+      console.warn('[media.js] YouTube API failed, trying RSS feed fallback:', apiErr.message);
+      return tryRSSFeed().catch(function(rssErr) {
+        console.error('[media.js] RSS feed fallback also failed:', rssErr.message);
+        return [];
+      });
+    });
+  }
+
+  // Merges playlist videos into the category, avoiding duplicates by YouTube ID.
+  // Manually listed videos (from index.json "videos") come first.
+  function mergePlaylistVideos(category, playlistVideos) {
+    var existingIds = {};
+    var merged = [];
+
+    // Manual videos first (they take visual priority)
+    for (var i = 0; i < category.videos.length; i++) {
+      var v = category.videos[i];
+      if (v.youtubeId) existingIds[v.youtubeId] = true;
+      merged.push(v);
+    }
+
+    // Append playlist videos that aren't duplicates
+    for (var j = 0; j < playlistVideos.length; j++) {
+      var pv = playlistVideos[j];
+      if (!existingIds[pv.youtubeId]) {
+        existingIds[pv.youtubeId] = true;
+        merged.push(pv);
+      }
+    }
+
+    return merged;
+  }
+
   function loadAllCategories() {
     var categories = window.__mediaCategories || [];
     if (!categories.length) {
@@ -231,21 +360,37 @@
     // Fetch each folder's index.json in parallel
     var fetches = [];
     for (var i = 0; i < categories.length; i++) {
-      var folder = categories[i].folder;
-      var url = 'assets/videos/' + folder + '/index.json';
-      fetches.push(
-        fetch(url)
-          .then(function(res) {
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return res.json();
-          })
-          .then(function(data) {
-            return { folder: folder, title: data.title, videos: data.videos || [] };
-          })
-          .catch(function() {
-            return { folder: folder, title: folder, videos: [] };
-          })
-      );
+      // IIFE captures `folder` per iteration (avoids var-hoisting closure bug)
+      (function(folder) {
+        var url = 'assets/videos/' + folder + '/index.json';
+        fetches.push(
+          fetch(url)
+            .then(function(res) {
+              if (!res.ok) throw new Error('HTTP ' + res.status);
+              return res.json();
+            })
+            .then(function(data) {
+              var category = {
+                folder: folder,
+                title: data.title,
+                videos: data.videos || []
+              };
+
+              // If the index.json specifies a playlistId, fetch the playlist
+              if (data.playlistId) {
+                return fetchPlaylistVideos(data.playlistId).then(function(playlistVideos) {
+                  category.videos = mergePlaylistVideos(category, playlistVideos);
+                  return category;
+                });
+              }
+
+              return category;
+            })
+            .catch(function() {
+              return { folder: folder, title: folder, videos: [] };
+            })
+        );
+      })(categories[i].folder);
     }
 
     Promise.all(fetches).then(function(results) {
