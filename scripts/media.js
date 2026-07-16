@@ -360,8 +360,9 @@
     // Fetch each folder's index.json in parallel
     var fetches = [];
     for (var i = 0; i < categories.length; i++) {
-      // IIFE captures `folder` per iteration (avoids var-hoisting closure bug)
-      (function(folder) {
+      // IIFE captures the full category config per iteration
+      (function(catConfig) {
+        var folder = catConfig.folder;
         var url = 'assets/videos/' + folder + '/index.json';
         fetches.push(
           fetch(url)
@@ -372,7 +373,7 @@
             .then(function(data) {
               var category = {
                 folder: folder,
-                title: data.title,
+                title: data.title || catConfig.title || folder,
                 videos: data.videos || []
               };
 
@@ -387,10 +388,24 @@
               return category;
             })
             .catch(function() {
-              return { folder: folder, title: folder, videos: [] };
+              // No index.json found — use files from the HTML category config
+              var files = catConfig.files || [];
+              var generatedVideos = [];
+              for (var f = 0; f < files.length; f++) {
+                generatedVideos.push({
+                  title: files[f].replace(/\.[^.]+$/, ''),
+                  source: 'local',
+                  localPath: 'assets/videos/' + folder + '/' + files[f]
+                });
+              }
+              return {
+                folder: folder,
+                title: catConfig.title || folder,
+                videos: generatedVideos
+              };
             })
         );
-      })(categories[i].folder);
+      })(categories[i]);
     }
 
     Promise.all(fetches).then(function(results) {

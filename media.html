@@ -36,11 +36,17 @@
 <script src="scripts/navbar.js"></script>
 
   <div id="media-categories"></div>
+  <!--
+    Categories are auto-managed by scripts/scan_videos.py.
+    Run: python scripts/scan_videos.py
+    It will scan assets/videos/ folders and generate this list automatically.
+  -->
   <script>
-    // Category list — each folder in assets/videos/ with video content.
-    // Add entries here when you create a new category folder.
-    window.__mediaCategories = [
-      { "folder": "promotional" }
+    // Auto-managed by scripts/scan_videos.py — do not edit by hand.
+        window.__mediaCategories = [
+      {"folder": "promotional"},
+      {"folder": "LCES Training Videos"},
+      {"folder": "Promotional"}
     ];
   </script>
 

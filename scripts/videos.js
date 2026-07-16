@@ -243,6 +243,27 @@
     });
   }
 
+  // Build fallback videos from container's data-files attribute (no index.json needed)
+  function getFallbackVideos() {
+    var filesAttr = container.getAttribute('data-files');
+    if (!filesAttr) return null;
+    try {
+      var files = JSON.parse(filesAttr);
+      if (!files || !files.length) return null;
+      var videos = [];
+      for (var f = 0; f < files.length; f++) {
+        videos.push({
+          title: files[f].replace(/\.[^.]+$/, ''),
+          source: 'local',
+          localPath: 'assets/videos/' + category + '/' + files[f]
+        });
+      }
+      return videos;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // Fetch video data — reads the category folder's index.json
   fetch(DATA_URL)
     .then(function(res) {
@@ -278,11 +299,17 @@
       }
       render(videos);
     })
-    .catch(function(err) {
-      container.innerHTML =
-        '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
-        'Could not load evidence locker. Ensure ' +
-        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">assets/videos/' + category + '/index.json</code>' +
-        ' exists and has videos.</p>';
+    .catch(function() {
+      // No index.json found — fall back to data-files attribute
+      var fallbackVideos = getFallbackVideos();
+      if (fallbackVideos && fallbackVideos.length) {
+        render(fallbackVideos);
+      } else {
+        container.innerHTML =
+          '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
+          'Could not load evidence locker. Ensure ' +
+          '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">assets/videos/' + category + '/index.json</code>' +
+          ' exists and has videos.</p>';
+      }
     });
 })();
