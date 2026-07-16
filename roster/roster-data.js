@@ -665,7 +665,7 @@ window.__rosterData = [
   },
   {
     "badge": 133,
-    "display": "zip****an",
+    "display": "zipper***",
     "status": "mia"
   },
   {
@@ -675,7 +675,7 @@ window.__rosterData = [
   },
   {
     "badge": 135,
-    "display": "Pet*****ii",
+    "display": "Peter ****",
     "status": "mia"
   },
   {
@@ -685,22 +685,22 @@ window.__rosterData = [
   },
   {
     "badge": 137,
-    "display": "NYP****93",
+    "display": "NYPD*****",
     "status": "mia"
   },
   {
     "badge": 138,
-    "display": "XxB********xX",
+    "display": "**BrAdMaN****",
     "status": "mia"
   },
   {
     "badge": 139,
-    "display": "WPP**13",
+    "display": "WPPD***",
     "status": "mia"
   },
   {
     "badge": 140,
-    "display": "pie******ss",
+    "display": "pieterX***",
     "status": "mia"
   },
   {
@@ -715,47 +715,47 @@ window.__rosterData = [
   },
   {
     "badge": 143,
-    "display": "Hon**********99",
+    "display": "Honor**death***",
     "status": "mia"
   },
   {
     "badge": 144,
-    "display": "Aim***in",
+    "display": "Aim2****",
     "status": "mia"
   },
   {
     "badge": 145,
-    "display": "cal************Tx",
+    "display": "c*ll*mv/x***BRITx ",
     "status": "mia"
   },
   {
     "badge": 146,
-    "display": "Vol********er",
+    "display": "Volt***Yapp**",
     "status": "mia"
   },
   {
     "badge": 147,
-    "display": "Gix*******r1",
+    "display": "Gixxer*****1",
     "status": "mia"
   },
   {
     "badge": 148,
-    "display": "jul*****rn",
+    "display": "juli*nk***",
     "status": "mia"
   },
   {
     "badge": 149,
-    "display": "Beo***11",
+    "display": "Beon ***",
     "status": "mia"
   },
   {
     "badge": 150,
-    "display": "PVf**********38",
+    "display": "P*firefighter3*",
     "status": "mia"
   },
   {
     "badge": 151,
-    "display": "Pol**********r9",
+    "display": "Police*******r9",
     "status": "mia"
   },
   {
@@ -765,7 +765,7 @@ window.__rosterData = [
   },
   {
     "badge": 153,
-    "display": "lon*h****00",
+    "display": "longhorn***",
     "status": "mia"
   },
   {
@@ -800,7 +800,7 @@ window.__rosterData = [
   },
   {
     "badge": 160,
-    "display": "Mau**********fe",
+    "display": "Maur****** jefe",
     "status": "mia"
   },
   {
@@ -835,27 +835,27 @@ window.__rosterData = [
   },
   {
     "badge": 167,
-    "display": "Ori**********on",
+    "display": "Ori***** ****on",
     "status": "mia"
   },
   {
     "badge": 168,
-    "display": "xRI******ef",
+    "display": "xRI** ***ef",
     "status": "mia"
   },
   {
     "badge": 169,
-    "display": "Nah******en",
+    "display": "Na* go* ye*",
     "status": "mia"
   },
   {
     "badge": 170,
-    "display": "dav*****88",
+    "display": "daveted***",
     "status": "mia"
   },
   {
     "badge": 171,
-    "display": "APD********10",
+    "display": "APDExplor****",
     "status": "mia"
   },
   {
@@ -865,7 +865,7 @@ window.__rosterData = [
   },
   {
     "badge": 173,
-    "display": "Roy**********07",
+    "display": "Roy*********007",
     "status": "mia"
   },
   {
@@ -880,7 +880,7 @@ window.__rosterData = [
   },
   {
     "badge": 176,
-    "display": "Rol****CH",
+    "display": "Roll**PC*",
     "status": "mia"
   },
   {
@@ -890,12 +890,12 @@ window.__rosterData = [
   },
   {
     "badge": 178,
-    "display": "Bob******66",
+    "display": "Boboape****",
     "status": "mia"
   },
   {
     "badge": 179,
-    "display": "mat*****ce",
+    "display": "matty*2**e",
     "status": "mia"
   },
   {
@@ -920,7 +920,7 @@ window.__rosterData = [
   },
   {
     "badge": 184,
-    "display": "The********95",
+    "display": "Theo**Crash9*",
     "status": "mia"
   },
   {
@@ -1005,12 +1005,12 @@ window.__rosterData = [
   },
   {
     "badge": 201,
-    "display": "Neg********sk",
+    "display": "N******* Risk",
     "status": "mia"
   },
   {
     "badge": 202,
-    "display": "XX8********XX",
+    "display": "**86SNIPE****",
     "status": "mia"
   },
   {
@@ -1020,7 +1020,7 @@ window.__rosterData = [
   },
   {
     "badge": 204,
-    "display": "kil******17",
+    "display": "killarob***",
     "status": "mia"
   },
   {
@@ -1045,12 +1045,12 @@ window.__rosterData = [
   },
   {
     "badge": 209,
-    "display": "SRi*****y3",
+    "display": "*Ridgew*y*",
     "status": "mia"
   },
   {
     "badge": 210,
-    "display": "Mis******se",
+    "display": "Mi****moose",
     "status": "mia"
   },
   {
@@ -1080,7 +1080,7 @@ window.__rosterData = [
   },
   {
     "badge": 216,
-    "display": "*USMC *SGT*",
+    "display": "*USMC**SGT*",
     "status": "mia"
   },
   {
