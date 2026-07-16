@@ -760,7 +760,7 @@ window.__rosterData = [
   },
   {
     "badge": 152,
-    "display": "firec**41617/ic*ma*61741",
+    "display": "firec**41617/ice******41",
     "status": "mia"
   },
   {
