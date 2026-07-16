@@ -705,12 +705,12 @@ window.__rosterData = [
   },
   {
     "badge": 141,
-    "display": "cav*******76",
+    "display": "cavs4life***",
     "status": "mia"
   },
   {
     "badge": 142,
-    "display": "bob*****s7",
+    "display": "bobasaur***",
     "status": "mia"
   },
   {
@@ -861,7 +861,8 @@ window.__rosterData = [
   {
     "badge": 172,
     "display": "JJ3**",
-    "status": "replied"
+    "status": "active",
+    "gamertag": "JJ306"
   },
   {
     "badge": 173,
