@@ -82,7 +82,7 @@
   </section>
   <section id="guestbook" class="panel reveal">
     <div class="panel-label">GUESTBOOK</div>
-    <h2>RE-ENLISTMENT</h2>
+    <h2 class="reenlist-heading">RE-ENLISTMENT</h2>
     <div id="enlist-form"></div>
     <script src="scripts/form.js"></script>
   </section>
@@ -98,9 +98,6 @@
   <script src="analytics/botfilter.js"></script>
   <script src="analytics/analytics.js"></script>
 </div>
-<script>
-const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:0.1,rootMargin:"0px 0px -40px 0px"});
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
-</script>
+<script src="scripts/reveal.js"></script>
 </body>
 </html>

@@ -250,6 +250,7 @@ body::before {
   letter-spacing: 0.03em;
 }
 .panel h2 .highlight { color: var(--blue-bright); }
+.panel h2.reenlist-heading { color: var(--green); }
 
 .panel p { margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; color: var(--text); }
 .panel p:last-child { margin-bottom: 0; }
@@ -410,6 +411,21 @@ body::before {
 }
 
 .cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+/* ─── Discord Icon (shared across guestbook and 404 pages) ─── */
+.discord-icon {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 0.75rem;
+  filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+#discord:hover .discord-icon {
+  filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
+  transform: scale(1.1);
+}
 
 /* ─── Evidence Locker — Inline Video Player ─── */
 .evidence-player {
