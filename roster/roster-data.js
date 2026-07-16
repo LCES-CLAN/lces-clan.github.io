@@ -455,7 +455,7 @@ window.__rosterData = [
   },
   {
     "badge": 91,
-    "display": "x *Ram****z x",
+    "display": "****Ramirez**",
     "status": "mia"
   },
   {
