@@ -5,17 +5,17 @@ window.__rosterData = [
   {
     "badge": 1,
     "display": "NC Sh***** (Harper)",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 2,
     "display": "husker****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 3,
     "display": "steven******",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 4,
@@ -30,37 +30,37 @@ window.__rosterData = [
   {
     "badge": 6,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 7,
     "display": "B*rg*t*3",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 8,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 9,
     "display": "JJM***00",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 10,
     "display": "DrGreen*******",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 11,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 12,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 13,
@@ -70,42 +70,42 @@ window.__rosterData = [
   {
     "badge": 14,
     "display": "M*l*d*k",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 15,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 16,
     "display": "Jon**An****s",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 17,
     "display": "PTY***",
-    "status": "tenfour"
+    "status": "replied"
   },
   {
     "badge": 18,
     "display": "Nay**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 19,
     "display": "Tep*****ri",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 20,
     "display": "Bry**ey",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 21,
     "display": "Ew**t",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 22,
@@ -115,122 +115,122 @@ window.__rosterData = [
   {
     "badge": 23,
     "display": "GT**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 24,
     "display": "Al***Sierra***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 25,
     "display": "RE**** MC",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 26,
     "display": "Cpt Re*****s **",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 27,
     "display": "Rea* *** G****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 28,
     "display": "De***B****er9*",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 29,
     "display": "lone*******12",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 30,
     "display": "Sta**ug",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 31,
     "display": "skr****93",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 32,
     "display": "pow**h**s3",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 33,
     "display": "Dev**OB",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 34,
     "display": "Stevo******",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 35,
     "display": "sca****ag",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 36,
     "display": "*l Car***l l*",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 37,
     "display": "Cow***D ***6ine",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 38,
     "display": "* Tay*** *",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 39,
     "display": "toms**r28**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 40,
     "display": "adir****bo",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 41,
     "display": "cra**a9",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 42,
     "display": "bu*t*** uk",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 43,
     "display": "DrewC*****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 44,
     "display": "dow*****er",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 45,
     "display": "And**ek",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 46,
     "display": "kgp**91",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 47,
@@ -250,67 +250,67 @@ window.__rosterData = [
   {
     "badge": 50,
     "display": "Guy***5**Of*****l",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 51,
     "display": "Pre********l*ve",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 52,
     "display": "Hom******Box",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 53,
     "display": "Alk*a1****i0",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 54,
     "display": "STRY****97",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 55,
     "display": "d*r*m***ve",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 56,
     "display": "Mr.S****py",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 57,
     "display": "Bob123*********",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 58,
     "display": "re***rds",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 59,
     "display": "Young G*******s",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 60,
     "display": "Von******tt",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 61,
     "display": "F**TFIREFIGHTER",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 62,
     "display": "pol****82",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 63,
@@ -326,42 +326,42 @@ window.__rosterData = [
   {
     "badge": 65,
     "display": "Ser***s6",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 66,
     "display": "johnny****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 67,
     "display": "lock**he**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 68,
     "display": "FeA***S I*****0",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 69,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 70,
     "display": "halo**master",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 71,
     "display": "Yankees****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 72,
     "display": "BBF**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 73,
@@ -371,392 +371,392 @@ window.__rosterData = [
   {
     "badge": 74,
     "display": "R*CKSTAR*****Y",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 75,
     "display": "Lance****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 76,
     "display": "Hawk****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 77,
     "display": "Del*a Rough****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 78,
     "display": "Firemi****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 79,
     "display": "HAZARDteh****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 80,
     "display": "dukh***d",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 81,
     "display": "Deb**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 82,
     "display": "j**cat",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 83,
     "display": "did******20",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 84,
     "display": "budatoker****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 85,
     "display": "PLA******RM",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 86,
     "display": "Hoffa*****e",
-    "status": "tenfour"
+    "status": "replied"
   },
   {
     "badge": 87,
     "display": "Gre**S*****on",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 88,
     "display": "Vi***F**la",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 89,
     "display": "MR *********AL",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 90,
     "display": "BLAZ*D 8**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 91,
     "display": "x *Ram****z x",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 92,
     "display": "o4w******d",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 93,
     "display": "FMM*****AL",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 94,
     "display": "Montreal*****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 95,
     "display": "dave****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 96,
     "display": "oRA*********Ko",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 97,
     "display": "Qui******s2",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 98,
     "display": "Off***********16",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 99,
     "display": "Ron**********an",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 100,
     "display": "dar***10",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 101,
     "display": "reaper****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 102,
     "display": "xla**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 103,
     "display": "alexbeast****",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 104,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 105,
     "display": "DUT**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 106,
     "display": "x i****** x",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 107,
     "display": "**Vinny**",
-    "status": "tenfour"
+    "status": "replied"
   },
   {
     "badge": 108,
     "display": "Pyro***5",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 109,
     "display": "A-R**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 110,
     "display": "USm*******05",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 111,
     "display": "iSa**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 112,
     "display": "Youngster***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 113,
     "display": "Ed2***91",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 114,
     "display": "dal********21",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 115,
     "display": "cheese*****man",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 116,
     "display": "XxB R****6xX",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 117,
     "display": "iMu**** S****s",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 118,
     "display": "SoulS****r",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 119,
     "display": "MR.***OS",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 120,
     "display": "car***60",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 121,
     "display": "delta ***o",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 122,
     "display": "Vanilla*****44",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 123,
     "display": "apo****ky",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 124,
     "display": "The**********39",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 125,
     "display": "plu******or",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 126,
     "display": "GDN****91",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 127,
     "display": "Sch******77",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 128,
     "display": "Off***********er",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 129,
     "display": "GMR**MR",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 130,
     "display": "lbj**72",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 131,
     "display": "Dir*****ry",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 132,
     "display": "Aqu*****de",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 133,
     "display": "zip****an",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 134,
     "display": "zig**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 135,
     "display": "Pet*****ii",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 136,
     "display": "Dud**ck",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 137,
     "display": "NYP****93",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 138,
     "display": "XxB********xX",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 139,
     "display": "WPP**13",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 140,
     "display": "pie******ss",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 141,
     "display": "cav*******76",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 142,
     "display": "bob*****s7",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 143,
     "display": "Hon**********99",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 144,
     "display": "Aim***in",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 145,
     "display": "cal************Tx",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 146,
     "display": "Vol********er",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 147,
     "display": "Gix*******r1",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 148,
     "display": "jul*****rn",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 149,
     "display": "Beo***11",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 150,
     "display": "PVf**********38",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 151,
     "display": "Pol**********r9",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 152,
@@ -766,462 +766,462 @@ window.__rosterData = [
   {
     "badge": 153,
     "display": "lon*h****00",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 154,
     "display": "C H********* x",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 155,
     "display": "lif**ff",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 156,
     "display": "cas**156",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 157,
     "display": "cba*****mi",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 158,
     "display": "ski*********17",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 159,
     "display": "Xtr***st",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 160,
     "display": "Mau**********fe",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 161,
     "display": "DsL******ty",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 162,
     "display": "*Canadian****",
-    "status": "tenfour"
+    "status": "replied"
   },
   {
     "badge": 163,
     "display": "GON*************nz",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 164,
     "display": "mit*******21",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 165,
     "display": "Nul********ss",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 166,
     "display": "xWe**********nx",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 167,
     "display": "Ori**********on",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 168,
     "display": "xRI******ef",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 169,
     "display": "Nah******en",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 170,
     "display": "dav*****88",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 171,
     "display": "APD********10",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 172,
     "display": "JJ3**",
-    "status": "tenfour"
+    "status": "replied"
   },
   {
     "badge": 173,
     "display": "Roy**********07",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 174,
     "display": "zan**00",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 175,
     "display": "Jes*********ft",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 176,
     "display": "Rol****CH",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 177,
     "display": "N2L*******ty",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 178,
     "display": "Bob******66",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 179,
     "display": "mat*****ce",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 180,
     "display": "DGo***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 181,
     "display": "VR9***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 182,
     "display": "UGC********ot",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 183,
     "display": "ITZ**********US",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 184,
     "display": "The********95",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 185,
     "display": "Hel**********on",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 186,
     "display": "HBR*******Zz",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 187,
     "display": "sli********r8",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 188,
     "display": "Tha**********88",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 189,
     "display": "Sch*****88",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 190,
     "display": "Nit******91",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 191,
     "display": "mar**********mb",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 192,
     "display": "Jak**32",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 193,
     "display": "Sno**S***y*20",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 194,
     "display": "rac****40",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 195,
     "display": "Emo****62",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 196,
     "display": "BGo***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 197,
     "display": "fis**********68",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 198,
     "display": "Spo*******te",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 199,
     "display": "Uni**22",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 200,
     "display": "ooo*********oo",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 201,
     "display": "Neg********sk",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 202,
     "display": "XX8********XX",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 203,
     "display": "Din********7x",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 204,
     "display": "kil******17",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 205,
     "display": "ASO*********Lx",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 206,
     "display": "Off*******am",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 207,
     "display": "Pat******37",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 208,
     "display": "mun****01",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 209,
     "display": "SRi*****y3",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 210,
     "display": "Mis******se",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 211,
     "display": "wwi********28",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 212,
     "display": "des**********58",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 213,
     "display": "x T********** x",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 214,
     "display": "Jo3******23",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 215,
     "display": "MAG**HH",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 216,
     "display": "xUS******Tx",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 217,
     "display": "Cap*****sy",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 218,
     "display": "vVJ*********Vv",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 219,
     "display": "JPM***",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 220,
     "display": "MHT***vo",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 221,
     "display": "Log****13",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 222,
     "display": "xXM******Xx",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 223,
     "display": "Bro***86",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 224,
     "display": "BLU********ZZ",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 225,
     "display": "Pur*********er",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 226,
     "display": "x S**aD",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 227,
     "display": "The*******85",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 228,
     "display": "TF *********en",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 229,
     "display": "NSJ***ed",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 230,
     "display": "Pwn*********es",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 231,
     "display": "Fro******00",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 232,
     "display": "TyB****20",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 233,
     "display": "Cha*** B",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 234,
     "display": "BAC*********63",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 235,
     "display": "Man*******13",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 236,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 237,
     "display": "x T**********oN",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 238,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 239,
     "display": "Sup********an",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 240,
     "display": "Try*********ma",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 241,
     "display": "Com*********on",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 242,
     "display": "Not**********st",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 243,
     "display": "Dil*****20",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 244,
     "display": "Pie*********in",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 245,
@@ -1231,42 +1231,42 @@ window.__rosterData = [
   {
     "badge": 246,
     "display": "JSF********in",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 247,
     "display": "RESERVED",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 248,
     "display": "Bks**",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 249,
     "display": "Scr*******SG",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 250,
     "display": "Dev********01",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 251,
     "display": "gro***12",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 252,
     "display": "FaT*********mE",
-    "status": "pending"
+    "status": "mia"
   },
   {
     "badge": 253,
     "display": "Chr*********er",
-    "status": "pending"
+    "status": "mia"
   }
 ];
 

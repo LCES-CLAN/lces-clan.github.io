@@ -13,13 +13,13 @@ Usage:
     python roster/roster.py delete <badge#>                  Remove a badge entry
     python roster/roster.py export                           Generate roster/roster-data.js (gamertags for active only)
 
-Status values: active, pending, tenfour, detected
+Status values: active, mia, replied, detected
 
 Examples:
     python roster/roster.py add "xX_LCES_Own3r_Xx"
     python roster/roster.py bulk-import old_roster.txt --reclaim 1
     python roster/roster.py reclaim 1 --gamertag "xX_LCES_Own3r_Xx"
-    python roster/roster.py edit 2 --display "LCES_***_2008" --status tenfour
+    python roster/roster.py edit 2 --display "LCES_***_2008" --status replied
     python roster/roster.py list
 """
 
@@ -43,6 +43,10 @@ def load():
         for entry in data:
             if entry.get("status") == "reclaimed":
                 entry["status"] = "active"
+            if entry.get("status") == "pending":
+                entry["status"] = "mia"
+            if entry.get("status") == "tenfour":
+                entry["status"] = "replied"
         return data
     except json.JSONDecodeError as e:
         print(f"  [X] Could not read {DATA_FILE}: {e}")
@@ -75,7 +79,7 @@ def censor_display(gamertag, keep_front=3, keep_back=2):
     return gamertag[:keep_front] + "█" * mid + gamertag[-keep_back:]
 
 def status_dot(status):
-    dots = {"active": "\033[92m*\033[0m", "tenfour": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "pending": "\033[94m*\033[0m"}
+    dots = {"active": "\033[92m*\033[0m", "replied": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "mia": "\033[94m*\033[0m"}
     return dots.get(status, "\033[90m*\033[0m")
 
 def fmt(s):
@@ -114,12 +118,12 @@ def cmd_list(args):
 def cmd_add(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster/roster.py add <gamertag> [--status active|pending|tenfour|detected] [--display <text>]")
+        print("  Usage: python roster/roster.py add <gamertag> [--status active|mia|replied|detected] [--display <text>]")
         return
     gamertag = pos[0]
-    status = flags.get("status", "pending").lower()
-    if status not in ("active", "pending", "tenfour", "detected"):
-        print(f"  [!] Invalid status '{status}'. Use: active, pending, tenfour, detected")
+    status = flags.get("status", "mia").lower()
+    if status not in ("active", "mia", "replied", "detected"):
+        print(f"  [!] Invalid status '{status}'. Use: active, mia, replied, detected")
         return
     display = flags.get("display")
     data = load()
@@ -155,7 +159,7 @@ def cmd_reclaim(args):
 def cmd_edit(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster/roster.py edit <badge#> [--status active|pending|tenfour|detected] [--display <text>]")
+        print("  Usage: python roster/roster.py edit <badge#> [--status active|mia|replied|detected] [--display <text>]")
         return
     try:
         badge_num = int(pos[0])
@@ -169,7 +173,7 @@ def cmd_edit(args):
         return
     if "status" in flags:
         s = flags["status"].lower()
-        if s in ("active", "pending", "tenfour", "detected"):
+        if s in ("active", "mia", "replied", "detected"):
             entry["status"] = s
         else:
             print(f"  [!] Invalid status '{s}'")
@@ -221,7 +225,7 @@ def cmd_bulk_import(args):
         if badge_num in reclaim_set:
             entry = {"badge": badge_num, "gamertag": gt, "display": gt, "status": "active"}
         else:
-            entry = {"badge": badge_num, "gamertag": gt, "display": censor_display(gt), "status": "pending"}
+            entry = {"badge": badge_num, "gamertag": gt, "display": censor_display(gt), "status": "mia"}
         data.append(entry)
     
     save(data)
@@ -237,10 +241,14 @@ def cmd_export(args):
     data = load()
     clean = []
     for entry in data:
-        # Normalize legacy "reclaimed" → "active"
+        # Normalize legacy statuses
         status = entry["status"]
         if status == "reclaimed":
             status = "active"
+        if status == "pending":
+            status = "mia"
+        if status == "tenfour":
+            status = "replied"
         e = {
             "badge": entry["badge"],
             "display": entry["display"],
