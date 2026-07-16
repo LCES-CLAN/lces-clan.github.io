@@ -1,33 +1,34 @@
 #!/usr/bin/env python3
 """
-Roster Manager — CLI tool for managing officers badge data (roster.json)
+Roster Manager — CLI tool for managing officers badge data (roster/roster.json)
 
 Usage:
-    python roster.py list                             Show all badges
-    python roster.py add <gamertag> [--status s]      Add new entry (censored)
-    python roster.py bulk-import <file>               Import all gamertags from
-                          [--reclaim 1,3,5]            a text file (one per line)
-    python roster.py reclaim <badge#> [--gamertag t]  Mark badge reclaimed
-    python roster.py edit <badge#> [--status s]       Change status or display
-                            [--display d]
-    python roster.py delete <badge#>                  Remove a badge entry
-    python roster.py export                           Generate roster-data.js (gamertags for active only)
+    python roster/roster.py list                             Show all badges
+    python roster/roster.py add <gamertag> [--status s]      Add new entry (censored)
+    python roster/roster.py bulk-import <file>               Import all gamertags from
+                               [--reclaim 1,3,5]             a text file (one per line)
+    python roster/roster.py reclaim <badge#> [--gamertag t]  Mark badge reclaimed
+    python roster/roster.py edit <badge#> [--status s]       Change status or display
+                               [--display d]
+    python roster/roster.py delete <badge#>                  Remove a badge entry
+    python roster/roster.py export                           Generate roster/roster-data.js (gamertags for active only)
 
 Status values: active, reclaimed, pending, mia, tenfour, detected
 
 Examples:
-    python roster.py add "xX_LCES_Own3r_Xx"
-    python roster.py bulk-import old_roster.txt --reclaim 1
-    python roster.py reclaim 1 --gamertag "xX_LCES_Own3r_Xx"
-    python roster.py edit 2 --display "LCES_***_2008" --status tenfour
-    python roster.py list
+    python roster/roster.py add "xX_LCES_Own3r_Xx"
+    python roster/roster.py bulk-import old_roster.txt --reclaim 1
+    python roster/roster.py reclaim 1 --gamertag "xX_LCES_Own3r_Xx"
+    python roster/roster.py edit 2 --display "LCES_***_2008" --status tenfour
+    python roster/roster.py list
 """
 
 import json
 import sys
 import os
 
-DATA_FILE = "roster.json"
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(_SCRIPT_DIR, "roster.json")
 
 # ─── Helpers ────────────────────────────────────────────────────────
 
@@ -108,7 +109,7 @@ def cmd_list(args):
 def cmd_add(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py add <gamertag> [--status reclaimed|pending|mia|tenfour|detected|active] [--display <text>]")
+        print("  Usage: python roster/roster.py add <gamertag> [--status reclaimed|pending|mia|tenfour|detected|active] [--display <text>]")
         return
     gamertag = pos[0]
     status = flags.get("status", "pending").lower()
@@ -127,7 +128,7 @@ def cmd_add(args):
 def cmd_reclaim(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py reclaim <badge#> [--gamertag <tag>]")
+        print("  Usage: python roster/roster.py reclaim <badge#> [--gamertag <tag>]")
         return
     try:
         badge_num = int(pos[0])
@@ -149,7 +150,7 @@ def cmd_reclaim(args):
 def cmd_edit(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py edit <badge#> [--status active|reclaimed|pending|mia|tenfour|detected] [--display <text>]")
+        print("  Usage: python roster/roster.py edit <badge#> [--status active|reclaimed|pending|mia|tenfour|detected] [--display <text>]")
         return
     try:
         badge_num = int(pos[0])
@@ -176,7 +177,7 @@ def cmd_edit(args):
 def cmd_bulk_import(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py bulk-import <file> [--reclaim 1,3,5]")
+        print("  Usage: python roster/roster.py bulk-import <file> [--reclaim 1,3,5]")
         print("  File format: one gamertag per line. Lines starting with # are ignored.")
         return
     
@@ -225,7 +226,7 @@ def cmd_bulk_import(args):
 
 def cmd_export(args):
     """
-    Generate roster-data.js from roster.json for public deployment.
+    Generate roster/roster-data.js from roster/roster.json for public deployment.
     Only active/re-enlisted officers include their full gamertag.
     """
     data = load()
@@ -239,11 +240,11 @@ def cmd_export(args):
         if entry["status"] == "active":
             e["gamertag"] = entry["gamertag"]
         clean.append(e)
-    out_path = "roster-data.js"
+    out_path = os.path.join(_SCRIPT_DIR, "roster-data.js")
     with open(out_path, "w") as f:
         f.write("// LCES Roster Data — public snapshot (gamertag shown only for active officers)\n")
         f.write("// roster.json is the master file — NOT deployed to GitHub Pages.\n")
-        f.write("// Regenerate this file with: python roster.py export\n")
+        f.write("// Regenerate this file with: python roster/roster.py export\n")
         f.write("window.__rosterData = " + json.dumps(clean, indent=2) + ";\n")
         f.write("\n")
     print(f"  [OK] Exported {len(clean)} entries to {out_path}")
@@ -252,7 +253,7 @@ def cmd_export(args):
 def cmd_delete(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster.py delete <badge#>")
+        print("  Usage: python roster/roster.py delete <badge#>")
         return
     try:
         badge_num = int(pos[0])
@@ -286,7 +287,7 @@ def main():
         cmds[cmd](cmd_args)
     else:
         print(f"  [!] Unknown command: {cmd}")
-        print("  Run 'python roster.py' for usage.")
+        print("  Run 'python roster/roster.py' for usage.")
 
 if __name__ == "__main__":
     main()
