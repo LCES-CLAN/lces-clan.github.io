@@ -114,17 +114,17 @@ window.__rosterData = [
   },
   {
     "badge": 23,
-    "display": "GTS*",
+    "display": "GT**",
     "status": "pending"
   },
   {
     "badge": 24,
-    "display": "Alp**S****a17*",
+    "display": "Al***Sierra***",
     "status": "pending"
   },
   {
     "badge": 25,
-    "display": "REA****MC",
+    "display": "RE**** MC",
     "status": "pending"
   },
   {
@@ -169,7 +169,7 @@ window.__rosterData = [
   },
   {
     "badge": 34,
-    "display": "Ste******bc",
+    "display": "Stevo******",
     "status": "pending"
   },
   {
@@ -194,7 +194,7 @@ window.__rosterData = [
   },
   {
     "badge": 39,
-    "display": "tomst*r28**",
+    "display": "toms**r28**",
     "status": "pending"
   },
   {
@@ -209,12 +209,12 @@ window.__rosterData = [
   },
   {
     "badge": 42,
-    "display": "bur*****uk",
+    "display": "bu*t*** uk",
     "status": "pending"
   },
   {
     "badge": 43,
-    "display": "Dre*****us",
+    "display": "DrewC*****",
     "status": "pending"
   },
   {
@@ -284,7 +284,7 @@ window.__rosterData = [
   },
   {
     "badge": 57,
-    "display": "Bob***",
+    "display": "Bob123*********",
     "status": "pending"
   },
   {
@@ -294,7 +294,7 @@ window.__rosterData = [
   },
   {
     "badge": 59,
-    "display": "You**********rs",
+    "display": "Young G*******s",
     "status": "pending"
   },
   {
@@ -304,7 +304,7 @@ window.__rosterData = [
   },
   {
     "badge": 61,
-    "display": "FDM***",
+    "display": "F**TFIREFIGHTER",
     "status": "pending"
   },
   {
@@ -330,17 +330,17 @@ window.__rosterData = [
   },
   {
     "badge": 66,
-    "display": "joh*****a4",
+    "display": "johnny****",
     "status": "pending"
   },
   {
     "badge": 67,
-    "display": "loc*****ed",
+    "display": "lock**he**",
     "status": "pending"
   },
   {
     "badge": 68,
-    "display": "FeA**********n0",
+    "display": "FeA***S I*****0",
     "status": "pending"
   },
   {
@@ -350,12 +350,12 @@ window.__rosterData = [
   },
   {
     "badge": 70,
-    "display": "hal*******er",
+    "display": "halo**master",
     "status": "pending"
   },
   {
     "badge": 71,
-    "display": "Yan******22",
+    "display": "Yankees****",
     "status": "pending"
   },
   {
@@ -365,42 +365,42 @@ window.__rosterData = [
   },
   {
     "badge": 73,
-    "display": "Low****t9",
+    "display": "Low*Rent*",
     "status": "detected"
   },
   {
     "badge": 74,
-    "display": "R0C*********GY",
+    "display": "R*CKSTAR*****Y",
     "status": "pending"
   },
   {
     "badge": 75,
-    "display": "Lan****31",
+    "display": "Lance****",
     "status": "pending"
   },
   {
     "badge": 76,
-    "display": "Haw***51",
+    "display": "Hawk****",
     "status": "pending"
   },
   {
     "badge": 77,
-    "display": "Del**********ks",
+    "display": "Del*a Rough****",
     "status": "pending"
   },
   {
     "badge": 78,
-    "display": "Firem**e**",
+    "display": "Firemi****",
     "status": "pending"
   },
   {
     "badge": 79,
-    "display": "HAZ********ea",
+    "display": "HAZARDteh****",
     "status": "pending"
   },
   {
     "badge": 80,
-    "display": "duk***dd",
+    "display": "dukh***d",
     "status": "pending"
   },
   {
@@ -410,7 +410,7 @@ window.__rosterData = [
   },
   {
     "badge": 82,
-    "display": "jay***",
+    "display": "j**cat",
     "status": "pending"
   },
   {
@@ -420,7 +420,7 @@ window.__rosterData = [
   },
   {
     "badge": 84,
-    "display": "bud********05",
+    "display": "budatoker****",
     "status": "pending"
   },
   {
@@ -430,7 +430,7 @@ window.__rosterData = [
   },
   {
     "badge": 86,
-    "display": "Hoffa*g****e",
+    "display": "Hoffa*****e",
     "status": "tenfour"
   },
   {
@@ -450,7 +450,7 @@ window.__rosterData = [
   },
   {
     "badge": 90,
-    "display": "BLA****863",
+    "display": "BLAZ*D 8**",
     "status": "pending"
   },
   {
@@ -470,12 +470,12 @@ window.__rosterData = [
   },
   {
     "badge": 94,
-    "display": "Mon*****F**94",
+    "display": "Montreal*****",
     "status": "pending"
   },
   {
     "badge": 95,
-    "display": "dav***08",
+    "display": "dave****",
     "status": "pending"
   },
   {
@@ -505,7 +505,7 @@ window.__rosterData = [
   },
   {
     "badge": 101,
-    "display": "rea*****22",
+    "display": "reaper****",
     "status": "pending"
   },
   {
@@ -515,7 +515,7 @@ window.__rosterData = [
   },
   {
     "badge": 103,
-    "display": "ale********26",
+    "display": "alexbeast****",
     "status": "pending"
   },
   {
@@ -535,7 +535,7 @@ window.__rosterData = [
   },
   {
     "badge": 107,
-    "display": "XxVi***13",
+    "display": "**Vinny**",
     "status": "tenfour"
   },
   {
@@ -545,7 +545,7 @@ window.__rosterData = [
   },
   {
     "badge": 109,
-    "display": "*-R*d",
+    "display": "A-R**",
     "status": "pending"
   },
   {
@@ -560,7 +560,7 @@ window.__rosterData = [
   },
   {
     "badge": 112,
-    "display": "You*******09",
+    "display": "Youngster***",
     "status": "pending"
   },
   {
@@ -575,22 +575,22 @@ window.__rosterData = [
   },
   {
     "badge": 115,
-    "display": "che*********an",
+    "display": "cheese*****man",
     "status": "pending"
   },
   {
     "badge": 116,
-    "display": "XxB*******xX",
+    "display": "XxB R****6xX",
     "status": "pending"
   },
   {
     "badge": 117,
-    "display": "iMu*********bs",
+    "display": "iMu**** S****s",
     "status": "pending"
   },
   {
     "badge": 118,
-    "display": "Sou*****er",
+    "display": "SoulS****r",
     "status": "pending"
   },
   {
@@ -610,7 +610,7 @@ window.__rosterData = [
   },
   {
     "badge": 122,
-    "display": "Van*********44",
+    "display": "Vanilla*****44",
     "status": "pending"
   },
   {
