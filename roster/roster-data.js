@@ -550,7 +550,7 @@ window.__rosterData = [
   },
   {
     "badge": 110,
-    "display": "USm*******05",
+    "display": "USmarshal***",
     "status": "mia"
   },
   {
@@ -570,7 +570,7 @@ window.__rosterData = [
   },
   {
     "badge": 114,
-    "display": "dal********21",
+    "display": "dallasher****",
     "status": "mia"
   },
   {
@@ -610,37 +610,37 @@ window.__rosterData = [
   },
   {
     "badge": 122,
-    "display": "Vanilla*****44",
+    "display": "Vanilla**man**",
     "status": "mia"
   },
   {
     "badge": 123,
-    "display": "apo****ky",
+    "display": "apollo***",
     "status": "mia"
   },
   {
     "badge": 124,
-    "display": "The**********39",
+    "display": "****Jackel*****",
     "status": "mia"
   },
   {
     "badge": 125,
-    "display": "plu******or",
+    "display": "plump******",
     "status": "mia"
   },
   {
     "badge": 126,
-    "display": "GDN****91",
+    "display": "GDN*smp**",
     "status": "mia"
   },
   {
     "badge": 127,
-    "display": "Sch******77",
+    "display": "Scheffy****",
     "status": "mia"
   },
   {
     "badge": 128,
-    "display": "Off***********er",
+    "display": "********Tischler",
     "status": "mia"
   },
   {
@@ -830,7 +830,7 @@ window.__rosterData = [
   },
   {
     "badge": 166,
-    "display": "xWe**********nx",
+    "display": "*Wel5hA55******",
     "status": "mia"
   },
   {
@@ -886,7 +886,7 @@ window.__rosterData = [
   },
   {
     "badge": 177,
-    "display": "N2L F*******",
+    "display": "N2**Fatal***",
     "status": "mia"
   },
   {
@@ -911,12 +911,12 @@ window.__rosterData = [
   },
   {
     "badge": 182,
-    "display": "UGC********ot",
+    "display": "UG* Su** S**t",
     "status": "mia"
   },
   {
     "badge": 183,
-    "display": "ITZ**********US",
+    "display": "*** ROGUESTAT**",
     "status": "mia"
   },
   {
@@ -926,7 +926,7 @@ window.__rosterData = [
   },
   {
     "badge": 185,
-    "display": "Hel**********on",
+    "display": "Hel*Destruct***",
     "status": "mia"
   },
   {
@@ -936,7 +936,7 @@ window.__rosterData = [
   },
   {
     "badge": 187,
-    "display": "slicksp******",
+    "display": "s****spencer8",
     "status": "mia"
   },
   {
@@ -946,7 +946,7 @@ window.__rosterData = [
   },
   {
     "badge": 189,
-    "display": "Sch*****88",
+    "display": "Schone****",
     "status": "mia"
   },
   {
@@ -1231,7 +1231,7 @@ window.__rosterData = [
   },
   {
     "badge": 246,
-    "display": "JSF********in",
+    "display": "JSF*Dovah****",
     "status": "mia"
   },
   {
