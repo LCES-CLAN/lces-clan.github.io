@@ -4,7 +4,7 @@
 window.__rosterData = [
   {
     "badge": 1,
-    "display": "N**Sheriff (Harper)",
+    "display": "HARPER****/N**Sheriff/Nozzleman***/**H*RP*R**/many more",
     "status": "mia"
   },
   {
@@ -189,7 +189,7 @@ window.__rosterData = [
   },
   {
     "badge": 38,
-    "display": "**Taylor**",
+    "display": "TJP*****/**Taylor**",
     "status": "mia"
   },
   {
@@ -239,7 +239,7 @@ window.__rosterData = [
   },
   {
     "badge": 48,
-    "display": "Born A S*****",
+    "display": "Born A S*****/BornA********/***Survivors**",
     "status": "detected"
   },
   {
@@ -304,7 +304,7 @@ window.__rosterData = [
   },
   {
     "badge": 61,
-    "display": "F**T*8/F**TFIREFIGHTER",
+    "display": "F**TFIREFIGHTER/F**T*8",
     "status": "mia"
   },
   {
@@ -400,7 +400,7 @@ window.__rosterData = [
   },
   {
     "badge": 80,
-    "display": "dukh***d",
+    "display": "dukh***d/**Duck*******",
     "status": "mia"
   },
   {
@@ -761,7 +761,7 @@ window.__rosterData = [
   {
     "badge": 152,
     "display": "firec**41617/ic*ma*61741",
-    "status": "detected"
+    "status": "mia"
   },
   {
     "badge": 153,
