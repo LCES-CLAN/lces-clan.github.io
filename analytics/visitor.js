@@ -75,7 +75,10 @@
         language:  navigator.language || 'unknown',
         timezone:  (Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown'),
         timestamp: new Date().toISOString(),
-        visitorId: getVisitorId()
+        visitorId: getVisitorId(),
+        // Internal-only fields (used by BotFilter, not shown in embeds)
+        cores:    navigator.hardwareConcurrency || 0,
+        touch:    navigator.maxTouchPoints
       };
     },
 

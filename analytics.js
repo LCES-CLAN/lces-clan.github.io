@@ -7,7 +7,7 @@
   var NS = window.LCES.Analytics;
 
   // ─── Guard: check all modules loaded ────────────────────────────
-  if (!NS.Config || !NS.Visitor || !NS.Whitelist || !NS.Dispatch || !NS.Tracker) {
+  if (!NS.Config || !NS.Visitor || !NS.Whitelist || !NS.Dispatch || !NS.Tracker || !NS.BotFilter) {
     console.warn('[LCES Analytics] Module(s) missing — analytics disabled.');
     return;
   }
@@ -15,6 +15,7 @@
   var Config   = NS.Config;
   var Visitor  = NS.Visitor;
   var Whitelist = NS.Whitelist;
+  var BotFilter = NS.BotFilter;
   var Tracker  = NS.Tracker;
 
   // ─── Self-Whitelist Check ───────────────────────────────────────
@@ -23,6 +24,14 @@
 
   // ─── Page View ──────────────────────────────────────────────────
   var snap = Visitor.snapshot();
+
+  // ─── Bot / Crawler Check ────────────────────────────────────────
+  // Two conservative layers: UA pattern matching (zero false positives
+  // — no real browser calls itself "googlebot") and heuristic scoring
+  // (threshold ≥5 — catches obvious bots without risking real members).
+  if (BotFilter.isBot(snap)) {
+    return;
+  }
 
   Visitor.getGeo().then(function(geo) {
     Tracker.pageView(geo, snap);
