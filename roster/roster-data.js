@@ -950,17 +950,17 @@ window.__rosterData = [
   },
   {
     "badge": 190,
-    "display": "Nit******91",
+    "display": "Ni**Flash**",
     "status": "mia"
   },
   {
     "badge": 191,
-    "display": "mar**********mb",
+    "display": "marshmallow****",
     "status": "mia"
   },
   {
     "badge": 192,
-    "display": "Jak**32",
+    "display": "Jake***",
     "status": "mia"
   },
   {
@@ -970,12 +970,12 @@ window.__rosterData = [
   },
   {
     "badge": 194,
-    "display": "rac****40",
+    "display": "racer****",
     "status": "mia"
   },
   {
     "badge": 195,
-    "display": "Emo****62",
+    "display": "Emoney***",
     "status": "mia"
   },
   {
@@ -985,22 +985,22 @@ window.__rosterData = [
   },
   {
     "badge": 197,
-    "display": "fis**********68",
+    "display": "fishforlife****",
     "status": "mia"
   },
   {
     "badge": 198,
-    "display": "Spo*******te",
+    "display": "Spoonz *****",
     "status": "mia"
   },
   {
     "badge": 199,
-    "display": "Uni**22",
+    "display": "Unit*2*",
     "status": "mia"
   },
   {
     "badge": 200,
-    "display": "ooo*********oo",
+    "display": "***H*YABUSA***",
     "status": "mia"
   },
   {
@@ -1015,7 +1015,7 @@ window.__rosterData = [
   },
   {
     "badge": 203,
-    "display": "Din********7x",
+    "display": "Dinozzo*****",
     "status": "mia"
   },
   {
@@ -1035,12 +1035,12 @@ window.__rosterData = [
   },
   {
     "badge": 207,
-    "display": "Pat******37",
+    "display": "Patrick****",
     "status": "mia"
   },
   {
     "badge": 208,
-    "display": "mun****01",
+    "display": "munoz****",
     "status": "mia"
   },
   {
@@ -1055,22 +1055,22 @@ window.__rosterData = [
   },
   {
     "badge": 211,
-    "display": "wwi********28",
+    "display": "wwiifan******",
     "status": "mia"
   },
   {
     "badge": 212,
-    "display": "des**********58",
+    "display": "desert*eagle***",
     "status": "mia"
   },
   {
     "badge": 213,
-    "display": "x T********** x",
+    "display": "**THE*GREASE***",
     "status": "mia"
   },
   {
     "badge": 214,
-    "display": "Jo3******23",
+    "display": "Jo3yDud3***",
     "status": "mia"
   },
   {
@@ -1080,17 +1080,17 @@ window.__rosterData = [
   },
   {
     "badge": 216,
-    "display": "xUS******Tx",
+    "display": "*USMC *SGT*",
     "status": "mia"
   },
   {
     "badge": 217,
-    "display": "Cap*****sy",
+    "display": "**** Daisy",
     "status": "mia"
   },
   {
     "badge": 218,
-    "display": "vVJ*********Vv",
+    "display": "**JeSUSFr*****",
     "status": "mia"
   },
   {
@@ -1100,82 +1100,82 @@ window.__rosterData = [
   },
   {
     "badge": 220,
-    "display": "MHT***vo",
+    "display": "MHTBra**",
     "status": "mia"
   },
   {
     "badge": 221,
-    "display": "Log****13",
+    "display": "LoganB6**",
     "status": "mia"
   },
   {
     "badge": 222,
-    "display": "xXM******Xx",
+    "display": "*XMan**ee**",
     "status": "mia"
   },
   {
     "badge": 223,
-    "display": "Bro***86",
+    "display": "Bronz***",
     "status": "mia"
   },
   {
     "badge": 224,
-    "display": "BLU********ZZ",
+    "display": "BLUEelmo*****",
     "status": "mia"
   },
   {
     "badge": 225,
-    "display": "Pur*********er",
+    "display": "Pure VV***st*r",
     "status": "mia"
   },
   {
     "badge": 226,
-    "display": "x S**aD",
+    "display": "x*St*aD",
     "status": "mia"
   },
   {
     "badge": 227,
-    "display": "The*******85",
+    "display": "The Boss****",
     "status": "mia"
   },
   {
     "badge": 228,
-    "display": "TF *********en",
+    "display": "TF *4* Ste**en",
     "status": "mia"
   },
   {
     "badge": 229,
-    "display": "NSJ***ed",
+    "display": "NSJ bp**",
     "status": "mia"
   },
   {
     "badge": 230,
-    "display": "Pwn*********es",
+    "display": "Pwnish** J***s",
     "status": "mia"
   },
   {
     "badge": 231,
-    "display": "Fro******00",
+    "display": "Frostman***",
     "status": "mia"
   },
   {
     "badge": 232,
-    "display": "TyB****20",
+    "display": "TyBacc***",
     "status": "mia"
   },
   {
     "badge": 233,
-    "display": "Cha*** B",
+    "display": "Chazz* *",
     "status": "mia"
   },
   {
     "badge": 234,
-    "display": "BAC*********63",
+    "display": "BACKDRAFT*****",
     "status": "mia"
   },
   {
     "badge": 235,
-    "display": "Man*******13",
+    "display": "Manny*Year**",
     "status": "mia"
   },
   {
@@ -1185,7 +1185,7 @@ window.__rosterData = [
   },
   {
     "badge": 237,
-    "display": "x T**********oN",
+    "display": "**Toxic***ReCoN",
     "status": "mia"
   },
   {
@@ -1245,27 +1245,27 @@ window.__rosterData = [
   },
   {
     "badge": 249,
-    "display": "Scr*******SG",
+    "display": "Scramble****",
     "status": "mia"
   },
   {
     "badge": 250,
-    "display": "Dev********01",
+    "display": "Devil*Dogs***",
     "status": "mia"
   },
   {
     "badge": 251,
-    "display": "gro***12",
+    "display": "groom***",
     "status": "mia"
   },
   {
     "badge": 252,
-    "display": "FaT*********mE",
+    "display": "FaTaL****F**mE",
     "status": "mia"
   },
   {
     "badge": 253,
-    "display": "Chr*********er",
+    "display": "Chrome*Cra****",
     "status": "mia"
   }
 ];
