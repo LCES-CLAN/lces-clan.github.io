@@ -3,9 +3,7 @@
 Video Scanner — auto-discovers video folders & files in assets/videos/.
 
 Usage:
-    python scripts/scan_videos.py              Scan & generate everything
-    python scripts/scan_videos.py --dry        Preview without writing
-    python scripts/scan_videos.py --force      Regenerate existing index.json too
+    python scripts/scan_videos.py         Scan & generate everything
 
 What it does:
     1. Scans every subfolder under assets/videos/
@@ -14,6 +12,9 @@ What it does:
     4. Updates media.html's window.__mediaCategories to include all folders
 
 Just drag-drop folders and video files, then run this script. No JSON editing required.
+
+If you want to customise a category (YouTube videos, playlists, custom titles),
+just create an assets/videos/<folder>/index.json manually — the script won't touch it.
 """
 
 import json
@@ -30,7 +31,6 @@ _MEDIA_HTML = os.path.join(_PROJECT_DIR, 'media.html')
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 elif hasattr(sys.stdout, 'buffer'):
-    # Python < 3.7 fallback
     sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', closefd=False)
 
 # Recognised video file extensions
@@ -46,7 +46,6 @@ def fmt(s):
 def get_folder_title(folder_name):
     """Convert a folder name into a readable display title."""
     t = folder_name.replace('-', ' ').replace('_', ' ').strip()
-    # Capitalise each word
     return ' '.join(w[0].upper() + w[1:] for w in t.split() if w)
 
 
@@ -82,12 +81,14 @@ def scan_video_folders():
     return folders
 
 
-def generate_index_json(fi, dry_run=False, force=False):
+def generate_index_json(fi, dry_run=False):
     """Generate index.json for a folder that has no index.json yet.
 
+    Skips folders that already have an index.json (preserves manual overrides
+    with YouTube videos, playlists, custom titles, etc.).
     Returns True if a file was (or would be) written.
     """
-    if fi['has_json'] and not force:
+    if fi['has_json']:
         return False
     if not fi['video_files']:
         return False
@@ -118,24 +119,50 @@ def generate_index_json(fi, dry_run=False, force=False):
 
 # ─── media.html update ──────────────────────────────────────────────
 
-def extract_categories_from_html(html):
-    """Parse the existing window.__mediaCategories array from media.html.
+def extract_script_block(html):
+    """Find the <script> block containing window.__mediaCategories.
 
-    Returns a list of category dicts, or an empty list if not found.
+    Returns (script_content, start_index, end_index) or None.
+    start/end point to the entire opening/closing <script> tags.
     """
-    # Find the opening [ after window.__mediaCategories
-    idx = html.find('window.__mediaCategories')
+    marker = 'window.__mediaCategories'
+    idx = html.find(marker)
     if idx == -1:
-        return [], idx
-    brace = html.find('[', idx)
-    if brace == -1:
-        return [], idx
+        return None
 
-    # Walk balanced brackets so we capture the whole array literal
+    # Walk backwards to find the opening <script>
+    start = html.rfind('<script', 0, idx)
+    if start == -1:
+        return None
+
+    # Walk forwards to find the closing </script>
+    end = html.find('</script>', idx)
+    if end == -1:
+        return None
+    end += len('</script>')
+
+    return html[start:end], start, end
+
+
+def parse_categories_array(text):
+    """Extract the JSON array from a window.__mediaCategories assignment.
+
+    Returns a list of category dicts (may be empty).
+    """
+    marker = 'window.__mediaCategories'
+    idx = text.find(marker)
+    if idx == -1:
+        return []
+
+    brace = text.find('[', idx)
+    if brace == -1:
+        return []
+
+    # Walk balanced brackets
     depth = 0
     end = brace
-    for i in range(brace, len(html)):
-        ch = html[i]
+    for i in range(brace, len(text)):
+        ch = text[i]
         if ch == '[':
             depth += 1
         elif ch == ']':
@@ -144,21 +171,20 @@ def extract_categories_from_html(html):
                 end = i + 1
                 break
     if depth != 0:
-        return [], idx  # unbalanced – bail
+        return []
 
-    raw = html[brace:end]
+    raw = text[brace:end]
 
-    # Strip JavaScript comments and trailing commas so json.loads can cope
+    # Strip JS comments (both // and /* */) and trailing commas
     cleaned = re.sub(r'//[^\n]*', '', raw)
+    cleaned = re.sub(r'/\*.*?\*/', '', cleaned, flags=re.DOTALL)
     cleaned = re.sub(r',\s*([\]}])', r'\1', cleaned)
 
     try:
         cats = json.loads(cleaned)
-        if isinstance(cats, list):
-            return cats, idx
-        return [], idx
+        return cats if isinstance(cats, list) else []
     except json.JSONDecodeError:
-        return [], idx
+        return []
 
 
 def build_updated_categories(existing_cats, discovered_folders):
@@ -166,33 +192,53 @@ def build_updated_categories(existing_cats, discovered_folders):
 
     Existing entries are kept as-is (preserving custom config like title, files).
     New folders are appended as simple {"folder": name} entries.
+    Duplicate detection is case-insensitive (folder == FOLDER == Folder).
     """
     result = list(existing_cats)
-    seen = {c['folder'] for c in existing_cats if 'folder' in c}
+
+    # Track seen folder names case-insensitively
+    seen = {}
+    for c in existing_cats:
+        if 'folder' in c:
+            seen[c['folder'].lower()] = c['folder']
 
     added = 0
     for fi in discovered_folders:
-        if fi['folder'] not in seen:
+        lower = fi['folder'].lower()
+        if lower not in seen:
             result.append({'folder': fi['folder']})
-            seen.add(fi['folder'])
+            seen[lower] = fi['folder']
             added += 1
+        else:
+            # Update folder name to match the filesystem casing if different
+            existing_lower = seen[lower]
+            if existing_lower != fi['folder']:
+                # Find and update the existing entry to match disk casing
+                for c in result:
+                    if 'folder' in c and c['folder'].lower() == lower:
+                        c['folder'] = fi['folder']
+                        break
+
     return result, added
 
 
 def render_categories_js(cats):
-    """Turn a list of category dicts into the JavaScript array literal."""
+    """Turn a list of category dicts into a JS array literal (indented to match style)."""
     lines = ['    window.__mediaCategories = [']
     for i, c in enumerate(cats):
-        # Simple serialisation: only serialise folder for plain entries
-        # to keep the output clean. Custom keys (title, files) are preserved.
         comma = ',' if i < len(cats) - 1 else ''
-        lines.append(f'      {json.dumps(c, indent=None)}{comma}')
+        # Pretty-print with spaces for readability
+        items = []
+        for k, v in c.items():
+            items.append(f'"{k}": {json.dumps(v)}')
+        inner = ', '.join(items)
+        lines.append(f'      {{ {inner} }}{comma}')
     lines.append('    ];')
     return '\n'.join(lines)
 
 
 def update_media_html(discovered_folders, dry_run=False):
-    """Patch the window.__mediaCategories block inside media.html."""
+    """Patch the window.__mediaCategories script block inside media.html."""
     if not os.path.isfile(_MEDIA_HTML):
         print(f"  [!] media.html not found at {_MEDIA_HTML}")
         return False
@@ -200,35 +246,45 @@ def update_media_html(discovered_folders, dry_run=False):
     with open(_MEDIA_HTML, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    existing_cats, anchor = extract_categories_from_html(html)
-    if anchor == -1:
-        print(f"  [!] Could not find window.__mediaCategories in media.html")
+    block = extract_script_block(html)
+    if not block:
+        print(f"  [!] Could not find window.__mediaCategories <script> block in media.html")
         return False
 
+    script_content, script_start, script_end = block
+
+    existing_cats = parse_categories_array(script_content)
     print(f"  Found {len(existing_cats)} existing category(ies) in media.html")
 
     new_cats, added = build_updated_categories(existing_cats, discovered_folders)
-    new_block = render_categories_js(new_cats)
+    new_script_content = render_categories_js(new_cats)
 
-    # Replace the old window.__mediaCategories = [...] line(s)
-    # Find the end of the statement (the ; that closes the assignment)
-    stmt_start = html.rfind('window.__mediaCategories', 0, anchor)
-    if stmt_start == -1:
-        stmt_start = anchor  # fallback
-    stmt_end = html.find(';', anchor)
-    if stmt_end == -1:
-        stmt_end = len(html)
+    # Preserve indentation by matching the original script's leading whitespace
+    # Calculate the indent from the first non-empty line of the script
+    orig_lines = script_content.split('\n')
+    base_indent = ''
+    for line in orig_lines:
+        stripped = line.strip()
+        if stripped and not stripped.startswith('//') and 'window.__mediaCategories' not in stripped:
+            base_indent = line[:len(line) - len(line.lstrip())]
+            break
+    if not base_indent:
+        base_indent = '  '  # fallback
 
-    before = html[:stmt_start]
-    after = html[stmt_end + 1:]
+    # Indent the new content to match
+    new_indented = '\n'.join(
+        (base_indent + line) if line.strip() else line
+        for line in new_script_content.split('\n')
+    )
 
-    new_html = before + new_block + after
+    new_html = html[:script_start] + '  <script>\n' + new_indented + '\n' + '  </script>' + html[script_end:]
 
     if added:
-        print(f"  [+] Added {added} new folder(s) to media.html categories")
+        plural = '' if added == 1 else 's'
+        print(f"  [+] Added {added} new folder{plural} to media.html categories")
 
     if new_html == html:
-        print(f"  [–] No changes to media.html")
+        print(f"  [\u2013] No changes to media.html")
         return True
 
     if dry_run:
@@ -245,9 +301,8 @@ def update_media_html(discovered_folders, dry_run=False):
 
 def main():
     dry_run = '--dry' in sys.argv or '--dry-run' in sys.argv
-    force = '--force' in sys.argv
 
-    sep = '─' * 50
+    sep = '\u2500' * 50
     print(f"\n  {sep}")
     print(f"  {fmt('LCES Video Scanner')}")
     print(f"  {sep}")
@@ -264,7 +319,7 @@ def main():
     missing_json = 0
 
     for fi in folders:
-        status_icon = '✓' if fi['has_json'] else '·'
+        status_icon = '\u2713' if fi['has_json'] else '\u00b7'
         n = len(fi['video_files'])
         if n:
             file_list = ', '.join(fi['video_files'])
@@ -276,28 +331,21 @@ def main():
 
         if not fi['has_json'] and fi['video_files']:
             missing_json += 1
-            if generate_index_json(fi, dry_run, force):
+            if generate_index_json(fi, dry_run):
                 any_gen = True
-
-    if force and not dry_run:
-        # Regenerate existing ones too
-        for fi in folders:
-            if fi['has_json'] and fi['video_files']:
-                if generate_index_json(fi, dry_run, force):
-                    any_gen = True
 
     print()
 
-    if missing_json or force:
+    if missing_json:
         update_media_html(folders, dry_run)
-        if force and not dry_run:
-            print(f"  (--force: regenerated index.json even where one already existed)")
     else:
         print(f"  All folders already have index.json. Nothing to generate.")
+
+        # Still update media.html in case new folders appeared without videos
         update_media_html(folders, dry_run)
 
     if dry_run:
-        print(f"\n  {fmt('Dry run')} — no files written. Run without --dry to apply.\n")
+        print(f"\n  {fmt('Dry run')} \u2014 no files written. Run without --dry to apply.\n")
     else:
         print(f"  {fmt('Done.')}\n")
 
