@@ -159,6 +159,7 @@
   if (c) {
     c.innerHTML =
       '<form class="form-section" onsubmit="handleReEnlist(event)">' +
+        '<p class="form-subtitle">Just fill in what you know &mdash; you can always share more details later.</p>' +
         '<div class="form-row">' +
           '<div class="field"><label for="gt-original">Original Xbox Gamertag <span style="color:var(--green);opacity:0.7">*</span></label><input id="gt-original" type="text" placeholder="e.g. xX_LCES0ffic3r_Xx" required></div>' +
           '<div class="field"><label for="gt-current">Current Xbox Gamertag <span class="optional">(optional)</span></label><input id="gt-current" type="text" placeholder="e.g. MyNewGamertag2026"></div>' +
