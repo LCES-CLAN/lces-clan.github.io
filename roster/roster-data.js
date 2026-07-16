@@ -244,7 +244,7 @@ window.__rosterData = [
   },
   {
     "badge": 49,
-    "display": "inf*****d***",
+    "display": "infamous****",
     "status": "detected"
   },
   {
@@ -259,7 +259,7 @@ window.__rosterData = [
   },
   {
     "badge": 52,
-    "display": "Hom******Box",
+    "display": "Home****Box",
     "status": "mia"
   },
   {
@@ -269,7 +269,7 @@ window.__rosterData = [
   },
   {
     "badge": 54,
-    "display": "STRY****97",
+    "display": "STRYKER***",
     "status": "mia"
   },
   {
@@ -294,12 +294,12 @@ window.__rosterData = [
   },
   {
     "badge": 59,
-    "display": "Young G*******s",
+    "display": "Young*Gang*****",
     "status": "mia"
   },
   {
     "badge": 60,
-    "display": "Von******tt",
+    "display": "Von*S*h*it*",
     "status": "mia"
   },
   {
@@ -309,7 +309,7 @@ window.__rosterData = [
   },
   {
     "badge": 62,
-    "display": "pol****82",
+    "display": "police1**",
     "status": "mia"
   },
   {
@@ -325,12 +325,12 @@ window.__rosterData = [
   },
   {
     "badge": 65,
-    "display": "Ser***s6",
+    "display": "S*rim*s6",
     "status": "mia"
   },
   {
     "badge": 66,
-    "display": "johnny****",
+    "display": "john**gta*",
     "status": "mia"
   },
   {
@@ -415,7 +415,7 @@ window.__rosterData = [
   },
   {
     "badge": 83,
-    "display": "did******20",
+    "display": "did*kong***",
     "status": "mia"
   },
   {
@@ -425,7 +425,7 @@ window.__rosterData = [
   },
   {
     "badge": 85,
-    "display": "PLA******RM",
+    "display": "PLA*****ORM",
     "status": "mia"
   },
   {
@@ -480,27 +480,27 @@ window.__rosterData = [
   },
   {
     "badge": 96,
-    "display": "oRA*********Ko",
+    "display": "*RAW****STEAK*",
     "status": "mia"
   },
   {
     "badge": 97,
-    "display": "Qui******s2",
+    "display": "Quietc***s*",
     "status": "mia"
   },
   {
     "badge": 98,
-    "display": "Off***********16",
+    "display": "********Joey*016",
     "status": "mia"
   },
   {
     "badge": 99,
-    "display": "Ron**********an",
+    "display": "Ron****Jon*****",
     "status": "mia"
   },
   {
     "badge": 100,
-    "display": "dar***10",
+    "display": "darza***",
     "status": "mia"
   },
   {
@@ -600,7 +600,7 @@ window.__rosterData = [
   },
   {
     "badge": 120,
-    "display": "car***60",
+    "display": "c*rver**",
     "status": "mia"
   },
   {
@@ -610,7 +610,7 @@ window.__rosterData = [
   },
   {
     "badge": 122,
-    "display": "Vanilla**man**",
+    "display": "Vanillao*man**",
     "status": "mia"
   },
   {
