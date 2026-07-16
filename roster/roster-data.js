@@ -861,7 +861,7 @@ window.__rosterData = [
   {
     "badge": 172,
     "display": "JJ3**",
-    "status": "pending"
+    "status": "detected"
   },
   {
     "badge": 173,
