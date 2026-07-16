@@ -3,7 +3,8 @@
   var container = document.getElementById('media-gallery-container');
   if (!container) return;
 
-  var DATA_URL = 'videos.json';
+  var category = container.getAttribute('data-category') || 'promotional';
+  var DATA_URL = 'assets/videos/' + category + '/index.json';
   var videosList = [];
   var currentIndex = 0;
 
@@ -80,7 +81,7 @@
       container.innerHTML =
         '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
         'No evidence logged yet. Add YouTube links to ' +
-        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code>.' +
+        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">assets/videos/' + category + '/index.json</code>.' +
         '</p>';
       return;
     }
@@ -156,18 +157,23 @@
     });
   }
 
-  // Fetch video data
+  // Fetch video data — reads the promotional folder's index.json directly
   fetch(DATA_URL)
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
-    .then(render)
+    .then(function(data) {
+      if (!data.videos || data.videos.length === 0) {
+        throw new Error('No videos in ' + category + ' category');
+      }
+      render(data.videos);
+    })
     .catch(function() {
       container.innerHTML =
         '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
         'Could not load evidence locker. Ensure ' +
-        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">videos.json</code>' +
-        ' is present on the server.</p>';
+        '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">assets/videos/' + category + '/index.json</code>' +
+        ' exists and has videos.</p>';
     });
 })();

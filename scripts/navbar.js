@@ -6,7 +6,8 @@
     { href: './',   label: 'Home' },
     { href: 'guestbook.html', label: 'Re-enlist', cta: true },
     { href: 'officers.html', label: 'Officers' },
-    { href: 'https://forums.lcesclan.net', label: 'Forums Archive', external: true },
+    { href: 'media.html', label: 'Evidence' },
+    { href: 'https://forums.lcesclan.net', label: 'Archives', external: true },
     { href: 'https://discord.lcesclan.net', label: 'Discord', external: true }
   ];
 

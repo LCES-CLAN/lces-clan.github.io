@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LCES Evidence — surveillance footage, patrol recordings, and promotional videos from the Liberty City Emergency Services archives.">
+
+<!-- Social Embed Cards -->
+<meta property="og:site_name" content="LCES 2026 - Liberty City Emergency Services">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LCES: Evidence — Liberty City Emergency Services">
+<meta property="og:description" content="Browse surveillance footage, patrol recordings, and evidence from the LCES archives. Liberty City Emergency Services (est. 2008).">
+<meta property="og:url" content="https://lcesclan.net/media.html">
+<meta property="og:image" content="https://lcesclan.net/assets/banner-card.png">
+<meta property="og:image:width" content="1210">
+<meta property="og:image:height" content="620">
+<meta property="og:image:alt" content="LCES Clan 2026 — Liberty City Emergency Services">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LCES: Evidence — Liberty City Emergency Services">
+<meta name="twitter:description" content="Browse surveillance footage, patrol recordings, and evidence from the LCES archives.">
+<meta name="twitter:image" content="https://lcesclan.net/assets/banner-card.png">
+<meta name="twitter:image:alt" content="LCES Clan 2026 — Liberty City Emergency Services">
+
+<title>LCES: Evidence - Liberty City Emergency Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="scripts/head.js"></script>
+</head>
+<body>
+<div class="top-bar"></div><div class="bottom-bar"></div>
+<div class="wrapper">
+<div id="header" data-title="EVIDENCE"></div>
+<script src="scripts/header.js"></script>
+<script src="scripts/navbar.js"></script>
+
+  <section class="panel reveal" style="text-align:center">
+    <h2>SURVEILLANCE <span class="highlight">FOOTAGE</span></h2>
+    <p>Browse patrol recordings, promotional videos, and evidence from the LCES archives. Click a thumbnail to load the footage — use the arrow keys or buttons to navigate each category.</p>
+  </section>
+
+  <div id="media-categories"></div>
+  <script>
+    // Category list — each folder in assets/videos/ with video content.
+    // Add entries here when you create a new category folder.
+    window.__mediaCategories = [
+      { "folder": "promotional" }
+    ];
+  </script>
+
+  <div class="divider"><span class="dot"></span> CASE CLOSED <span class="dot"></span></div>
+
+  <section class="cta-panel reveal">
+    <span class="badge-icon">&#x1faf5;</span>
+    <h2>GOT EVIDENCE TO SHARE?</h2>
+    <p>If you have old LCES recordings or promotional material, drop them in the Discord and we'll add them to the evidence locker.</p>
+    <div class="cta-buttons">
+      <a href="https://discord.gg/gn2ASjNZc4" class="btn">Join the Discord</a>
+      <a href="./" class="btn btn-secondary">Back to Home</a>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="scripts/footer.js"></script>
+  <script src="scripts/media.js"></script>
+  <script src="analytics/config.js"></script>
+  <script src="analytics/visitor.js"></script>
+  <script src="analytics/whitelist.js"></script>
+  <script src="analytics/dispatch.js"></script>
+  <script src="analytics/tracker.js"></script>
+  <script src="analytics/botfilter.js"></script>
+  <script src="analytics/analytics.js"></script>
+</div>
+
+<script src="scripts/reveal.js"></script>
+</body>
+</html>
