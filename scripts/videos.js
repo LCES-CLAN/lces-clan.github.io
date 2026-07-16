@@ -63,9 +63,14 @@
       thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 
-    // Update "Watch on YouTube" link
+    // Update "Watch on YouTube" link (hide for local videos)
     var link = container.querySelector('.evidence-watch-link');
-    link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
+    if (video.source !== 'local' && video.youtubeId) {
+      link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
+      link.style.display = '';
+    } else {
+      link.style.display = 'none';
+    }
 
     // Enable/disable nav buttons
     container.querySelector('.evidence-prev').disabled = index === 0;
@@ -157,8 +162,10 @@
   function render(videos) {
     var valid = [];
     for (var i = 0; i < videos.length; i++) {
-      if (videos[i].youtubeId && videos[i].title) {
-        valid.push(videos[i]);
+      var v = videos[i];
+      // Accept YouTube videos (have youtubeId) OR local videos (have localPath)
+      if (v.title && (v.youtubeId || (v.source === 'local' && v.localPath))) {
+        valid.push(v);
       }
     }
     videosList = valid;
@@ -166,7 +173,7 @@
     if (valid.length === 0) {
       container.innerHTML =
         '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:0.5rem 0;">' +
-        'No evidence logged yet. Add YouTube links to ' +
+        'No evidence logged yet. Add videos to ' +
         '<code style="font-family:\'Share Tech Mono\',monospace;color:var(--blue-bright);">assets/videos/' + category + '/index.json</code>.' +
         '</p>';
       return;
@@ -175,19 +182,29 @@
     // Build thumbnail HTML
     var thumbsHtml = '';
     for (var j = 0; j < valid.length; j++) {
-      var thumbUrl = 'https://img.youtube.com/vi/' +
-        encodeURIComponent(valid[j].youtubeId) + '/hqdefault.jpg';
+      var v = valid[j];
+      var thumbUrl = '';
+      if (v.source !== 'local' && v.youtubeId) {
+        thumbUrl = 'https://img.youtube.com/vi/' +
+          encodeURIComponent(v.youtubeId) + '/hqdefault.jpg';
+      } else {
+        thumbUrl = 'assets/videos/' + category + '/thumb-' + j + '.jpg';
+      }
       thumbsHtml +=
         '<button type="button" class="evidence-thumb' + (j === 0 ? ' active' : '') +
         '" data-index="' + j + '"' +
         ' aria-current="' + (j === 0 ? 'true' : 'false') + '"' +
-        ' aria-label="Play: ' + escapeAttr(valid[j].title) + '">' +
+        ' aria-label="Play: ' + escapeAttr(v.title) + '">' +
           '<img src="' + thumbUrl + '" alt="" loading="lazy">' +
           '<span class="evidence-thumb-num">' + (j + 1) + '</span>' +
         '</button>';
     }
 
     var firstVideo = valid[0];
+    var hasYtLink = firstVideo.source !== 'local' && firstVideo.youtubeId;
+    var ytHref = hasYtLink
+      ? 'https://www.youtube.com/watch?v=' + encodeURIComponent(firstVideo.youtubeId)
+      : '';
 
     container.innerHTML =
       '<div class="evidence-player">' +
@@ -202,9 +219,9 @@
         thumbsHtml +
       '</div>' +
       '<div class="evidence-actions">' +
-        '<a class="evidence-watch-link" href="https://www.youtube.com/watch?v=' +
-        encodeURIComponent(firstVideo.youtubeId) +
-        '" target="_blank" rel="noopener">Watch on YouTube &nearr;</a>' +
+        '<a class="evidence-watch-link" href="' + ytHref + '" target="_blank" rel="noopener"' +
+        (hasYtLink ? '' : ' style="display:none"') +
+        '>Watch on YouTube &nearr;</a>' +
       '</div>';
 
     // ─── Event Binding ───

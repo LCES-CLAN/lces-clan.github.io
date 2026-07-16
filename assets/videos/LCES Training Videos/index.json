@@ -1,10 +1,3 @@
 {
-  "title": "LCES Training Videos",
-  "videos": [
-    {
-      "title": "cat-child",
-      "source": "local",
-      "localPath": "assets/videos/LCES Training Videos/cat-child.mp4"
-    }
-  ]
+  "playlistId": "PL1473655E6F079A76"
 }
