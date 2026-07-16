@@ -1,4 +1,4 @@
-// Shared header + status bar + typewriter — loaded on every page
+// Shared header + status bar + typewriter
 (function() {
   var el = document.getElementById('header');
   if (!el) return;
@@ -53,7 +53,7 @@
     setTimeout(type, 400);
   }
 
-  // ─── 10-8 signal dips — brief opacity/glow drop for realistic radio effect ───
+  // ─── 10-8 signal dips — brief opacity/glow drop ───
   setTimeout(function() {
     var dot108 = document.querySelector('.status-bar .dot-10-8');
     if (!dot108) return;

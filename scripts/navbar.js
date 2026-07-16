@@ -1,4 +1,4 @@
-// Shared navigation bar — loaded on every page
+// Shared navigation bar
 (function() {
   var page = window.location.pathname.split('/').pop() || 'index.html';
 

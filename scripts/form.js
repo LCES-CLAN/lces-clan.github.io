@@ -2,26 +2,26 @@
 (function() {
 
   // ════════════════════════════════════════════════════════════════
-  //  CONFIG — Paste your Discord Webhook URL below
+  //  Discord Webhook URL
   // ════════════════════════════════════════════════════════════════
   var WEBHOOK_URL = 'https://discord.com/api/webhooks/1526034307125215355/9WvOLTIWGVvtziJVrzYEH7N5psqc6P1L5gYCRiYU1Ysaq5Vg0MwiUL05aVWXcon8-PJQ';
 
   // ════════════════════════════════════════════════════════════════
-  //  TRIVIA CAPTCHA QUESTIONS — Paste your real questions here
+  //  TRIVIA CAPTCHA QUESTIONS
   // ════════════════════════════════════════════════════════════════
   var CAPTCHA_QUESTIONS = [
     { q: "What color did the crook team play as?", a: ["Orange","Blue","Green","Red"], ok: 0 },
     { q: "Where did debriefs take place?", a: ["At the scene of the crime","In the game lobby","At the PD","On the forums"], ok: 2 },
     { q: "What did we call our game sessions?", a: ["RPs","Shifts","Beats","Patrols"], ok: 3 },
     { q: "Which platform was LCES active on?", a: ["PlayStation 3","Xbox 360","PC","Nintendo Wii"], ok: 1 },
-    { q: "What color did the cop team play as?", a: ["White","Blue","Purple","Red"], ok: 1 }
+    { q: "What color did the cop team play as?", a: ["White","Orange","Purple","Red"], ok: 1 }
   ];
 
   // ─── State ───
   var captchaPassed = false;
   var curQ = null;
 
-  // ─── Inject captcha styles (tiny) ───
+  // ─── Inject captcha styles ───
   var s = document.createElement('style');
   s.textContent = '.trivia-captcha{margin:0.5rem 0;padding:0.35rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}' +
     '.tc-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}' +

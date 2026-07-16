@@ -1,4 +1,4 @@
-// Evidence Locker — Inline Video Player with Navigation
+// Inline Video Player with Navigation
 (function() {
   var container = document.getElementById('media-gallery-container');
   if (!container) return;

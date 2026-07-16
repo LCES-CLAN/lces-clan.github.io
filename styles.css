@@ -702,7 +702,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   .cta-panel { padding: 1.25rem 1rem; }
   .form-row { flex-direction: column; }
 
-  /* Flexible wrap on mobile — adapts to 2, 3, or 4 status items */
+  /* Flexible wrap on mobile */
   .status-bar {
     display: flex;
     justify-content: center;
