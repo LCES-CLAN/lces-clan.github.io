@@ -856,7 +856,7 @@ window.__rosterData = [
   {
     "badge": 171,
     "display": "APD********10",
-    "status": "pending"
+    "status": "tenfour"
   },
   {
     "badge": 172,
