@@ -424,7 +424,7 @@ function renderRoster(data) {
             entry.display = entry.display.replace(/\*/g, '░');
     var statusDot, statusLabel;
     // Reserved (10-7) rows skip the status dot entirely — statusDot is unused for them
-    if (entry.status === 'active' || entry.status === 'reclaimed') {
+    if (entry.status === 'active') {
       statusDot = 'dot-10-8';
       statusLabel = '10-8';
     } else if (entry.display === 'RESERVED') {
@@ -461,7 +461,7 @@ function renderRoster(data) {
     else if (entry.status === 'detected') dotStyle = ' style="animation-delay:-' + ((entry.badge * 1.6180339887) % 2).toFixed(2) + 's"';
 
     var rowClass = '';
-    if (entry.status === 'active' || entry.status === 'reclaimed') {
+    if (entry.status === 'active') {
       rowClass = ' class="row-active"';
     } else if (entry.status === 'tenfour') {
       rowClass = ' class="row-tenfour"';
@@ -473,14 +473,14 @@ function renderRoster(data) {
       badgeClass += ' badge-pending';
     } else if (entry.status === 'tenfour') {
       badgeClass += ' badge-tenfour';
-    } else if (entry.status === 'active' || entry.status === 'reclaimed') {
+    } else if (entry.status === 'active') {
       badgeClass += ' badge-active';
     } else if (entry.status === 'detected') {
       badgeClass += ' badge-detected';
     }
     // Skip the status column entirely for 10-7 (reserved) rows
     var statusCell = (statusLabel === '10-7') ? '' :
-      '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' || entry.status === 'reclaimed' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>';
+      '<td><span class="status-dot ' + statusDot + '"' + dotStyle + '></span><span class="status-label' + (entry.status === 'tenfour' ? ' tenfour-text' : '') + (entry.status === 'active' ? ' active-text' : '') + (entry.status === 'detected' ? ' detected-text' : '') + '">' + statusLabel + '</span></td>';
     html += '<tr' + rowClass + '>' +
       '<td class="' + badgeClass + '">#' + entry.badge + '</td>' +
       '<td class="gamertag">' + gamertagHtml + '</td>' +

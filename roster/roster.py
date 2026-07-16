@@ -6,14 +6,14 @@ Usage:
     python roster/roster.py list                             Show all badges
     python roster/roster.py add <gamertag> [--status s]      Add new entry (censored)
     python roster/roster.py bulk-import <file>               Import all gamertags from
-                               [--reclaim 1,3,5]             a text file (one per line)
+                            [--reclaim 1,3,5]                a text file (one per line)
     python roster/roster.py reclaim <badge#> [--gamertag t]  Mark badge reclaimed
     python roster/roster.py edit <badge#> [--status s]       Change status or display
-                               [--display d]
+                            [--display d]
     python roster/roster.py delete <badge#>                  Remove a badge entry
     python roster/roster.py export                           Generate roster/roster-data.js (gamertags for active only)
 
-Status values: active, reclaimed, pending, mia, tenfour, detected
+Status values: active, pending, tenfour, detected
 
 Examples:
     python roster/roster.py add "xX_LCES_Own3r_Xx"
@@ -38,7 +38,12 @@ def load():
         return []
     try:
         with open(DATA_FILE, "r") as f:
-            return json.load(f)
+            data = json.load(f)
+        # Normalize legacy statuses
+        for entry in data:
+            if entry.get("status") == "reclaimed":
+                entry["status"] = "active"
+        return data
     except json.JSONDecodeError as e:
         print(f"  [X] Could not read {DATA_FILE}: {e}")
         print("      Fix the file or delete it to start fresh.")
@@ -70,7 +75,7 @@ def censor_display(gamertag, keep_front=3, keep_back=2):
     return gamertag[:keep_front] + "█" * mid + gamertag[-keep_back:]
 
 def status_dot(status):
-    dots = {"active": "\033[92m*\033[0m", "reclaimed": "\033[92m*\033[0m", "tenfour": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "pending": "\033[94m*\033[0m", "mia": "\033[90m*\033[0m"}
+    dots = {"active": "\033[92m*\033[0m", "tenfour": "\033[94m*\033[0m", "detected": "\033[93m*\033[0m", "pending": "\033[94m*\033[0m"}
     return dots.get(status, "\033[90m*\033[0m")
 
 def fmt(s):
@@ -103,24 +108,24 @@ def cmd_list(args):
         d = e.get("display", e["gamertag"])
         styled = f"\033[2m{d}\033[0m" if "█" in d else f"\033[92m{d}\033[0m"
         print(f"  #{e['badge']:03d}    {e['gamertag']:<25} {status_dot(e['status'])} {e['status']:<7}  {styled}")
-    reclaimed = sum(1 for e in data if e["status"] == "reclaimed")
-    print(f"\n  {reclaimed} of {len(data)} badge(s) reclaimed\n")
+    active_count = sum(1 for e in data if e["status"] == "active")
+    print(f"\n  {active_count} of {len(data)} badge(s) active\n")
 
 def cmd_add(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster/roster.py add <gamertag> [--status reclaimed|pending|mia|tenfour|detected|active] [--display <text>]")
+        print("  Usage: python roster/roster.py add <gamertag> [--status active|pending|tenfour|detected] [--display <text>]")
         return
     gamertag = pos[0]
     status = flags.get("status", "pending").lower()
-    if status not in ("active", "reclaimed", "pending", "mia", "tenfour", "detected"):
-        print(f"  [!] Invalid status '{status}'. Use: active, reclaimed, pending, mia, tenfour, detected")
+    if status not in ("active", "pending", "tenfour", "detected"):
+        print(f"  [!] Invalid status '{status}'. Use: active, pending, tenfour, detected")
         return
     display = flags.get("display")
     data = load()
     badge = next_badge(data)
     if display is None:
-        display = gamertag if status == "reclaimed" else censor_display(gamertag)
+        display = gamertag if status == "active" else censor_display(gamertag)
     data.append({"badge": badge, "gamertag": gamertag, "display": display, "status": status})
     save(data)
     print(f"  [OK] Added #{badge:03d}: {gamertag} ({status})")
@@ -143,14 +148,14 @@ def cmd_reclaim(args):
     if "gamertag" in flags:
         entry["gamertag"] = flags["gamertag"]
     entry["display"] = entry["gamertag"]
-    entry["status"] = "reclaimed"
+    entry["status"] = "active"
     save(data)
     print(f"  [OK] Badge #{badge_num:03d} reclaimed as '{entry['gamertag']}'")
 
 def cmd_edit(args):
     pos, flags = pop_flags(args)
     if not pos:
-        print("  Usage: python roster/roster.py edit <badge#> [--status active|reclaimed|pending|mia|tenfour|detected] [--display <text>]")
+        print("  Usage: python roster/roster.py edit <badge#> [--status active|pending|tenfour|detected] [--display <text>]")
         return
     try:
         badge_num = int(pos[0])
@@ -164,7 +169,7 @@ def cmd_edit(args):
         return
     if "status" in flags:
         s = flags["status"].lower()
-        if s in ("active", "reclaimed", "pending", "mia", "tenfour", "detected"):
+        if s in ("active", "pending", "tenfour", "detected"):
             entry["status"] = s
         else:
             print(f"  [!] Invalid status '{s}'")
@@ -192,7 +197,7 @@ def cmd_bulk_import(args):
         try:
             reclaim_set = set(int(x.strip()) for x in flags["reclaim"].split(","))
         except ValueError:
-            print(f"  [!] Invalid --reclaim format. Use comma-separated numbers, e.g. --reclaim 1,3,5")
+            print("  [!] Invalid --reclaim format. Use comma-separated numbers, e.g. --reclaim 1,3,5")
             return
     
     # Read gamertags from file
@@ -214,7 +219,7 @@ def cmd_bulk_import(args):
     for i, gt in enumerate(gamertags):
         badge_num = i + 1
         if badge_num in reclaim_set:
-            entry = {"badge": badge_num, "gamertag": gt, "display": gt, "status": "reclaimed"}
+            entry = {"badge": badge_num, "gamertag": gt, "display": gt, "status": "active"}
         else:
             entry = {"badge": badge_num, "gamertag": gt, "display": censor_display(gt), "status": "pending"}
         data.append(entry)
@@ -227,17 +232,21 @@ def cmd_bulk_import(args):
 def cmd_export(args):
     """
     Generate roster/roster-data.js from roster/roster.json for public deployment.
-    Only active/re-enlisted officers include their full gamertag.
+    Only active officers include their full gamertag.
     """
     data = load()
     clean = []
     for entry in data:
+        # Normalize legacy "reclaimed" → "active"
+        status = entry["status"]
+        if status == "reclaimed":
+            status = "active"
         e = {
             "badge": entry["badge"],
             "display": entry["display"],
-            "status": entry["status"]
+            "status": status
         }
-        if entry["status"] == "active":
+        if status == "active":
             e["gamertag"] = entry["gamertag"]
         clean.append(e)
     out_path = os.path.join(_SCRIPT_DIR, "roster-data.js")
