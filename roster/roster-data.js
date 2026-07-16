@@ -84,7 +84,7 @@ window.__rosterData = [
   },
   {
     "badge": 17,
-    "display": "PTY***",
+    "display": "PTY***/xXPTY***Xx",
     "status": "replied"
   },
   {
@@ -189,7 +189,7 @@ window.__rosterData = [
   },
   {
     "badge": 38,
-    "display": "TJP*****/**Taylor**",
+    "display": "TJP*****/**Taylor**/M**B*ggl*sw*rt*",
     "status": "mia"
   },
   {
@@ -239,7 +239,7 @@ window.__rosterData = [
   },
   {
     "badge": 48,
-    "display": "Born A S*****/BornA********/***Survivors**",
+    "display": "Born A S*****/BornA********/No*Surviv*****",
     "status": "detected"
   },
   {
