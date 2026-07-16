@@ -4,7 +4,7 @@
 window.__rosterData = [
   {
     "badge": 1,
-    "display": "NC Sh***** (Harper)",
+    "display": "N**Sheriff (Harper)",
     "status": "mia"
   },
   {
@@ -49,7 +49,7 @@ window.__rosterData = [
   },
   {
     "badge": 10,
-    "display": "DrGreen*******",
+    "display": "**Greenthumb**",
     "status": "mia"
   },
   {
@@ -119,7 +119,7 @@ window.__rosterData = [
   },
   {
     "badge": 24,
-    "display": "Al***Sierra***",
+    "display": "AlphaSierra***",
     "status": "mia"
   },
   {
@@ -129,7 +129,7 @@ window.__rosterData = [
   },
   {
     "badge": 26,
-    "display": "Cpt Re*****s **",
+    "display": "*** Reynolds **",
     "status": "mia"
   },
   {
