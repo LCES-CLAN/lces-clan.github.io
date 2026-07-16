@@ -326,9 +326,22 @@
 
 /* pulse-glow keyframes moved to styles.css (shared) */
 
-/* ─── Multi‑Gamertag Toggle ─── */
+/* ─── Truncation & Multi‑Gamertag Toggle ─── */
+.gt-row {
+  /* inline layout so the button hugs the text, not the column edge */
+}
+.gt-text {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.gt-text.truncated {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .gt-toggle {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   height: 17px;
@@ -343,7 +356,6 @@
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.2s;
-  vertical-align: middle;
   user-select: none;
   line-height: 1;
   white-space: nowrap;
@@ -362,12 +374,12 @@
 
 .gt-alts {
   display: none;
-  margin-top: 0.2rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid var(--border);
 }
 .gt-alts.visible {
   display: block;
+  margin-top: 0.2rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--border);
 }
 .gt-alt {
   display: block;
@@ -525,49 +537,39 @@ function renderRoster(data) {
     var gamertagHtml;
     // Determine source text — gamertag for active, display for everyone else
     var srcText = (entry.status === 'active') ? (entry.gamertag || entry.display) : entry.display;
-    var slashIdx = srcText.indexOf('/');
+    var mainText = srcText;
 
-    if (slashIdx !== -1) {
-      // Multi‑gamertag entry — split on /
-      var parts = srcText.split('/');
-      var mainPart = parts[0].trim();
-      var altParts = parts.slice(1).map(function(p) { return p.trim(); });
-      var altCount = altParts.length;
-
-      // Determine CSS class for main tag
-      var tagClass;
-      if (entry.status === 'active') {
-        tagClass = 'active';
-      } else if (entry.status === 'replied') {
-        tagClass = 'replied-gt';
-      } else if (entry.status === 'detected') {
-        tagClass = 'detected-gt';
-      } else if (entry.display.indexOf('░') !== -1) {
-        tagClass = 'censored';
-      } else {
-        tagClass = 'reserved';
-      }
-
-      // Build alternate tag spans
-      var altHtml = '';
-      for (var i = 0; i < altParts.length; i++) {
-        altHtml += '<span class="gt-alt ' + tagClass + '">' + altParts[i] + '</span>';
-      }
-
-      gamertagHtml = '<span class="' + tagClass + '">' + mainPart + '</span>' +
-        '<span class="gt-toggle" onclick="var a=this.nextElementSibling;a.classList.toggle(\'visible\');this.classList.toggle(\'expanded\');this.innerHTML=a.classList.contains(\'visible\')?\'aka ▴\':\'aka ▾\'" title="' + altCount + ' alternate gamertag(s)">aka ▾</span>' +
-        '<div class="gt-alts">' + altHtml + '</div>';
-    } else if (entry.status === 'active') {
-      gamertagHtml = '<span class="active">' + srcText + '</span>';
+    // Determine CSS class for the gamertag text
+    var tagClass;
+    if (entry.status === 'active') {
+      tagClass = 'active';
     } else if (entry.status === 'replied') {
-      gamertagHtml = '<span class="replied-gt">' + entry.display + '</span>';
+      tagClass = 'replied-gt';
     } else if (entry.status === 'detected') {
-      gamertagHtml = '<span class="detected-gt">' + entry.display + '</span>';
-            } else if (entry.display.indexOf('░') !== -1) {
-      gamertagHtml = '<span class="censored">' + entry.display + '</span>';
+      tagClass = 'detected-gt';
+    } else if (entry.display.indexOf('░') !== -1) {
+      tagClass = 'censored';
     } else {
-      gamertagHtml = '<span class="reserved">' + entry.display + '</span>';
+      tagClass = 'reserved';
     }
+
+    // Build alternate gamertag spans (from / split)
+    var altHtml = '';
+    var slashIdx = srcText.indexOf('/');
+    if (slashIdx !== -1) {
+      var parts = srcText.split('/');
+      mainText = parts[0].trim();
+      for (var i = 1; i < parts.length; i++) {
+        altHtml += '<span class="gt-alt ' + tagClass + '">' + parts[i].trim() + '</span>';
+      }
+    }
+
+    gamertagHtml =
+      '<div class="gt-row">' +
+        '<span class="gt-text truncated ' + tagClass + '">' + mainText + '</span>' +
+        '<span class="gt-toggle" onclick="var r=this.parentElement;r.querySelector(\'.gt-text\').classList.toggle(\'truncated\');r.nextElementSibling.classList.toggle(\'visible\');var x=this.classList.toggle(\'expanded\');this.innerHTML=x?\'less ▴\':\'more ▾\'">more ▾</span>' +
+      '</div>' +
+      '<div class="gt-alts">' + altHtml + '</div>';
 
     var dotStyle = '';
     if (entry.status === 'replied') dotStyle = ' style="animation-delay:-' + ((entry.badge * 1.6180339887) % 0.3).toFixed(2) + 's"';
@@ -602,6 +604,17 @@ function renderRoster(data) {
   });
 
   document.getElementById('roster-body').innerHTML = html;
+
+  // Show "more" toggle on truncated gamertags or entries with alternates
+  var gtTexts = document.querySelectorAll('#roster-body .gt-text');
+  for (var g = 0; g < gtTexts.length; g++) {
+    var text = gtTexts[g];
+    var toggle = text.nextElementSibling;
+    var alts = text.parentElement.nextElementSibling;
+    if (text.scrollWidth > text.clientWidth || alts.children.length > 0) {
+      toggle.style.display = 'inline-flex';
+    }
+  }
 
   // Active signal blink for 10-8 dots — strong but with brief, random signal dips
   setTimeout(function() {
