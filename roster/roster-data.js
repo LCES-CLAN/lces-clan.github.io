@@ -770,17 +770,17 @@ window.__rosterData = [
   },
   {
     "badge": 154,
-    "display": "C H********* x",
+    "display": "C H I2 *** * *",
     "status": "mia"
   },
   {
     "badge": 155,
-    "display": "lif**ff",
+    "display": "lift***",
     "status": "mia"
   },
   {
     "badge": 156,
-    "display": "cas**156",
+    "display": "caspa***",
     "status": "mia"
   },
   {
@@ -790,7 +790,7 @@ window.__rosterData = [
   },
   {
     "badge": 158,
-    "display": "ski*********17",
+    "display": "skil**killa***",
     "status": "mia"
   },
   {
@@ -805,7 +805,7 @@ window.__rosterData = [
   },
   {
     "badge": 161,
-    "display": "DsL******ty",
+    "display": "DsL *****ty",
     "status": "mia"
   },
   {
@@ -815,17 +815,17 @@ window.__rosterData = [
   },
   {
     "badge": 163,
-    "display": "GON*************nz",
+    "display": "GONZO**/iCory ****",
     "status": "mia"
   },
   {
     "badge": 164,
-    "display": "mit*******21",
+    "display": "mitchell****",
     "status": "mia"
   },
   {
     "badge": 165,
-    "display": "Nul********ss",
+    "display": "Null*****less",
     "status": "mia"
   },
   {
@@ -835,7 +835,7 @@ window.__rosterData = [
   },
   {
     "badge": 167,
-    "display": "Ori***** ****on",
+    "display": "******** Fusion",
     "status": "mia"
   },
   {
@@ -866,17 +866,17 @@ window.__rosterData = [
   },
   {
     "badge": 173,
-    "display": "Roy*********007",
+    "display": "Royal****** 007",
     "status": "mia"
   },
   {
     "badge": 174,
-    "display": "zan**00",
+    "display": "zan****",
     "status": "mia"
   },
   {
     "badge": 175,
-    "display": "Jes*********ft",
+    "display": "Jesse JK *****",
     "status": "mia"
   },
   {
@@ -886,7 +886,7 @@ window.__rosterData = [
   },
   {
     "badge": 177,
-    "display": "N2L*******ty",
+    "display": "N2L F*******",
     "status": "mia"
   },
   {
@@ -931,17 +931,17 @@ window.__rosterData = [
   },
   {
     "badge": 186,
-    "display": "HBR*******Zz",
+    "display": "HBR * B***Zz",
     "status": "mia"
   },
   {
     "badge": 187,
-    "display": "sli********r8",
+    "display": "slicksp******",
     "status": "mia"
   },
   {
     "badge": 188,
-    "display": "Tha**********88",
+    "display": "***Situation***",
     "status": "mia"
   },
   {
@@ -1026,12 +1026,12 @@ window.__rosterData = [
   },
   {
     "badge": 205,
-    "display": "ASO*********Lx",
+    "display": "ASOC**GEN*****",
     "status": "mia"
   },
   {
     "badge": 206,
-    "display": "Off*******am",
+    "display": "******* Adam",
     "status": "mia"
   },
   {
@@ -1196,32 +1196,32 @@ window.__rosterData = [
   },
   {
     "badge": 239,
-    "display": "Sup********an",
+    "display": "****Whitey***",
     "status": "mia"
   },
   {
     "badge": 240,
-    "display": "Try*********ma",
+    "display": "Tryhard ******",
     "status": "mia"
   },
   {
     "badge": 241,
-    "display": "Com*********on",
+    "display": "Co*****Carlton",
     "status": "mia"
   },
   {
     "badge": 242,
-    "display": "Not**********st",
+    "display": "****HeroBassist",
     "status": "mia"
   },
   {
     "badge": 243,
-    "display": "Dil*****20",
+    "display": "Dilate****",
     "status": "mia"
   },
   {
     "badge": 244,
-    "display": "Pie*********in",
+    "display": "*******Penguin",
     "status": "mia"
   },
   {
