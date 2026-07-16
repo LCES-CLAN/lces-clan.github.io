@@ -234,7 +234,7 @@ window.__rosterData = [
   },
   {
     "badge": 47,
-    "display": "K***a0611",
+    "display": "Killa****",
     "status": "detected"
   },
   {
