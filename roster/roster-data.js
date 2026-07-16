@@ -856,12 +856,12 @@ window.__rosterData = [
   {
     "badge": 171,
     "display": "APD********10",
-    "status": "tenfour"
+    "status": "pending"
   },
   {
     "badge": 172,
     "display": "JJ3**",
-    "status": "detected"
+    "status": "tenfour"
   },
   {
     "badge": 173,
