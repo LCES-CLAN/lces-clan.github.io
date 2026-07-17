@@ -540,15 +540,18 @@ body::before {
   padding: 0.5rem 0 0.5rem;
 }
 
-/* 5-video category: 3+2 layout, same item size as 4-col via CSS Grid */
+/* 5-video category: 3+2 layout — same item size as 4-col, but as 3-per-row
+   using a narrower flex container with justify-content:center so the 2 items
+   on the second row are properly centered as a group. */
 .media-thumbnails.media-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
   width: calc((3 * 100% - 1.25rem) / 4);
   margin: 0 auto;
 }
+.media-thumbnails.media-grid-3 .media-thumb {
+  width: calc((100% - 2 * 1.25rem) / 3);
+}
 
-/* 4 columns (default) */
+/* 4 columns (default flex layout) */
 .media-thumbnails .media-thumb {
   width: calc((100% - 3 * 1.25rem) / 4);
 }
@@ -736,11 +739,13 @@ body::before {
   .media-thumbnails {
     gap: 0.75rem;
   }
-  /* Reset desktop grid-3 — portrait uses 3 columns for all */
+  /* Reset desktop narrowed container — media-grid-3 inherits full flex width */
   .media-thumbnails.media-grid-3 {
-    display: flex;
     width: auto;
     max-width: none;
+  }
+  .media-thumbnails.media-grid-3 .media-thumb {
+    width: calc((100% - 2 * 0.75rem) / 3);
   }
   .media-thumbnails .media-thumb {
     width: calc((100% - 2 * 0.75rem) / 3);
@@ -751,6 +756,9 @@ body::before {
     grid-template-columns: repeat(2, 1fr);
     width: calc((2 * 100% - 0.75rem) / 3);
     margin: 0 auto;
+  }
+  .media-thumbnails.media-grid-2 .media-thumb {
+    width: auto;
   }
   /* Hide 7th+ thumb (3 cols × 2 rows = 6 visible) */
   .media-thumbnails:not(.media-expanded) > .media-thumb:nth-child(n + 7) {
@@ -769,7 +777,14 @@ body::before {
     width: auto;
     max-width: none;
   }
+  /* grid-2 is now flex; override the width:auto from the 600px media query */
+  .media-thumbnails.media-grid-2 .media-thumb {
+    width: calc((100% - 1 * 0.75rem) / 2);
+  }
 
+  .media-thumbnails.media-grid-3 .media-thumb {
+    width: calc((100% - 1 * 0.75rem) / 2);
+  }
   .media-thumbnails .media-thumb {
     width: calc((100% - 1 * 0.75rem) / 2);
   }
