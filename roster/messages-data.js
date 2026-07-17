@@ -3,6 +3,7 @@
 window.__messagesData = {
   "3": "I am here to see what madness has been created here.",
   "63": "Unit 63 10-8.",
-  "170": "So many memories from what seems like such a simpler time. Loved playing as the crooks and coming up with long drawn out scenarios for the detectives to solve."
+  "170": "Curious who went on to become a cop irl.",
+  "172": "So many memories from what seems like such a simpler time. Loved playing as the crooks and coming up with long drawn out scenarios for the detectives to solve."
 };
 
