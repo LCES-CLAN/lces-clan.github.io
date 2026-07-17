@@ -6,8 +6,11 @@ Reads roster/roster.json (the master file with uncensored gamertags)
 and sends the roster in batches of 25 badges per message.
 
 Usage:
-    1. Set WEBHOOK_URL below (or pass via --webhook)
+    1. Set WEBHOOK_URL in .env (or pass via --webhook)
     2. python roster/discord_webhook.py
+
+The first message includes a header with a generation timestamp.
+The last message includes a legend explaining the status emojis.
 
 Format per badge:
     🟢 **`#  3`** — stevenkb6720               (active — green, only badge bold)
@@ -25,6 +28,7 @@ import os
 import sys
 import urllib.request
 import urllib.error
+from datetime import datetime
 
 # ── Configuration ──────────────────────────────────────────────────
 # Webhook URL is loaded from .env (WEBHOOK_URL) — see .env.example.
@@ -32,7 +36,7 @@ import urllib.error
 
 CHUNK_SIZE = 25       # badges per message
 MAX_CONTENT_LEN = 2000 # Discord webhook character limit
-MAX_GT_LEN = 25       # max gamertag chars before truncation with "…"
+MAX_GT_LEN = 30       # max gamertag chars before truncation with "…"
 
 # Map status → (emoji,)
 STATUS_MAP = {
@@ -79,6 +83,31 @@ def format_entry(entry):
 
     # Normal: only badge number is bolded
     return f"{emoji} {badge_bold} — {gt_part}"
+
+
+def build_header():
+    """Return the roster header with generation timestamp."""
+    now = datetime.now()
+    return (
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "📋  **LCES Officer Roster**\n"
+        f"🕐  Generated: {now.strftime('%B %d, %Y at %I:%M %p')}\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    )
+
+
+def build_legend():
+    """Return the status legend explaining each emoji."""
+    return (
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "**Status Legend:**\n"
+        "🟢  **Active**   — 10-8 (On duty)\n"
+        "🔵  **Replied**  — 10-4 (Acknowledged)\n"
+        "🟣  **Detected** — Spotted in-game (not yet contacted)\n"
+        "⚫  **MIA**      — Missing in action / no contact\n"
+        "⚫  **Reserved** — Badge is reserved / unused\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    )
 
 
 def send_webhook(url, content):
@@ -181,11 +210,31 @@ def main():
                 continue
         chunks.append(c)
 
+    # ── Decorate first and last chunks with header and legend ──
+    header = build_header()
+    legend = build_legend()
+
+    if chunks:
+        # Prepend header to the first chunk
+        first_with_header = header + "\n" + "\n".join(chunks[0])
+        if len(first_with_header) <= MAX_CONTENT_LEN:
+            chunks[0] = [header] + chunks[0]
+        else:
+            # Header alone should always fit, but just in case
+            chunks.insert(0, [header])
+
+        # Append legend to the last chunk
+        last_with_legend = "\n".join(chunks[-1]) + "\n" + legend
+        if len(last_with_legend) <= MAX_CONTENT_LEN:
+            chunks[-1] = chunks[-1] + [legend]
+        else:
+            chunks.append([legend])
+
     print(f"  Sending {total} badges in {len(chunks)} message(s)…")
 
     for i, chunk in enumerate(chunks, 1):
         content = "\n".join(chunk)
-        print(f"  [{i}/{len(chunks)}] Sending {len(chunk)} badges…")
+        print(f"  [{i}/{len(chunks)}] Sending {len(chunk)} lines…")
         status = send_webhook(url, content)
         if status == 204 or status == 200:
             print(f"    OK")
