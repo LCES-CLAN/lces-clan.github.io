@@ -540,6 +540,15 @@ body::before {
   padding: 0.5rem 0 0.5rem;
 }
 
+/* 5-video category: constrain container so 3 items fit per row (same 150px size) */
+.media-thumbnails.media-grid-3 {
+  max-width: calc(3 * 150px + 2 * 1.25rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
 .evidence-thumb,
 .media-thumb {
   width: 150px;
@@ -651,6 +660,11 @@ body::before {
   display: none;
 }
 
+/* When expanded, override both media-thumb-hidden and nth-child hiding */
+.media-thumbnails.media-expanded > .media-thumb.media-thumb-hidden {
+  display: block;
+}
+
 .media-expand-wrap {
   text-align: center;
   margin-top: 0.75rem;
@@ -686,19 +700,58 @@ body::before {
   transform: translateY(0);
 }
 
+/* Responsive expand — hidden on desktop, shown when CSS hides items on smaller screens */
+.media-expand-mobile,
+.media-expand-tiny {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .media-expand-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 340px) {
+  .media-expand-tiny {
+    display: block;
+  }
+}
+
 /* ─── Responsive: Video Players ─── */
 @media (max-width: 480px) {
-  .evidence-thumb,
-  .media-thumb {
+  .evidence-thumb {
     width: 110px;
   }
-  .evidence-thumbnails,
+  .evidence-thumbnails {
+    gap: 0.75rem;
+  }
   .media-thumbnails {
     gap: 0.75rem;
+  }
+  .media-thumbnails.media-grid-3 {
+    max-width: none;
+  }
+  .media-thumbnails .media-thumb {
+    width: calc((100% - 2 * 0.75rem) / 3);
+  }
+  /* Hide 7th+ thumb on mobile (3 cols × 2 rows = 6 visible) */
+  .media-thumbnails:not(.media-expanded) > .media-thumb:nth-child(n + 7) {
+    display: none;
   }
   .evidence-title,
   .media-title {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .media-thumbnails .media-thumb {
+    width: calc((100% - 1 * 0.75rem) / 2);
+  }
+  /* Hide 5th+ thumb on tiny screens (2 cols × 2 rows = 4 visible) */
+  .media-thumbnails:not(.media-expanded) > .media-thumb:nth-child(n + 5) {
+    display: none;
   }
 }
 

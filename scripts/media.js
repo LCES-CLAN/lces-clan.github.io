@@ -110,6 +110,7 @@
     if (videos.length === 0) return '';
 
     var catId = 'cat' + idx;
+    var gridClass = videos.length === 5 ? ' media-grid-3' : '';
     var overflow = videos.length > MAX_VISIBLE;
 
     // Stagger the reveal animation slightly for categories that are already
@@ -144,9 +145,14 @@
       : '';
 
     var expandHtml = '';
-    if (overflow) {
+    var expandClass = '';
+    if (!overflow) {
+      if (videos.length > 6) expandClass = ' media-expand-mobile';
+      else if (videos.length > 4) expandClass = ' media-expand-tiny';
+    }
+    if (videos.length > 4) {
       expandHtml =
-        '<div class="media-expand-wrap">' +
+        '<div class="media-expand-wrap' + expandClass + '">' +
           '<button type="button" class="media-expand-btn" data-cat="' + catId +
           '" aria-expanded="false">' +
             'SHOW ALL ' + videos.length + ' VIDEOS &blacktriangledown;' +
@@ -171,7 +177,7 @@
           '<button type="button" class="media-next" id="media-next-' + catId +
           '" aria-label="Next video">&rarr;</button>' +
         '</div>' +
-        '<div class="media-thumbnails">' +
+        '<div class="media-thumbnails' + gridClass + '">' +
           thumbsHtml +
         '</div>' +
 
@@ -214,18 +220,14 @@
     var expandBtn = catEl.querySelector('.media-expand-btn');
     if (expandBtn) {
       expandBtn.addEventListener('click', function() {
-        var hidden = catEl.querySelectorAll('.media-thumb-hidden');
+        var thumbsEl = catEl.querySelector('.media-thumbnails');
         var isExpanded = this.getAttribute('aria-expanded') === 'true';
         if (isExpanded) {
-          for (var h = 0; h < hidden.length; h++) {
-            hidden[h].classList.add('media-thumb-hidden');
-          }
+          if (thumbsEl) thumbsEl.classList.remove('media-expanded');
           this.setAttribute('aria-expanded', 'false');
           this.innerHTML = 'SHOW ALL ' + videos.length + ' VIDEOS &blacktriangledown;';
         } else {
-          for (var h = 0; h < hidden.length; h++) {
-            hidden[h].classList.remove('media-thumb-hidden');
-          }
+          if (thumbsEl) thumbsEl.classList.add('media-expanded');
           this.setAttribute('aria-expanded', 'true');
           this.innerHTML = 'SHOW LESS &blacktriangle;';
         }
