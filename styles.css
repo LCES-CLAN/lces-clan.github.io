@@ -749,9 +749,8 @@ body::before {
   .media-thumbnails.media-grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    max-width: calc((2 * 100% - 0.75rem) / 3);
-    margin-left: auto;
-    margin-right: auto;
+    width: calc((2 * 100% - 0.75rem) / 3);
+    margin: 0 auto;
   }
   /* Hide 7th+ thumb (3 cols × 2 rows = 6 visible) */
   .media-thumbnails:not(.media-expanded) > .media-thumb:nth-child(n + 7) {
@@ -767,6 +766,7 @@ body::before {
   /* Reset grid-2 override — all categories are 2 columns here anyway */
   .media-thumbnails.media-grid-2 {
     display: flex;
+    width: auto;
     max-width: none;
   }
 
