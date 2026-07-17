@@ -10,6 +10,10 @@
 //     2. RSS feed via CORS proxy (no key needed, but less reliable)
 //     3. Manual "videos" array in index.json (always takes precedence)
 //
+//   Manual entries can sit before (default) or after the playlist by
+//   adding a per-entry "position": "after". Manual entries always win
+//   over the playlist on duplicate youtubeId.
+//
 // Get a free API key: https://console.cloud.google.com/apis/credentials
 //   -> Create project -> Enable "YouTube Data API v3" -> Create API key
 
@@ -370,20 +374,33 @@
     return v;
   }
 
-  // Merges playlist videos into the category, avoiding duplicates by YouTube ID.
-  // Manually listed videos (from index.json "videos") come first.
+  // Merges playlist videos into the category. Each manual entry in
+  // index.json "videos" can carry an optional "position" field:
+  //   "before" (default) — appears at the top, before the playlist
+  //   "after"             — appears at the bottom, after the playlist
+  // Manual entries always win on duplicate youtubeId — the matching
+  // playlist entry is dropped so the author's override wins.
   function mergePlaylistVideos(category, playlistVideos) {
+    var before = [];
+    var after = [];
     var existingIds = {};
-    var merged = [];
+    var merged;
 
-    // Manual videos first (they take visual priority)
+    // Bucket manual entries by position; record intent for dedup.
     for (var i = 0; i < category.videos.length; i++) {
       var v = category.videos[i];
       if (v.youtubeId) existingIds[v.youtubeId] = true;
-      merged.push(v);
+      if (v.position === 'after') {
+        after.push(v);
+      } else {
+        // "before", undefined, or any unknown value → top of the list
+        before.push(v);
+      }
     }
 
-    // Append playlist videos that aren't duplicates
+    merged = before.slice();
+
+    // Append playlist videos that aren't already covered by manual intent.
     for (var j = 0; j < playlistVideos.length; j++) {
       var pv = playlistVideos[j];
       if (!existingIds[pv.youtubeId]) {
@@ -391,6 +408,9 @@
         merged.push(pv);
       }
     }
+
+    // Cap with manual "after" entries.
+    for (var k = 0; k < after.length; k++) merged.push(after[k]);
 
     return merged;
   }

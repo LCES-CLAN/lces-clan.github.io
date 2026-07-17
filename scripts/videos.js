@@ -1,7 +1,8 @@
 // Inline Video Player with Navigation — supports YouTube playlists via index.json.
 // Set "playlistId" in assets/videos/{category}/index.json to auto-fetch videos
 // from a YouTube playlist. Falls back from YouTube Data API to RSS feed, and
-// manual "videos" entries are always merged in first.
+// manual "videos" entries are always merged in. Each manual entry may carry an
+// optional "position": "after" to render after the playlist instead of before.
 (function() {
   var container = document.getElementById('media-gallery-container');
   if (!container) return;
@@ -326,20 +327,33 @@
       // If a playlistId is specified, fetch playlist videos and merge
       if (data.playlistId) {
         return fetchPlaylistVideos(data.playlistId).then(function(playlistVideos) {
-          // Merge: manual videos first, then playlist (skip duplicates)
+          // Manual videos go before (default) or after the playlist based on
+          // each entry's "position" field. Manual entries always win on
+          // duplicate youtubeId — the matching playlist entry is dropped.
+          var before = [];
+          var after = [];
           var existingIds = {};
-          var merged = [];
+          var merged;
           var manualVideos = data.videos || [];
           for (var m = 0; m < manualVideos.length; m++) {
-            if (manualVideos[m].youtubeId) existingIds[manualVideos[m].youtubeId] = true;
-            merged.push(manualVideos[m]);
-          }
-          for (var p = 0; p < playlistVideos.length; p++) {
-            if (!existingIds[playlistVideos[p].youtubeId]) {
-              existingIds[playlistVideos[p].youtubeId] = true;
-              merged.push(playlistVideos[p]);
+            var v = manualVideos[m];
+            if (v.youtubeId) existingIds[v.youtubeId] = true;
+            if (v.position === 'after') {
+              after.push(v);
+            } else {
+              // "before", undefined, or any unknown value → top of the list
+              before.push(v);
             }
           }
+          merged = before.slice();
+          for (var p = 0; p < playlistVideos.length; p++) {
+            var pv = playlistVideos[p];
+            if (!existingIds[pv.youtubeId]) {
+              existingIds[pv.youtubeId] = true;
+              merged.push(pv);
+            }
+          }
+          for (var a = 0; a < after.length; a++) merged.push(after[a]);
           return merged;
         });
       }

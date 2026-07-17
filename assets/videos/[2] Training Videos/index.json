@@ -1,3 +1,9 @@
 {
-  "playlistId": "PL1473655E6F079A76"
+  "playlistId": "PL1473655E6F079A76",
+  "videos": [
+    {
+      "youtubeId": "Flawvpltlds",
+      "position": "after"
+    }
+  ]
 }
