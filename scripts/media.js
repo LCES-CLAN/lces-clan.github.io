@@ -99,6 +99,13 @@
     var videos = category.videos || [];
     if (videos.length === 0) return '';
 
+    // Ensure every video has a title (fallback if missing)
+    for (var i = 0; i < videos.length; i++) {
+      if (!videos[i].title) {
+        videos[i].title = videos[i].youtubeId || 'Untitled';
+      }
+    }
+
     var catId = 'cat' + idx;
     var overflow = videos.length > MAX_VISIBLE;
 
@@ -233,6 +240,39 @@
     });
 
     container.setAttribute('data-index-' + categoryId, '0');
+  }
+
+  // ── YouTube Title Fetching (oEmbed — no API key needed) ────────────
+  // Fetches a video's title from YouTube when the JSON doesn't provide one.
+  function fetchYouTubeTitle(video) {
+    var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' +
+      encodeURIComponent(video.youtubeId) + '&format=json';
+    return fetch(url)
+      .then(function(res) {
+        if (!res.ok) throw new Error('oembed HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        if (data.title) video.title = data.title;
+      })
+      .catch(function() {
+        // Fallback: use the youtubeId as a readable title
+        if (!video.title) video.title = video.youtubeId;
+      });
+  }
+
+  // Batch-fetch missing titles for all YouTube videos across all categories.
+  function fetchMissingTitles(results) {
+    var fetches = [];
+    for (var r = 0; r < results.length; r++) {
+      var videos = results[r].videos || [];
+      for (var v = 0; v < videos.length; v++) {
+        if (!videos[v].title && videos[v].youtubeId) {
+          fetches.push(fetchYouTubeTitle(videos[v]));
+        }
+      }
+    }
+    return fetches.length ? Promise.all(fetches) : Promise.resolve();
   }
 
   // ── YouTube Playlist Fetching ──────────────────────────────────────
@@ -409,27 +449,30 @@
     }
 
     Promise.all(fetches).then(function(results) {
-      var html = '';
-      for (var j = 0; j < results.length; j++) {
-        html += renderCategory(results[j], j);
-      }
+      // Fetch missing YouTube titles before rendering
+      return fetchMissingTitles(results).then(function() {
+        var html = '';
+        for (var j = 0; j < results.length; j++) {
+          html += renderCategory(results[j], j);
+        }
 
-      if (!html) {
-        container.innerHTML =
-          '<div class="panel">' +
-            '<div class="panel-label">NO EVIDENCE</div>' +
-            '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:1rem;">' +
-            'No videos found in any category. Add videos to your ' +
-            '<code>assets/videos/*/index.json</code> files.</p>' +
-          '</div>';
-        return;
-      }
+        if (!html) {
+          container.innerHTML =
+            '<div class="panel">' +
+              '<div class="panel-label">NO EVIDENCE</div>' +
+              '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:1rem;">' +
+              'No videos found in any category. Add videos to your ' +
+              '<code>assets/videos/*/index.json</code> files.</p>' +
+            '</div>';
+          return;
+        }
 
-      container.innerHTML = html;
+        container.innerHTML = html;
 
-      for (var k = 0; k < results.length; k++) {
-        bindEvents('cat' + k, results[k].videos || []);
-      }
+        for (var k = 0; k < results.length; k++) {
+          bindEvents('cat' + k, results[k].videos || []);
+        }
+      });
     });
   }
 

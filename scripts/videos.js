@@ -80,6 +80,34 @@
     if (window.LCES && window.LCES.trackVideoPlay) window.LCES.trackVideoPlay(video.title);
   }
 
+  // ── YouTube Title Fetching (oEmbed — no API key needed) ────────────
+  // Fetches a video's title from YouTube when the JSON doesn't provide one.
+  function fetchYouTubeTitle(video) {
+    var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' +
+      encodeURIComponent(video.youtubeId) + '&format=json';
+    return fetch(url)
+      .then(function(res) {
+        if (!res.ok) throw new Error('oembed HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        if (data.title) video.title = data.title;
+      })
+      .catch(function() {
+        if (!video.title) video.title = video.youtubeId;
+      });
+  }
+
+  function fetchMissingTitles(videos) {
+    var fetches = [];
+    for (var v = 0; v < videos.length; v++) {
+      if (!videos[v].title && videos[v].youtubeId) {
+        fetches.push(fetchYouTubeTitle(videos[v]));
+      }
+    }
+    return fetches.length ? Promise.all(fetches) : Promise.resolve();
+  }
+
   // ── YouTube Playlist Fetching ──────────────────────────────────────
   function fetchPlaylistVideos(playlistId) {
     // Tier 1: YouTube Data API v3
@@ -314,7 +342,10 @@
       if (!videos || videos.length === 0) {
         throw new Error('No videos in ' + category + ' category');
       }
-      render(videos);
+      // Fetch missing YouTube titles before rendering
+      return fetchMissingTitles(videos).then(function() {
+        render(videos);
+      });
     })
     .catch(function() {
       // No index.json found — fall back to data-files attribute

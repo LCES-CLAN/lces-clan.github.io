@@ -44,8 +44,13 @@ def fmt(s):
 
 
 def get_folder_title(folder_name):
-    """Convert a folder name into a readable display title."""
+    """Convert a folder name into a readable display title.
+
+    Strips optional numbering prefix like [1], [2] etc.
+    """
     t = folder_name.replace('-', ' ').replace('_', ' ').strip()
+    # Remove [N] or [N] prefix for cleaner titles
+    t = re.sub(r'^\[\d+\]\s*', '', t)
     return ' '.join(w[0].upper() + w[1:] for w in t.split() if w)
 
 
@@ -144,87 +149,6 @@ def extract_script_block(html):
     return html[start:end], start, end
 
 
-def parse_categories_array(text):
-    """Extract the JSON array from a window.__mediaCategories assignment.
-
-    Returns a list of category dicts (may be empty).
-    """
-    marker = 'window.__mediaCategories'
-    idx = text.find(marker)
-    if idx == -1:
-        return []
-
-    brace = text.find('[', idx)
-    if brace == -1:
-        return []
-
-    # Walk balanced brackets
-    depth = 0
-    end = brace
-    for i in range(brace, len(text)):
-        ch = text[i]
-        if ch == '[':
-            depth += 1
-        elif ch == ']':
-            depth -= 1
-            if depth == 0:
-                end = i + 1
-                break
-    if depth != 0:
-        return []
-
-    raw = text[brace:end]
-
-    # Strip JS comments (both // and /* */) and trailing commas
-    cleaned = re.sub(r'//[^\n]*', '', raw)
-    cleaned = re.sub(r'/\*.*?\*/', '', cleaned, flags=re.DOTALL)
-    cleaned = re.sub(r',\s*([\]}])', r'\1', cleaned)
-
-    try:
-        cats = json.loads(cleaned)
-        return cats if isinstance(cats, list) else []
-    except json.JSONDecodeError:
-        return []
-
-
-def build_updated_categories(existing_cats, discovered_folders):
-    """Merge discovered folders into the existing category list.
-
-    * Existing entries are kept (preserves custom config like title, files).
-    * New folders are appended as simple {"folder": name} entries.
-    * Case-insensitive matching prevents duplicates (folder == FOLDER == Folder).
-    * If a duplicate exists, the entry's folder name is updated to match disk casing.
-    """
-    seen = set()
-    result = []
-
-    # Dedup existing entries keeping the first occurrence, update casing later
-    for c in existing_cats:
-        if 'folder' in c:
-            lower = c['folder'].lower()
-            if lower not in seen:
-                seen.add(lower)
-                result.append(dict(c))
-        else:
-            result.append(dict(c))
-
-    added = 0
-    for fi in discovered_folders:
-        lower = fi['folder'].lower()
-        if lower in seen:
-            # Update existing entry's casing to match filesystem
-            for c in result:
-                if 'folder' in c and c['folder'].lower() == lower:
-                    c['folder'] = fi['folder']
-                    break
-        else:
-            result.append({'folder': fi['folder']})
-            seen.add(lower)
-            added += 1
-
-    return result, added
-
-
 def render_categories_js(cats):
     """Turn a list of category dicts into a JS array literal (indented to match style)."""
     lines = ['    window.__mediaCategories = [']
@@ -256,14 +180,16 @@ def update_media_html(discovered_folders, dry_run=False):
 
     script_content, script_start, script_end = block
 
-    existing_cats = parse_categories_array(script_content)
-    print(f"  Found {len(existing_cats)} existing category(ies) in media.html")
+    # Replace categories entirely with what's on disk
+    print(f"  Found {len(discovered_folders)} folder(s) on disk")
 
-    new_cats, added = build_updated_categories(existing_cats, discovered_folders)
+    new_cats = [
+        {'folder': fi['folder'], 'title': fi['title']}
+        for fi in discovered_folders
+    ]
     new_script_content = render_categories_js(new_cats)
 
     # Preserve indentation by matching the original script's leading whitespace
-    # Calculate the indent from the first non-empty line of the script
     orig_lines = script_content.split('\n')
     base_indent = ''
     for line in orig_lines:
@@ -285,10 +211,6 @@ def update_media_html(discovered_folders, dry_run=False):
     tag_indent = html[line_start + 1:script_start] if line_start != -1 else ''
 
     new_html = html[:script_start] + tag_indent + '<script>\n' + new_indented + '\n' + tag_indent + '</script>' + html[script_end:]
-
-    if added:
-        plural = '' if added == 1 else 's'
-        print(f"  [+] Added {added} new folder{plural} to media.html categories")
 
     if new_html == html:
         print(f"  [\u2013] No changes to media.html")
