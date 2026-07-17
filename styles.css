@@ -606,7 +606,8 @@ body::before {
   color: var(--blue-bright);
 }
 
-/* ─── Media Page — Title link replaces old "Watch on YouTube" ─── */
+/* ─── Title link replaces old "Watch on YouTube" ─── */
+.evidence-title-link,
 .media-title-link {
   text-decoration: none;
   display: inline-flex;
@@ -618,15 +619,18 @@ body::before {
   cursor: default;
 }
 
+.evidence-title-link[href],
 .media-title-link[href] {
   cursor: pointer;
   color: var(--text-bright);
 }
 
+.evidence-title-link[href]:hover,
 .media-title-link[href]:hover {
   color: var(--blue-bright);
 }
 
+.evidence-title-link[href]:hover .media-title-icon,
 .media-title-link[href]:hover .media-title-icon {
   opacity: 1;
   transform: translate(2px, -2px);

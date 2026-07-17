@@ -15,8 +15,15 @@
   // Configuration
   var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || 'AIzaSyAbKuQszn8X-cdQE17GfJCGVqzlPUB3mOk';
 
+  // Shared external-link icon SVG
+  var EXTERNAL_LINK_ICON = '<svg class="media-title-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+
   function escapeAttr(str) {
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function getEmbedUrl(videoId) {
@@ -48,8 +55,21 @@
     var player = container.querySelector('.evidence-player');
     player.innerHTML = buildPlayerContent(video);
 
-    // Update title
-    container.querySelector('.evidence-title').textContent = video.title;
+    // Update title — make it a link to YouTube, or plain text for local videos
+    var titleEl = container.querySelector('.evidence-title');
+    if (titleEl) {
+      if (video.source !== 'local' && video.youtubeId) {
+        titleEl.innerHTML = escapeHtml(video.title) + EXTERNAL_LINK_ICON;
+        titleEl.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
+        titleEl.target = '_blank';
+        titleEl.rel = 'noopener';
+      } else {
+        titleEl.innerHTML = escapeHtml(video.title);
+        titleEl.removeAttribute('href');
+        titleEl.removeAttribute('target');
+        titleEl.removeAttribute('rel');
+      }
+    }
 
     // Update thumbnail active states
     var thumbs = container.querySelectorAll('.evidence-thumb');
@@ -61,15 +81,6 @@
     // Scroll active thumbnail into view
     if (thumbs[index]) {
       thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-
-    // Update "Watch on YouTube" link (hide for local videos)
-    var link = container.querySelector('.evidence-watch-link');
-    if (video.source !== 'local' && video.youtubeId) {
-      link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
-      link.style.display = '';
-    } else {
-      link.style.display = 'none';
     }
 
     // Enable/disable nav buttons
@@ -270,16 +281,13 @@
       '</div>' +
       '<div class="evidence-bar">' +
         '<button type="button" class="evidence-prev" disabled aria-label="Previous video">&larr;</button>' +
-        '<span class="evidence-title">' + escapeAttr(firstVideo.title) + '</span>' +
+        '<a class="evidence-title evidence-title-link" href="' + ytHref + '"' +
+        (hasYtLink ? ' target="_blank" rel="noopener"' : '') + '>' +
+        escapeHtml(firstVideo.title) + EXTERNAL_LINK_ICON + '</a>' +
         '<button type="button" class="evidence-next" aria-label="Next video">&rarr;</button>' +
       '</div>' +
       '<div class="evidence-thumbnails">' +
         thumbsHtml +
-      '</div>' +
-      '<div class="evidence-actions">' +
-        '<a class="evidence-watch-link" href="' + ytHref + '" target="_blank" rel="noopener"' +
-        (hasYtLink ? '' : ' style="display:none"') +
-        '>Watch on YouTube &nearr;</a>' +
       '</div>';
 
     // ─── Event Binding ───
