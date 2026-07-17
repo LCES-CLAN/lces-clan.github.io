@@ -540,18 +540,26 @@ body::before {
   padding: 0.5rem 0 0.5rem;
 }
 
-/* 5-video category: constrain container so 3 items fit per row (same 150px size) */
+/* 5-video category: 3+2 layout, same item size as 4-col via CSS Grid */
 .media-thumbnails.media-grid-3 {
-  max-width: calc(3 * 150px + 2 * 1.25rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: calc((3 * 100% - 1.25rem) / 4);
   margin-left: auto;
   margin-right: auto;
 }
 
+/* 4 columns (default) */
+.media-thumbnails .media-thumb {
+  width: calc((100% - 3 * 1.25rem) / 4);
+}
 
+.evidence-thumb {
+  width: 150px;
+}
 
 .evidence-thumb,
 .media-thumb {
-  width: 150px;
   border: 2px solid transparent;
   border-radius: 4px;
   overflow: hidden;
@@ -706,7 +714,7 @@ body::before {
   display: none;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .media-expand-mobile {
     display: block;
   }
@@ -719,7 +727,7 @@ body::before {
 }
 
 /* ─── Responsive: Video Players ─── */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .evidence-thumb {
     width: 110px;
   }
@@ -729,17 +737,23 @@ body::before {
   .media-thumbnails {
     gap: 0.75rem;
   }
+  /* Reset desktop grid-3 — portrait uses 3 columns for all */
   .media-thumbnails.media-grid-3 {
+    display: flex;
     max-width: none;
   }
   .media-thumbnails .media-thumb {
     width: calc((100% - 2 * 0.75rem) / 3);
   }
-  /* 4-video categories: 2 columns on mobile */
-  .media-thumbnails.media-grid-2 .media-thumb {
-    width: calc((100% - 1 * 0.75rem) / 2);
+  /* 4-video categories: 2 columns, same item size as 3-col */
+  .media-thumbnails.media-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: calc((2 * 100% - 0.75rem) / 3);
+    margin-left: auto;
+    margin-right: auto;
   }
-  /* Hide 7th+ thumb on mobile (3 cols × 2 rows = 6 visible) */
+  /* Hide 7th+ thumb (3 cols × 2 rows = 6 visible) */
   .media-thumbnails:not(.media-expanded) > .media-thumb:nth-child(n + 7) {
     display: none;
   }
@@ -750,6 +764,12 @@ body::before {
 }
 
 @media (max-width: 340px) {
+  /* Reset grid-2 override — all categories are 2 columns here anyway */
+  .media-thumbnails.media-grid-2 {
+    display: flex;
+    max-width: none;
+  }
+
   .media-thumbnails .media-thumb {
     width: calc((100% - 1 * 0.75rem) / 2);
   }
