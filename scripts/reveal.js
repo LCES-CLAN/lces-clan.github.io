@@ -5,7 +5,13 @@
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    observer.observe(el);
-  });
+
+  function observeReveal(el) {
+    if (el) observer.observe(el);
+  }
+
+  document.querySelectorAll('.reveal').forEach(observeReveal);
+
+  // Allow dynamically injected content to opt-in to the reveal observer
+  window.observeReveal = observeReveal;
 })();

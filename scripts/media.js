@@ -113,6 +113,10 @@
     var catId = 'cat' + idx;
     var overflow = videos.length > MAX_VISIBLE;
 
+    // Stagger the reveal animation slightly for categories that are already
+    // in the viewport on load, but keep delays small so scrolling feels snappy.
+    var revealDelay = idx < 4 ? ' style="transition-delay:' + (idx * 0.08) + 's"' : '';
+
     var thumbsHtml = '';
     for (var j = 0; j < videos.length; j++) {
       var v = videos[j];
@@ -152,7 +156,7 @@
     }
 
     return '' +
-      '<div class="panel media-category" id="media-cat-' + catId + '">' +
+      '<div class="panel media-category reveal" id="media-cat-' + catId + '"' + revealDelay + '>' +
         '<div class="panel-label">' + escapeHtml(category.title || category.folder) + '</div>' +
         '<div class="media-player" id="media-player-' + catId + '">' +
           buildPlayerContent(firstVideo) +
@@ -248,7 +252,8 @@
 
   // ── YouTube Title Fetching (oEmbed — no API key needed) ────────────
   // Fetches a video's title from YouTube when the JSON doesn't provide one.
-  function fetchYouTubeTitle(video) {
+  // Updates the data model and, if the video is currently selected, the DOM.
+  function fetchYouTubeTitle(video, catIdx, videoIdx) {
     var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' +
       encodeURIComponent(video.youtubeId) + '&format=json';
     return fetch(url)
@@ -262,6 +267,17 @@
       .catch(function() {
         // Fallback: oEmbed failed, show the youtubeId as the title
         if (!video.title) video.title = video.youtubeId;
+      })
+      .then(function() {
+        // If this video is the currently selected one for its category,
+        // update the visible title text without touching the player.
+        if (catIdx == null || videoIdx == null) return;
+        var catId = 'cat' + catIdx;
+        var currentIdx = parseInt(container.getAttribute('data-index-' + catId), 10) || 0;
+        if (currentIdx === videoIdx) {
+          var titleEl = document.getElementById('media-title-' + catId);
+          if (titleEl) titleEl.textContent = video.title;
+        }
       });
   }
 
@@ -272,7 +288,7 @@
       var videos = results[r].videos || [];
       for (var v = 0; v < videos.length; v++) {
         if (!videos[v].title && videos[v].youtubeId) {
-          fetches.push(fetchYouTubeTitle(videos[v]));
+          fetches.push(fetchYouTubeTitle(videos[v], r, v));
         }
       }
     }
@@ -484,30 +500,39 @@
       // Filter out hidden categories
       results = results.filter(function(c) { return !c.hidden; });
 
-      // Fetch missing YouTube titles before rendering
-      return fetchMissingTitles(results).then(function() {
-        var html = '';
-        for (var j = 0; j < results.length; j++) {
-          html += renderCategory(results[j], j);
-        }
+      var html = '';
+      for (var j = 0; j < results.length; j++) {
+        html += renderCategory(results[j], j);
+      }
 
-        if (!html) {
-          container.innerHTML =
-            '<div class="panel">' +
-              '<div class="panel-label">NO EVIDENCE</div>' +
-              '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:1rem;">' +
-              'No videos found in any category. Add videos to your ' +
-              '<code>assets/videos/*/index.json</code> files.</p>' +
-            '</div>';
-          return;
-        }
+      if (!html) {
+        container.innerHTML =
+          '<div class="panel">' +
+            '<div class="panel-label">NO EVIDENCE</div>' +
+            '<p style="color:var(--text-dim);font-size:0.8rem;text-align:center;padding:1rem;">' +
+            'No videos found in any category. Add videos to your ' +
+            '<code>assets/videos/*/index.json</code> files.</p>' +
+          '</div>';
+        return;
+      }
 
-        container.innerHTML = html;
+      container.innerHTML = html;
 
-        for (var k = 0; k < results.length; k++) {
-          bindEvents('cat' + k, results[k].videos || []);
+      for (var k = 0; k < results.length; k++) {
+        bindEvents('cat' + k, results[k].videos || []);
+      }
+
+      // Observe newly injected panels for the scroll reveal animation
+      if (window.observeReveal) {
+        var panels = container.querySelectorAll('.media-category.reveal');
+        for (var p = 0; p < panels.length; p++) {
+          window.observeReveal(panels[p]);
         }
-      });
+      }
+
+      // Fetch missing YouTube titles in the background so the page feels
+      // fast. Titles update in the DOM as each fetch resolves.
+      fetchMissingTitles(results);
     });
   }
 

@@ -897,7 +897,7 @@ window.__rosterData = [
   {
     "badge": 179,
     "display": "matty*2**e",
-    "status": "mia"
+    "status": "detected"
   },
   {
     "badge": 180,
