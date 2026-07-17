@@ -4,7 +4,8 @@
   // ════════════════════════════════════════════════════════════════
   //  Discord Webhook URL
   // ════════════════════════════════════════════════════════════════
-  var WEBHOOK_URL = 'https://discord.com/api/webhooks/1526034307125215355/9WvOLTIWGVvtziJVrzYEH7N5psqc6P1L5gYCRiYU1Ysaq5Vg0MwiUL05aVWXcon8-PJQ';
+  // Injected at deploy time via GitHub Actions. Locally, falls back to fake submit.
+  var WEBHOOK_URL = '{{WEBHOOK_FORM_URL}}';
 
   // ════════════════════════════════════════════════════════════════
   //  TRIVIA CAPTCHA QUESTIONS

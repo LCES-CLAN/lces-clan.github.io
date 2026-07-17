@@ -24,8 +24,8 @@ import urllib.request
 import urllib.error
 
 # ── Configuration ──────────────────────────────────────────────────
-# Replace this with your actual Discord webhook URL.
-WEBHOOK_URL = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+# Webhook URL is loaded from .env (WEBHOOK_URL) — see .env.example.
+# Can also pass via --webhook <url> CLI argument.
 
 CHUNK_SIZE = 25       # badges per message
 MAX_GT_LEN = 55       # max gamertag chars before truncation with "..."
@@ -90,6 +90,32 @@ def send_webhook(url, content):
         return -1
 
 
+def load_webhook_url():
+    """Read webhook URL from .env, env var, or --webhook CLI arg."""
+    # Priority 1: CLI --webhook argument
+    if len(sys.argv) > 1 and sys.argv[1] == "--webhook" and len(sys.argv) > 2:
+        return sys.argv[2]
+
+    # Priority 2: .env file in project root
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(script_dir)  # project root
+    env_path = os.path.join(root_dir, ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("WEBHOOK_URL=") or line.startswith("export WEBHOOK_URL="):
+                    prefix = "export " if line.startswith("export ") else ""
+                    return line[len(prefix + "WEBHOOK_URL="):].strip().strip('"').strip("'")
+
+    # Priority 3: environment variable
+    env_url = os.environ.get("WEBHOOK_URL") or os.environ.get("DISCORD_WEBHOOK_URL")
+    if env_url:
+        return env_url
+
+    return None
+
+
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     data_file = os.path.join(script_dir, "roster.json")
@@ -101,14 +127,20 @@ def main():
     with open(data_file, "r") as f:
         data = json.load(f)
 
-    # Parse --webhook argument
-    url = WEBHOOK_URL
-    if len(sys.argv) > 1 and sys.argv[1] == "--webhook" and len(sys.argv) > 2:
-        url = sys.argv[2]
-
-    if "YOUR_WEBHOOK" in url:
-        print("  [!] Please set WEBHOOK_URL in the script or pass --webhook <url>")
-        print("  Usage: python roster/discord_webhook.py --webhook https://discord.com/api/webhooks/...")
+    url = load_webhook_url()
+    if not url or "YOUR_WEBHOOK" in url:
+        print("  [!] No Discord webhook URL configured.")
+        print()
+        print("  Create a .env file in the project root with:")
+        print("    WEBHOOK_URL=https://discord.com/api/webhooks/...")
+        print()
+        print("  See .env.example for the format, then:")
+        print("    cp .env.example .env")
+        print("    # edit .env with your real webhook URL")
+        print("    python roster/discord_webhook.py")
+        print()
+        print("  Or pass the URL directly:")
+        print("    python roster/discord_webhook.py --webhook https://discord.com/api/webhooks/...")
         sys.exit(1)
 
     # Build lines, filtering out RESERVED entries (or keep them — your call).
