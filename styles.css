@@ -828,9 +828,27 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   0%, 100% { border-color: var(--border); }
   50% { border-color: rgba(26,138,255,0.15); }
 }
+
+/* ── Bottom-of-page "loading more" spinner ─── */
+.media-load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem 0 2rem;
+  opacity: 0.7;
+}
+.media-load-text {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cat-spinner { animation: none; opacity: 0.5; }
   .media-cat-skeleton { animation: none; }
+  .media-load-more .cat-spinner { animation: none; opacity: 0.5; }
 }
 
 /* ─── Animations ─── */

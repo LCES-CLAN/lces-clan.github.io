@@ -534,7 +534,10 @@
         sentinel.insertAdjacentHTML('beforebegin', html);
       } else {
         container.innerHTML = html +
-          '<div id="' + SENTINEL_ID + '" aria-hidden="true"></div>';
+          '<div id="' + SENTINEL_ID + '" class="media-load-more">' +
+            '<div class="cat-spinner"></div>' +
+            '<span class="media-load-text">Loading more evidence\u2026</span>' +
+          '</div>';
       }
 
       if (data) bindEvents('cat' + idx, data.videos || []);
@@ -655,7 +658,7 @@
       if (sentinel) {
         observer = new IntersectionObserver(function(entries) {
           if (entries[0].isIntersecting) renderNext();
-        }, { rootMargin: '300px' });
+        }, { rootMargin: '0px 0px 100px 0px' });
         observer.observe(sentinel);
       }
     }
