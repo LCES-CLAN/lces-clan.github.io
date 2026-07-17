@@ -1,4 +1,6 @@
 {
+  "title": "Promotional Videos",
+  "hidden": true,
   "videos": [
     {
       "title": "2008 Promotional Video",
@@ -8,14 +10,6 @@
     {
       "title": "2011 Promotional Video",
       "youtubeId": "75sIYxwYFgI",
-      "source": "youtube"
-    },
-    {
-      "youtubeId": "mcP-B7roH0o",
-      "source": "youtube"
-    },
-    {
-      "youtubeId": "WBgHgbH4rw4",
       "source": "youtube"
     }
   ]

@@ -359,6 +359,17 @@
     });
   }
 
+  // Normalize a video entry so every downstream lookup can rely on a single
+  // canonical `youtubeId` key. Accepts common casing typos (e.g. `youtubeID`)
+  // so a hand-typed field name doesn't silently disable title auto-fill,
+  // thumbnails, the embed URL, or the Watch link. The original property is
+  // left untouched so JSON serials still match the data layout on disk.
+  function normalizeVideo(v) {
+    if (!v) return v;
+    v.youtubeId = v.youtubeId || v.youtubeID || null;
+    return v;
+  }
+
   // Merges playlist videos into the category, avoiding duplicates by YouTube ID.
   // Manually listed videos (from index.json "videos") come first.
   function mergePlaylistVideos(category, playlistVideos) {
@@ -414,7 +425,8 @@
               var category = {
                 folder: folder,
                 title: data.title || catConfig.title || folder,
-                videos: data.videos || []
+                videos: (data.videos || []).map(normalizeVideo),
+                hidden: data.hidden === true
               };
 
               // If the index.json specifies a playlistId, fetch the playlist
@@ -449,6 +461,9 @@
     }
 
     Promise.all(fetches).then(function(results) {
+      // Filter out hidden categories
+      results = results.filter(function(c) { return !c.hidden; });
+
       // Fetch missing YouTube titles before rendering
       return fetchMissingTitles(results).then(function() {
         var html = '';
