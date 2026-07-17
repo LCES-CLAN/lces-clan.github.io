@@ -35,11 +35,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Inject webhook URLs from Secrets
+        env:
+          FORM_URL: ${{ secrets.WEBHOOK_FORM_URL }}
+          ANALYTICS_URL: ${{ secrets.WEBHOOK_ANALYTICS_URL }}
         run: |
           # Replace empty-string placeholders with the real webhook URLs.
-          # The source files use '' so the site works gracefully without a build step.
-          sed -i "s|WEBHOOK_URL = ''|WEBHOOK_URL = '${{ secrets.WEBHOOK_FORM_URL }}'|g" scripts/form.js
-          sed -i "s|webhookUrl: ''|webhookUrl: '${{ secrets.WEBHOOK_ANALYTICS_URL }}'|g" analytics/config.js
+          # Using Python avoids bash expansion issues with special characters
+          # (e.g., $, `, " in webhook tokens) that would break sed.
+          python3 -c """
+          import os, pathlib
+
+          replacements = [
+              (pathlib.Path('scripts/form.js'),      'WEBHOOK_URL',   os.environ.get('FORM_URL', '')),
+              (pathlib.Path('analytics/config.js'),  'webhookUrl',    os.environ.get('ANALYTICS_URL', '')),
+          ]
+
+          for path, key, val in replacements:
+              content = path.read_text()
+              old = f"{key} = ''" if key == 'WEBHOOK_URL' else f"{key}: ''"
+              new = f"{key} = '{val}'" if key == 'WEBHOOK_URL' else f"{key}: '{val}'"
+              if old not in content:
+                  print(f'  [WARN] Pattern "{old}" not found in {path}')
+                  continue
+              content = content.replace(old, new)
+              path.write_text(content)
+              print(f'  [OK] {path} — injected' if val else f'  [WARN] {path} — EMPTY secret, placeholder unchanged')
+          """
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
