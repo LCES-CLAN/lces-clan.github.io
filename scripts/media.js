@@ -110,7 +110,7 @@
     if (videos.length === 0) return '';
 
     var catId = 'cat' + idx;
-    var gridClass = videos.length === 5 ? ' media-grid-3' : videos.length === 4 ? ' media-grid-2' : '';
+    var gridClass = videos.length === 4 ? ' media-grid-2' : '';
     var overflow = videos.length > MAX_VISIBLE;
 
     // Stagger the reveal animation slightly for categories that are already

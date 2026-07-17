@@ -540,15 +540,6 @@ body::before {
   padding: 0.5rem 0 0.5rem;
 }
 
-/* 5-video category: 3+2 layout, same item size as 4-col via CSS Grid */
-.media-thumbnails.media-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: calc((3 * 100% - 1.25rem) / 4);
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* 4 columns (default) */
 .media-thumbnails .media-thumb {
   width: calc((100% - 3 * 1.25rem) / 4);
@@ -736,11 +727,6 @@ body::before {
   }
   .media-thumbnails {
     gap: 0.75rem;
-  }
-  /* Reset desktop grid-3 — portrait uses 3 columns for all */
-  .media-thumbnails.media-grid-3 {
-    display: flex;
-    max-width: none;
   }
   .media-thumbnails .media-thumb {
     width: calc((100% - 2 * 0.75rem) / 3);
