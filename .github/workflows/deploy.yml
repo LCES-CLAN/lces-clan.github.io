@@ -40,9 +40,8 @@ jobs:
           ANALYTICS_URL: ${{ secrets.WEBHOOK_ANALYTICS_URL }}
         run: |
           # Replace empty-string placeholders with the real webhook URLs.
-          # Using Python avoids bash expansion issues with special characters
-          # (e.g., $, `, " in webhook tokens) that would break sed.
-          python3 -c """
+          # Written to a temp file and executed to avoid bash mangling quotes.
+          python3 << 'EOF'
           import os, pathlib
 
           replacements = [
@@ -52,15 +51,18 @@ jobs:
 
           for path, key, val in replacements:
               content = path.read_text()
-              old = f"{key} = ''" if key == 'WEBHOOK_URL' else f"{key}: ''"
-              new = f"{key} = '{val}'" if key == 'WEBHOOK_URL' else f"{key}: '{val}'"
+              old = key + " = ''" if key == 'WEBHOOK_URL' else key + ": ''"
+              new = key + " = '" + val + "'" if key == 'WEBHOOK_URL' else key + ": '" + val + "'"
               if old not in content:
-                  print(f'  [WARN] Pattern "{old}" not found in {path}')
+                  print('  [WARN] Pattern "' + old + '" not found in ' + str(path))
                   continue
               content = content.replace(old, new)
               path.write_text(content)
-              print(f'  [OK] {path} — injected' if val else f'  [WARN] {path} — EMPTY secret, placeholder unchanged')
-          """
+              if val:
+                  print('  [OK] ' + str(path) + ' — injected')
+              else:
+                  print('  [WARN] ' + str(path) + ' — EMPTY secret, placeholder unchanged')
+          EOF
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
