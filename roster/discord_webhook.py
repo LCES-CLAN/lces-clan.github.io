@@ -75,7 +75,10 @@ def send_webhook(url, content):
     req = urllib.request.Request(
         url,
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers={
+                "Content-Type": "application/json",
+                "User-Agent": "LCES-RosterBot/1.0 (https://lcesclan.net)"
+            },
         method="POST",
     )
     try:
