@@ -668,7 +668,7 @@
       if (sentinel) {
         observer = new IntersectionObserver(function(entries) {
           if (entries[0].isIntersecting) renderNext();
-        }, { rootMargin: '0px 0px 50px 0px' });
+        }, { rootMargin: '0px 0px 75px 0px' });
         observer.observe(sentinel);
       }
     }
