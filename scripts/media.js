@@ -59,6 +59,12 @@
       ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
   }
 
+  // Returns the best available title for a video, falling back to the
+  // YouTube ID (or "Untitled") so the UI never shows blank text.
+  function getVideoTitle(video) {
+    return video.title || video.youtubeId || 'Untitled';
+  }
+
   function loadVideo(categoryId, index, videos) {
     if (index < 0 || index >= videos.length) return;
     var video = videos[index];
@@ -67,7 +73,7 @@
     if (player) player.innerHTML = buildPlayerContent(video);
 
     var titleEl = document.getElementById('media-title-' + categoryId);
-    if (titleEl) titleEl.textContent = video.title;
+    if (titleEl) titleEl.textContent = getVideoTitle(video);
 
     var thumbs = document.querySelectorAll('#media-cat-' + categoryId + ' .media-thumb');
     for (var i = 0; i < thumbs.length; i++) {
@@ -103,13 +109,6 @@
     var videos = category.videos || [];
     if (videos.length === 0) return '';
 
-    // Ensure every video has a title (fallback if missing)
-    for (var i = 0; i < videos.length; i++) {
-      if (!videos[i].title) {
-        videos[i].title = videos[i].youtubeId || 'Untitled';
-      }
-    }
-
     var catId = 'cat' + idx;
     var overflow = videos.length > MAX_VISIBLE;
 
@@ -132,7 +131,7 @@
         '<button type="button" class="media-thumb' + (j === 0 ? ' active' : '') + hiddenClass +
         '" data-index="' + j + '"' +
         ' aria-current="' + (j === 0 ? 'true' : 'false') + '"' +
-        ' aria-label="Play: ' + escapeAttr(v.title) + '">' +
+        ' aria-label="Play: ' + escapeAttr(getVideoTitle(v)) + '">' +
           '<img src="' + thumbUrl + '" alt="" loading="lazy">' +
           '<span class="media-thumb-num">' + (j + 1) + '</span>' +
         '</button>';
@@ -165,7 +164,7 @@
           '<button type="button" class="media-prev" id="media-prev-' + catId +
           '" disabled aria-label="Previous video">&larr;</button>' +
           '<span class="media-title" id="media-title-' + catId + '">' +
-          escapeHtml(firstVideo.title) + '</span>' +
+          escapeHtml(getVideoTitle(firstVideo)) + '</span>' +
           '<button type="button" class="media-next" id="media-next-' + catId +
           '" aria-label="Next video">&rarr;</button>' +
         '</div>' +
