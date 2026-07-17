@@ -280,22 +280,6 @@
       });
   }
 
-  // Batch-fetch missing titles for all YouTube videos across all categories.
-  // (Legacy helper — no longer directly called; title fetching is handled
-  // inline in tryFetchMissingTitles below.)
-  function fetchMissingTitles(results) {
-    var fetches = [];
-    for (var r = 0; r < results.length; r++) {
-      var videos = results[r].videos || [];
-      for (var v = 0; v < videos.length; v++) {
-        if (!videos[v].title && videos[v].youtubeId) {
-          fetches.push(fetchYouTubeTitle(videos[v], r, v));
-        }
-      }
-    }
-    return fetches.length ? Promise.all(fetches) : Promise.resolve();
-  }
-
   // ── YouTube Playlist Fetching ──────────────────────────────────────
   // Fetches videos from a YouTube playlist using a three-tier approach:
   //   1. YouTube Data API v3 (if API key is set)
