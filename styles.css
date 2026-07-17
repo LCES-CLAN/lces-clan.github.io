@@ -783,24 +783,6 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* ─── Media Page Loading Skeleton ─── */
-.media-skeleton { display: flex; flex-direction: column; gap: 1.25rem; }
-.skeleton-panel {
-  height: 320px;
-  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
-  background-size: 200% 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  animation: skeletonSweep 1.6s ease-in-out infinite;
-}
-@keyframes skeletonSweep {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .skeleton-panel { animation: none; opacity: 0.6; }
-}
-
 /* ─── Per‑Category Skeleton Spinner ─── */
 .cat-spinner-wrap {
   position: absolute;

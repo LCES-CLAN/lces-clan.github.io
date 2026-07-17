@@ -281,6 +281,8 @@
   }
 
   // Batch-fetch missing titles for all YouTube videos across all categories.
+  // (Legacy helper — no longer directly called; title fetching is handled
+  // inline in tryFetchMissingTitles below.)
   function fetchMissingTitles(results) {
     var fetches = [];
     for (var r = 0; r < results.length; r++) {
@@ -519,15 +521,21 @@
       }
 
       if (skeletonsRendered >= total) {
-        var s = document.getElementById(SENTINEL_ID);
-        if (s) s.remove();
-        if (observer) observer.disconnect();
+        cleanup();
         return;
       }
 
       var idx = skeletonsRendered;
       var data = pendingData[idx];
       var html = data ? renderCategory(data, idx) : renderSkeleton(categories[idx], idx);
+
+      // Skip categories that produced no HTML (zero videos after merge)
+      if (!html) {
+        skeletonsRendered++;
+        renderNext();
+        return;
+      }
+
       var sentinel = document.getElementById(SENTINEL_ID);
 
       if (sentinel) {
@@ -543,12 +551,14 @@
       if (data) bindEvents('cat' + idx, data.videos || []);
       skeletonsRendered++;
 
-      if (skeletonsRendered >= total) {
-        var s2 = document.getElementById(SENTINEL_ID);
-        if (s2) s2.remove();
-        if (observer) observer.disconnect();
-        tryFetchMissingTitles();
-      }
+      if (skeletonsRendered >= total) cleanup();
+    }
+
+    function cleanup() {
+      var s = document.getElementById(SENTINEL_ID);
+      if (s) s.remove();
+      if (observer) observer.disconnect();
+      tryFetchMissingTitles();
     }
 
     // ── Finalise once everything is settled ───────────────────────
@@ -658,7 +668,7 @@
       if (sentinel) {
         observer = new IntersectionObserver(function(entries) {
           if (entries[0].isIntersecting) renderNext();
-        }, { rootMargin: '0px 0px 100px 0px' });
+        }, { rootMargin: '0px 0px 50px 0px' });
         observer.observe(sentinel);
       }
     }
