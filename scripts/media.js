@@ -33,7 +33,7 @@
   var MAX_VISIBLE = 8;
 
   function escapeAttr(str) {
-    return String(str).replace(/"/g, '&quot;').replace(/&/g, '&amp;');
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
   function escapeHtml(str) {
@@ -299,6 +299,30 @@
   //   1. YouTube Data API v3 (if API key is set)
   //   2. RSS feed via CORS proxy (no key needed)
   //   3. Returns empty array if all methods fail
+
+  // AbortController-based timeout for fetch (falls back gracefully in
+  // older browsers that don't support AbortController).
+  function fetchWithTimeout(url, timeoutMs) {
+    var controller;
+    var signal;
+    var timeoutId;
+    try {
+      controller = new AbortController();
+      signal = controller.signal;
+      timeoutId = setTimeout(function() { controller.abort(); }, timeoutMs);
+    } catch (e) {
+      // AbortController not supported — proceed without timeout
+      return fetch(url);
+    }
+    return fetch(url, { signal: signal }).then(function(res) {
+      clearTimeout(timeoutId);
+      return res;
+    }, function(err) {
+      clearTimeout(timeoutId);
+      throw err;
+    });
+  }
+
   function fetchPlaylistVideos(playlistId) {
     // Tier 1: YouTube Data API v3
     function tryYouTubeAPI() {
@@ -311,7 +335,7 @@
         '&playlistId=' + encodeURIComponent(playlistId) +
         '&key=' + encodeURIComponent(YOUTUBE_API_KEY);
 
-      return fetch(url)
+      return fetchWithTimeout(url, 10000)
         .then(function(res) {
           if (!res.ok) throw new Error('YouTube API returned HTTP ' + res.status);
           return res.json();
@@ -337,7 +361,7 @@
         encodeURIComponent(playlistId);
       var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      return fetch(proxyUrl)
+      return fetchWithTimeout(proxyUrl, 5000)
         .then(function(res) {
           if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
           return res.text();
@@ -499,12 +523,7 @@
       // Filter out hidden categories
       results = results.filter(function(c) { return !c.hidden; });
 
-      var html = '';
-      for (var j = 0; j < results.length; j++) {
-        html += renderCategory(results[j], j);
-      }
-
-      if (!html) {
+      if (!results.length) {
         container.innerHTML =
           '<div class="panel">' +
             '<div class="panel-label">NO EVIDENCE</div>' +
@@ -515,10 +534,59 @@
         return;
       }
 
-      container.innerHTML = html;
+      var total = results.length;
+      var rendered = 0;
+      var observer;
 
-      for (var k = 0; k < results.length; k++) {
-        bindEvents('cat' + k, results[k].videos || []);
+      // Sentinel ID used to anchor new categories before it
+      var SENTINEL_ID = 'media-lazy-sentinel';
+
+      // Renders the next category. When all are rendered the sentinel
+      // is removed and the observer disconnected.
+      function renderNext() {
+        if (rendered >= total) return;
+
+        var idx = rendered;
+        var html = renderCategory(results[idx], idx);
+        var sentinel = document.getElementById(SENTINEL_ID);
+
+        if (sentinel) {
+          sentinel.insertAdjacentHTML('beforebegin', html);
+        } else {
+          // First category — replace the skeleton and append a sentinel
+          container.innerHTML = html +
+            '<div id="' + SENTINEL_ID + '" aria-hidden="true"></div>';
+        }
+
+        bindEvents('cat' + idx, results[idx].videos || []);
+        rendered++;
+
+        // All done — clean up sentinel and observer
+        if (rendered >= total) {
+          var s = document.getElementById(SENTINEL_ID);
+          if (s) s.remove();
+          if (observer) observer.disconnect();
+        }
+      }
+
+      // Render the first category immediately
+      renderNext();
+
+      // If there are more categories, set up Intersection Observer to
+      // lazily load the rest as the user scrolls. rootMargin makes it
+      // trigger 300px before the sentinel enters the viewport so the
+      // next category is ready by the time the user reaches it.
+      if (rendered < total) {
+        var sentinel = document.getElementById(SENTINEL_ID);
+        if (sentinel) {
+          observer = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+              renderNext();
+            }
+          }, { rootMargin: '300px' });
+
+          observer.observe(sentinel);
+        }
       }
 
       // Fetch missing YouTube titles in the background so the page feels

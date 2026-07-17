@@ -17,7 +17,7 @@
   var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   function escapeAttr(str) {
-    return String(str).replace(/"/g, '&quot;').replace(/&/g, '&amp;');
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
   function getEmbedUrl(videoId) {
@@ -110,6 +110,30 @@
   }
 
   // ── YouTube Playlist Fetching ──────────────────────────────────────
+
+  // AbortController-based timeout for fetch (falls back gracefully in
+  // older browsers that don't support AbortController).
+  function fetchWithTimeout(url, timeoutMs) {
+    var controller;
+    var signal;
+    var timeoutId;
+    try {
+      controller = new AbortController();
+      signal = controller.signal;
+      timeoutId = setTimeout(function() { controller.abort(); }, timeoutMs);
+    } catch (e) {
+      // AbortController not supported — proceed without timeout
+      return fetch(url);
+    }
+    return fetch(url, { signal: signal }).then(function(res) {
+      clearTimeout(timeoutId);
+      return res;
+    }, function(err) {
+      clearTimeout(timeoutId);
+      throw err;
+    });
+  }
+
   function fetchPlaylistVideos(playlistId) {
     // Tier 1: YouTube Data API v3
     function tryYouTubeAPI() {
@@ -122,7 +146,7 @@
         '&playlistId=' + encodeURIComponent(playlistId) +
         '&key=' + encodeURIComponent(YOUTUBE_API_KEY);
 
-      return fetch(url)
+      return fetchWithTimeout(url, 10000)
         .then(function(res) {
           if (!res.ok) throw new Error('YouTube API returned HTTP ' + res.status);
           return res.json();
@@ -148,7 +172,7 @@
         encodeURIComponent(playlistId);
       var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      return fetch(proxyUrl)
+      return fetchWithTimeout(proxyUrl, 5000)
         .then(function(res) {
           if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
           return res.text();
