@@ -631,10 +631,23 @@ function renderRoster(data) {
       altHtml += '<span class="gt-message">' + msg + '</span>';
     }
 
+    var hasAlts = slashIdx !== -1;
+    var hasMessage = !!msg;
+    var toggleLabel;
+    if (hasAlts && hasMessage) {
+      toggleLabel = 'more';
+    } else if (hasAlts) {
+      toggleLabel = 'aka';
+    } else if (hasMessage) {
+      toggleLabel = 'memo';
+    } else {
+      toggleLabel = 'more';
+    }
+
     gamertagHtml =
       '<div class="gt-row">' +
         '<span class="gt-text truncated ' + tagClass + '">' + mainText + '</span>' +
-        '<span class="gt-toggle" onclick="var r=this.parentElement;r.querySelector(\'.gt-text\').classList.toggle(\'truncated\');r.nextElementSibling.classList.toggle(\'visible\');var x=this.classList.toggle(\'expanded\');this.innerHTML=x?\'less ▴\':\'more ▾\'">more ▾</span>' +
+        '<span class="gt-toggle" onclick="var r=this.parentElement;r.querySelector(\'.gt-text\').classList.toggle(\'truncated\');r.nextElementSibling.classList.toggle(\'visible\');var x=this.classList.toggle(\'expanded\');this.innerHTML=x?\'less ▴\':\'' + toggleLabel + ' ▾\'">' + toggleLabel + ' ▾</span>' +
       '</div>' +
       '<div class="gt-alts">' + altHtml + '</div>';
 
