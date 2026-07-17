@@ -27,6 +27,9 @@
 
   var MAX_VISIBLE = 8;
 
+  // Shared external-link icon SVG used by both renderCategory and loadVideo.
+  var EXTERNAL_LINK_ICON = '<svg class="media-title-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+
   function escapeAttr(str) {
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
@@ -68,7 +71,19 @@
     if (player) player.innerHTML = buildPlayerContent(video);
 
     var titleEl = document.getElementById('media-title-' + categoryId);
-    if (titleEl) titleEl.textContent = getVideoTitle(video);
+    if (titleEl) {
+      if (video.source !== 'local' && video.youtubeId) {
+        titleEl.innerHTML = escapeHtml(getVideoTitle(video)) + EXTERNAL_LINK_ICON;
+        titleEl.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
+        titleEl.target = '_blank';
+        titleEl.rel = 'noopener';
+      } else {
+        titleEl.innerHTML = escapeHtml(getVideoTitle(video));
+        titleEl.removeAttribute('href');
+        titleEl.removeAttribute('target');
+        titleEl.removeAttribute('rel');
+      }
+    }
 
     var thumbs = document.querySelectorAll('#media-cat-' + categoryId + ' .media-thumb');
     for (var i = 0; i < thumbs.length; i++) {
@@ -78,16 +93,6 @@
 
     if (thumbs[index]) {
       thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-
-    var link = document.getElementById('media-ytlink-' + categoryId);
-    if (link) {
-      if (video.source !== 'local' && video.youtubeId) {
-        link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(video.youtubeId);
-        link.style.display = '';
-      } else {
-        link.style.display = 'none';
-      }
     }
 
     var prev = document.getElementById('media-prev-' + categoryId);
@@ -158,20 +163,18 @@
         '<div class="media-bar">' +
           '<button type="button" class="media-prev" id="media-prev-' + catId +
           '" disabled aria-label="Previous video">&larr;</button>' +
-          '<span class="media-title" id="media-title-' + catId + '">' +
-          escapeHtml(getVideoTitle(firstVideo)) + '</span>' +
+          '<a class="media-title media-title-link" id="media-title-' + catId + '"' +
+          ' href="' + ytHref + '"' +
+          (hasYtLink ? ' target="_blank" rel="noopener"' : '') + '>' +
+          escapeHtml(getVideoTitle(firstVideo)) + EXTERNAL_LINK_ICON +
+          '</a>' +
           '<button type="button" class="media-next" id="media-next-' + catId +
           '" aria-label="Next video">&rarr;</button>' +
         '</div>' +
         '<div class="media-thumbnails">' +
           thumbsHtml +
         '</div>' +
-        '<div class="media-actions">' +
-          '<a class="media-watch-link" id="media-ytlink-' + catId +
-          '" href="' + ytHref + '" target="_blank" rel="noopener"' +
-          (hasYtLink ? '' : ' style="display:none"') +
-          '>Watch on YouTube &nearr;</a>' +
-        '</div>' +
+
         expandHtml +
       '</div>';
   }
@@ -270,7 +273,9 @@
         var currentIdx = parseInt(container.getAttribute('data-index-' + catId), 10) || 0;
         if (currentIdx === videoIdx) {
           var titleEl = document.getElementById('media-title-' + catId);
-          if (titleEl) titleEl.textContent = video.title;
+          if (titleEl) {
+            titleEl.innerHTML = escapeHtml(video.title) + EXTERNAL_LINK_ICON;
+          }
         }
       });
   }

@@ -587,14 +587,12 @@ body::before {
   pointer-events: none;
 }
 
-.evidence-actions,
-.media-actions {
+.evidence-actions {
   text-align: center;
   margin-top: 0.4rem;
 }
 
-.evidence-watch-link,
-.media-watch-link {
+.evidence-watch-link {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.6rem;
   color: var(--text-dim);
@@ -603,10 +601,41 @@ body::before {
   transition: opacity 0.2s, color 0.2s;
 }
 
-.evidence-watch-link:hover,
-.media-watch-link:hover {
+.evidence-watch-link:hover {
   opacity: 1;
   color: var(--blue-bright);
+}
+
+/* ─── Media Page — Title link replaces old "Watch on YouTube" ─── */
+.media-title-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: var(--text-bright);
+  transition: color 0.2s ease;
+  cursor: default;
+}
+
+.media-title-link[href] {
+  cursor: pointer;
+  color: var(--text-bright);
+}
+
+.media-title-link[href]:hover {
+  color: var(--blue-bright);
+}
+
+.media-title-link[href]:hover .media-title-icon {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+.media-title-icon {
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 /* ─── Media Page — Unique Styles ─── */
