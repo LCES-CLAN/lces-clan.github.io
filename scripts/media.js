@@ -355,15 +355,20 @@
         });
     }
 
-    // Tier 2: RSS feed via CORS proxy
+    // Tier 2: RSS feed — try direct first, fall back to CORS proxy
     function tryRSSFeed() {
       var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
         encodeURIComponent(playlistId);
       var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      return fetchWithTimeout(proxyUrl, 5000)
+      // YouTube RSS feeds support CORS; fetch directly when possible
+      return fetchWithTimeout(rssUrl, 3000)
+        .catch(function() {
+          // Direct fetch failed (network / CORS) — fall back to proxy
+          return fetchWithTimeout(proxyUrl, 5000);
+        })
         .then(function(res) {
-          if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
+          if (!res.ok) throw new Error('RSS fetch returned HTTP ' + res.status);
           return res.text();
         })
         .then(function(xmlText) {
@@ -467,63 +472,94 @@
       return;
     }
 
-    // Fetch each folder's index.json in parallel
-    var fetches = [];
-    for (var i = 0; i < categories.length; i++) {
-      // IIFE captures the full category config per iteration
-      (function(catConfig) {
-        var folder = catConfig.folder;
-        var url = 'assets/videos/' + folder + '/index.json';
-        fetches.push(
-          fetch(url)
-            .then(function(res) {
-              if (!res.ok) throw new Error('HTTP ' + res.status);
-              return res.json();
-            })
-            .then(function(data) {
-              var category = {
-                folder: folder,
-                title: data.title || catConfig.title || folder,
-                videos: (data.videos || []).map(normalizeVideo),
-                hidden: data.hidden === true
-              };
+    var total = categories.length;
 
-              // If the index.json specifies a playlistId, fetch the playlist
-              if (data.playlistId) {
-                return fetchPlaylistVideos(data.playlistId).then(function(playlistVideos) {
-                  category.videos = mergePlaylistVideos(category, playlistVideos);
-                  return category;
-                });
-              }
+    // pendingData[idx] = null (fetching), category object (resolved), or
+    // { hidden: true } for hidden categories.
+    var pendingData = new Array(total);
+    var resolvedCount = 0;
+    var skeletonsRendered = 0;
+    var titlesFetched = false;
+    var observer;
+    var SENTINEL_ID = 'media-lazy-sentinel';
 
-              return category;
-            })
-            .catch(function() {
-              // No index.json found — use files from the HTML category config
-              var files = catConfig.files || [];
-              var generatedVideos = [];
-              for (var f = 0; f < files.length; f++) {
-                generatedVideos.push({
-                  title: files[f].replace(/\.[^.]+$/, ''),
-                  source: 'local',
-                  localPath: 'assets/videos/' + folder + '/' + files[f]
-                });
-              }
-              return {
-                folder: folder,
-                title: catConfig.title || folder,
-                videos: generatedVideos
-              };
-            })
-        );
-      })(categories[i]);
+    // ── Per‑category skeleton ──────────────────────────────────────
+    function renderSkeleton(catConfig, idx) {
+      var revealDelay = idx < 4 ? ' style="transition-delay:' + (idx * 0.08) + 's"' : '';
+      return '<div class="panel media-category media-cat-skeleton reveal" id="media-cat-cat' + idx + '"' + revealDelay + '>' +
+        '<div class="panel-label">' + escapeHtml(catConfig.title || catConfig.folder) + '</div>' +
+        '<div class="media-player">' +
+          '<div class="cat-spinner-wrap"><div class="cat-spinner"></div></div>' +
+        '</div>' +
+        '<div class="media-bar" style="opacity:0.35">' +
+          '<button type="button" class="media-prev" disabled aria-label="Previous">&larr;</button>' +
+          '<span class="media-title">Loading\u2026</span>' +
+          '<button type="button" class="media-next" disabled aria-label="Next">&rarr;</button>' +
+        '</div>' +
+      '</div>';
     }
 
-    Promise.all(fetches).then(function(results) {
-      // Filter out hidden categories
-      results = results.filter(function(c) { return !c.hidden; });
+    // ── Replace a skeleton with real content ───────────────────────
+    function upgradeSkeleton(idx, category) {
+      var skeleton = document.getElementById('media-cat-cat' + idx);
+      if (!skeleton) return;
+      var html = renderCategory(category, idx);
+      var temp = document.createElement('div');
+      temp.innerHTML = html;
+      var realEl = temp.firstChild;
+      skeleton.parentNode.replaceChild(realEl, skeleton);
+      bindEvents('cat' + idx, category.videos || []);
+    }
 
-      if (!results.length) {
+    // ── Lazy skeleton rendering ────────────────────────────────────
+    function renderNext() {
+      // Skip categories we already know are hidden
+      while (skeletonsRendered < total && pendingData[skeletonsRendered] && pendingData[skeletonsRendered].hidden) {
+        skeletonsRendered++;
+      }
+
+      if (skeletonsRendered >= total) {
+        var s = document.getElementById(SENTINEL_ID);
+        if (s) s.remove();
+        if (observer) observer.disconnect();
+        return;
+      }
+
+      var idx = skeletonsRendered;
+      var data = pendingData[idx];
+      var html = data ? renderCategory(data, idx) : renderSkeleton(categories[idx], idx);
+      var sentinel = document.getElementById(SENTINEL_ID);
+
+      if (sentinel) {
+        sentinel.insertAdjacentHTML('beforebegin', html);
+      } else {
+        container.innerHTML = html +
+          '<div id="' + SENTINEL_ID + '" aria-hidden="true"></div>';
+      }
+
+      if (data) bindEvents('cat' + idx, data.videos || []);
+      skeletonsRendered++;
+
+      if (skeletonsRendered >= total) {
+        var s2 = document.getElementById(SENTINEL_ID);
+        if (s2) s2.remove();
+        if (observer) observer.disconnect();
+        tryFetchMissingTitles();
+      }
+    }
+
+    // ── Finalise once everything is settled ───────────────────────
+    function tryFetchMissingTitles() {
+      if (titlesFetched) return;
+      if (resolvedCount < total) return;
+      titlesFetched = true;
+
+      // Check whether every category ended up hidden
+      var anyVisible = false;
+      for (var ri = 0; ri < total; ri++) {
+        if (pendingData[ri] && !pendingData[ri].hidden) { anyVisible = true; break; }
+      }
+      if (!anyVisible) {
         container.innerHTML =
           '<div class="panel">' +
             '<div class="panel-label">NO EVIDENCE</div>' +
@@ -534,65 +570,95 @@
         return;
       }
 
-      var total = results.length;
-      var rendered = 0;
-      var observer;
-
-      // Sentinel ID used to anchor new categories before it
-      var SENTINEL_ID = 'media-lazy-sentinel';
-
-      // Renders the next category. When all are rendered the sentinel
-      // is removed and the observer disconnected.
-      function renderNext() {
-        if (rendered >= total) return;
-
-        var idx = rendered;
-        var html = renderCategory(results[idx], idx);
-        var sentinel = document.getElementById(SENTINEL_ID);
-
-        if (sentinel) {
-          sentinel.insertAdjacentHTML('beforebegin', html);
-        } else {
-          // First category — replace the skeleton and append a sentinel
-          container.innerHTML = html +
-            '<div id="' + SENTINEL_ID + '" aria-hidden="true"></div>';
-        }
-
-        bindEvents('cat' + idx, results[idx].videos || []);
-        rendered++;
-
-        // All done — clean up sentinel and observer
-        if (rendered >= total) {
-          var s = document.getElementById(SENTINEL_ID);
-          if (s) s.remove();
-          if (observer) observer.disconnect();
+      // Fetch missing YouTube titles, using original indices so
+      // DOM IDs ("cat" + ri) match what renderCategory produced.
+      var fetches = [];
+      for (var ri = 0; ri < total; ri++) {
+        var category = pendingData[ri];
+        if (!category || category.hidden) continue;
+        var videos = category.videos || [];
+        for (var v = 0; v < videos.length; v++) {
+          if (!videos[v].title && videos[v].youtubeId) {
+            fetches.push(fetchYouTubeTitle(videos[v], ri, v));
+          }
         }
       }
+      if (fetches.length) Promise.all(fetches);
+    }
 
-      // Render the first category immediately
-      renderNext();
+    // ── Kick off parallel fetches ──────────────────────────────────
+    for (var i = 0; i < total; i++) {
+      (function(catConfig, idx) {
+        var folder = catConfig.folder;
+        var url = 'assets/videos/' + folder + '/index.json';
 
-      // If there are more categories, set up Intersection Observer to
-      // lazily load the rest as the user scrolls. rootMargin makes it
-      // trigger 300px before the sentinel enters the viewport so the
-      // next category is ready by the time the user reaches it.
-      if (rendered < total) {
-        var sentinel = document.getElementById(SENTINEL_ID);
-        if (sentinel) {
-          observer = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) {
-              renderNext();
+        fetch(url)
+          .then(function(res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function(data) {
+            var category = {
+              folder: folder,
+              title: data.title || catConfig.title || folder,
+              videos: (data.videos || []).map(normalizeVideo),
+              hidden: data.hidden === true
+            };
+
+            if (data.playlistId) {
+              return fetchPlaylistVideos(data.playlistId).then(function(playlistVideos) {
+                category.videos = mergePlaylistVideos(category, playlistVideos);
+                return category;
+              });
             }
-          }, { rootMargin: '300px' });
 
-          observer.observe(sentinel);
-        }
+            return category;
+          })
+          .catch(function() {
+            var files = catConfig.files || [];
+            var generatedVideos = [];
+            for (var f = 0; f < files.length; f++) {
+              generatedVideos.push({
+                title: files[f].replace(/\.[^.]+$/, ''),
+                source: 'local',
+                localPath: 'assets/videos/' + folder + '/' + files[f]
+              });
+            }
+            return {
+              folder: folder,
+              title: catConfig.title || folder,
+              videos: generatedVideos
+            };
+          })
+          .then(function(category) {
+            pendingData[idx] = category;
+            resolvedCount++;
+
+            if (category.hidden) {
+              var skel = document.getElementById('media-cat-cat' + idx);
+              if (skel) skel.remove();
+            } else {
+              upgradeSkeleton(idx, category);
+            }
+
+            tryFetchMissingTitles();
+          });
+      })(categories[i], i);
+    }
+
+    // ── Render the first skeleton immediately ──────────────────────
+    renderNext();
+
+    // ── Lazily render remaining skeletons on scroll ────────────────
+    if (skeletonsRendered < total) {
+      var sentinel = document.getElementById(SENTINEL_ID);
+      if (sentinel) {
+        observer = new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting) renderNext();
+        }, { rootMargin: '300px' });
+        observer.observe(sentinel);
       }
-
-      // Fetch missing YouTube titles in the background so the page feels
-      // fast. Titles update in the DOM as each fetch resolves.
-      fetchMissingTitles(results);
-    });
+    }
   }
 
   loadAllCategories();

@@ -166,15 +166,20 @@
         });
     }
 
-    // Tier 2: RSS feed via CORS proxy
+    // Tier 2: RSS feed — try direct first, fall back to CORS proxy
     function tryRSSFeed() {
       var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
         encodeURIComponent(playlistId);
       var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      return fetchWithTimeout(proxyUrl, 5000)
+      // YouTube RSS feeds support CORS; fetch directly when possible
+      return fetchWithTimeout(rssUrl, 3000)
+        .catch(function() {
+          // Direct fetch failed (network / CORS) — fall back to proxy
+          return fetchWithTimeout(proxyUrl, 5000);
+        })
         .then(function(res) {
-          if (!res.ok) throw new Error('RSS proxy returned HTTP ' + res.status);
+          if (!res.ok) throw new Error('RSS fetch returned HTTP ' + res.status);
           return res.text();
         })
         .then(function(xmlText) {
