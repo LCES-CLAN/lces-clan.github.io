@@ -223,37 +223,31 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 3.5rem;
-  flex-wrap: wrap;
+  gap: 1.5rem;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.85rem;
   color: var(--text);
   margin: 0.25rem 0 0.75rem;
-  padding: 0.6rem 0.8rem;
+  padding: 0.4rem 0.8rem;
   background: rgba(0,0,0,0.15);
   border-radius: 4px;
   border: 1px solid rgba(255,255,255,0.03);
+}
+.legend-divider {
+  width: 1px;
+  align-self: stretch;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.06) 80%, transparent);
+  flex-shrink: 0;
 }
 .legend-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0 1.5rem;
-  border-right: 1px solid var(--border);
+  gap: 0.15rem;
+  padding: 0 1rem;
 }
 .legend-group:last-child {
   border-right: none;
-}
-@media (max-width: 480px) {
-  .legend-group {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 0.5rem 0;
-  }
-  .legend-group:last-child {
-    border-bottom: none;
-  }
 }
 .legend-group-title {
   font-family: 'Orbitron', monospace;
@@ -263,19 +257,19 @@
   text-transform: uppercase;
   color: var(--text-dim);
   margin: 0;
-  padding-bottom: 0.2rem;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .legend-group-items {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.1rem;
 }
 .legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
   letter-spacing: 0.03em;
   cursor: default;
   transition: color 0.2s ease;
@@ -457,14 +451,21 @@
     display: none;
   }
   .roster-legend {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 0.75rem;
-    padding: 0.5rem 0.4rem;
+    padding: 0.35rem 0.4rem;
+  }
+  .legend-group {
+    gap: 0.1rem;
+    padding: 0 0.5rem;
   }
   .legend-group-items {
-    gap: 0.75rem 1.2rem;
+    gap: 0.1rem;
+  }
+  .legend-divider {
+    opacity: 0.4;
+  }
+  .legend-code {
+    display: none;
   }
   .roster-table { font-size: 0.9rem; }
   .roster-table th { font-size: 0.7rem; }
@@ -503,15 +504,16 @@
       <div class="legend-group">
         <h3 class="legend-group-title">Active</h3>
         <div class="legend-group-items">
-          <span class="legend-item"><span class="legend-dot dot-active"></span><span class="legend-desc">(10-8) On Duty</span></span>
-          <span class="legend-item"><span class="legend-dot dot-replied"></span><span class="legend-desc">(10-4) Replied</span></span>
+          <span class="legend-item"><span class="legend-dot dot-active"></span><span class="legend-desc"><span class="legend-code">(10-8) </span>On Duty</span></span>
+          <span class="legend-item"><span class="legend-dot dot-replied"></span><span class="legend-desc"><span class="legend-code">(10-4) </span>Replied</span></span>
         </div>
       </div>
+      <div class="legend-divider"></div>
       <div class="legend-group">
         <h3 class="legend-group-title">Pending</h3>
         <div class="legend-group-items">
-          <span class="legend-item"><span class="legend-dot dot-detected"></span><span class="legend-desc">(10-2) Online Recently</span></span>
-          <span class="legend-item"><span class="legend-dot dot-mia"></span><span class="legend-desc">(10-1) Missing in Action</span></span>
+          <span class="legend-item"><span class="legend-dot dot-detected"></span><span class="legend-desc"><span class="legend-code">(10-2) </span>Online Recently</span></span>
+          <span class="legend-item"><span class="legend-dot dot-mia"></span><span class="legend-desc"><span class="legend-code">(10-1) </span>Missing in Action</span></span>
         </div>
       </div>
     </div>
