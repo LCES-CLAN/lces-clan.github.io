@@ -12,6 +12,22 @@
 
   document.querySelectorAll('.reveal').forEach(observeReveal);
 
-  // Allow dynamically injected content to opt-in to the reveal observer
-  window.observeReveal = observeReveal;
+  // Automatically observe any .reveal elements injected after page load
+  // (e.g. the media page's dynamically generated category panels).
+  if (window.MutationObserver) {
+    var bodyObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+          if (node.classList && node.classList.contains('reveal')) {
+            observeReveal(node);
+          }
+          if (node.querySelectorAll) {
+            node.querySelectorAll('.reveal').forEach(observeReveal);
+          }
+        });
+      });
+    });
+    bodyObserver.observe(document.body, { childList: true, subtree: true });
+  }
 })();

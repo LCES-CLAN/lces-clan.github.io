@@ -271,7 +271,7 @@
       .then(function() {
         // If this video is the currently selected one for its category,
         // update the visible title text without touching the player.
-        if (catIdx == null || videoIdx == null) return;
+        if (catIdx === null || catIdx === undefined || videoIdx === null || videoIdx === undefined) return;
         var catId = 'cat' + catIdx;
         var currentIdx = parseInt(container.getAttribute('data-index-' + catId), 10) || 0;
         if (currentIdx === videoIdx) {
@@ -520,14 +520,6 @@
 
       for (var k = 0; k < results.length; k++) {
         bindEvents('cat' + k, results[k].videos || []);
-      }
-
-      // Observe newly injected panels for the scroll reveal animation
-      if (window.observeReveal) {
-        var panels = container.querySelectorAll('.media-category.reveal');
-        for (var p = 0; p < panels.length; p++) {
-          window.observeReveal(panels[p]);
-        }
       }
 
       // Fetch missing YouTube titles in the background so the page feels
