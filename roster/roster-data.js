@@ -852,7 +852,8 @@ window.__rosterData = [
   {
     "badge": 170,
     "display": "daveted***",
-    "status": "mia"
+    "status": "active",
+    "gamertag": "daveted788"
   },
   {
     "badge": 171,
