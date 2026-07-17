@@ -9,12 +9,15 @@ Usage:
     1. Set WEBHOOK_URL below (or pass via --webhook)
     2. python roster/discord_webhook.py
 
-Format per badge (all bold, no 10-code suffix):
-    🟢 **#003 — stevenkb6720**               (active — green)
-    🔵 **#017 — PTY997/xXPTY997Xx**          (replied — blue)
-    🟣 **#004 — CALIKILLER33**               (detected — purple)
-    ⚫ **#001 — Harper HFD/NC…**             (mia — black, truncated)
-    ⚫ **#006 — RESERVED**                   (reserved — white)
+Format per badge:
+    🟢 **`#  3`** — stevenkb6720               (active — green, only badge bold)
+    🔵 **`# 17`** — PTY997/xXPTY997Xx          (replied — blue, only badge bold)
+    🟣 **`#  4`** — CALIKILLER33               (detected — purple, only badge bold)
+    ⚫ **`#  1`** — Harper HFD/NC…              (mia — black, only badge bold)
+    ⚫ **`#  6`** — RESERVED                   (reserved — white, only badge bold)
+
+    10‑4 (replied) and 10‑8 (active) officers get the entire line bolded:
+    **🟢 `# 63` — l33t 0wn3r/Genetically…**    (10‑8 — entire line bold)
 """
 
 import json
@@ -29,7 +32,7 @@ import urllib.error
 
 CHUNK_SIZE = 25       # badges per message
 MAX_CONTENT_LEN = 2000 # Discord webhook character limit
-MAX_GT_LEN = 55       # max gamertag chars before truncation with "…"
+MAX_GT_LEN = 25       # max gamertag chars before truncation with "…"
 
 # Map status → (emoji,)
 STATUS_MAP = {
@@ -49,20 +52,33 @@ def truncate(text, max_len=MAX_GT_LEN):
 
 def format_entry(entry):
     """Return a single Discord‑formatted line for one badge entry.
-    All lines are bold, no 10-code suffix — just emoji + badge + name.
+
+    Badge number is shown in a code block (no leading zeroes, space-padded),
+    and only the badge number is bolded — unless the officer is 10‑4 (replied)
+    or 10‑8 (active), in which case the entire line is bolded.
     """
     badge = entry["badge"]
     gamertag = entry.get("gamertag", entry.get("display", ""))
     status = entry.get("status", "")
 
-    # Reserved entries
-    if entry.get("display") == "RESERVED":
-        return f"⚫ **#{badge:03d} — RESERVED**"
+    # Format badge as inline code, right-aligned with spaces, no leading zeroes
+    # Max badge is 253 → 3-digit width
+    badge_code = f"`#{badge:>3}`"
+    badge_bold = f"**{badge_code}**"
 
     emoji = STATUS_MAP.get(status, "⚫")
     gt_part = truncate(gamertag)
 
-    return f"{emoji} **#{badge:03d} — {gt_part}**"
+    # Reserved entries
+    if entry.get("display") == "RESERVED":
+        return f"⚫ {badge_bold} — RESERVED"
+
+    # 10‑4 (replied) or 10‑8 (active): entire line bold
+    if status in ("active", "replied"):
+        return f"**{emoji} {badge_code} — {gt_part}**"
+
+    # Normal: only badge number is bolded
+    return f"{emoji} {badge_bold} — {gt_part}"
 
 
 def send_webhook(url, content):
