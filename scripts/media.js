@@ -362,11 +362,11 @@
   // Normalize a video entry so every downstream lookup can rely on a single
   // canonical `youtubeId` key. Accepts common casing typos (e.g. `youtubeID`)
   // so a hand-typed field name doesn't silently disable title auto-fill,
-  // thumbnails, the embed URL, or the Watch link. The original property is
-  // left untouched so JSON serials still match the data layout on disk.
+  // thumbnails, the embed URL, or the Watch link. This mutates only the
+  // in-memory copy loaded from the JSON fetch; the on-disk file is unchanged.
   function normalizeVideo(v) {
     if (!v) return v;
-    v.youtubeId = v.youtubeId || v.youtubeID || null;
+    if (!v.youtubeId) v.youtubeId = v.youtubeID;
     return v;
   }
 
