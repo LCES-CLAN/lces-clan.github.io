@@ -36,11 +36,10 @@
 <script src="scripts/navbar.js"></script>
 
   <div id="media-categories">
-    <!-- Loading skeleton shown while categories are fetched -->
-    <div id="media-skeleton" class="media-skeleton" aria-busy="true" aria-live="polite">
-      <div class="panel skeleton-panel"></div>
-      <div class="panel skeleton-panel"></div>
-      <div class="panel skeleton-panel"></div>
+    <!-- Brief loading spinner replaced by JS once categories populate -->
+    <div id="media-skeleton" class="media-load-more" aria-busy="true" aria-live="polite">
+      <div class="cat-spinner"></div>
+      <span class="media-load-text">Loading evidence\u2026</span>
     </div>
   </div>
   <!--
