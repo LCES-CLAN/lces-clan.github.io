@@ -4,8 +4,8 @@
   // ════════════════════════════════════════════════════════════════
   //  Discord Webhook URL
   // ════════════════════════════════════════════════════════════════
-  // Injected at deploy time via GitHub Actions. Locally, falls back to fake submit.
-  var WEBHOOK_URL = '{{WEBHOOK_FORM_URL}}';
+  // Injected at deploy time via GitHub Actions. Empty == fake submit locally.
+  var WEBHOOK_URL = '';
 
   // ════════════════════════════════════════════════════════════════
   //  TRIVIA CAPTCHA QUESTIONS

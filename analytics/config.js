@@ -9,8 +9,8 @@
     // ─── Discord Webhook ────────────────────────────────────────────
     // Create a SECOND webhook in a dedicated #analytics channel.
     // Paste the URL below (keep the quotes).
-    // Injected at deploy time via GitHub Actions. Locally, analytics silently fail.
-    webhookUrl: '{{WEBHOOK_ANALYTICS_URL}}',
+    // Injected at deploy time via GitHub Actions. Empty == silent no-op locally.
+    webhookUrl: '',
 
     // ─── IP & Geolocation API ───────────────────────────────────────
     // Returns IP, city, region, country, org — no token needed.

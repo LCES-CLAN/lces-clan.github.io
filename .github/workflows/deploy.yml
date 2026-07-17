@@ -36,8 +36,10 @@ jobs:
 
       - name: Inject webhook URLs from Secrets
         run: |
-          sed -i "s|{{WEBHOOK_FORM_URL}}|${{ secrets.WEBHOOK_FORM_URL }}|g" scripts/form.js
-          sed -i "s|{{WEBHOOK_ANALYTICS_URL}}|${{ secrets.WEBHOOK_ANALYTICS_URL }}|g" analytics/config.js
+          # Replace empty-string placeholders with the real webhook URLs.
+          # The source files use '' so the site works gracefully without a build step.
+          sed -i "s|WEBHOOK_URL = ''|WEBHOOK_URL = '${{ secrets.WEBHOOK_FORM_URL }}'|g" scripts/form.js
+          sed -i "s|webhookUrl: ''|webhookUrl: '${{ secrets.WEBHOOK_ANALYTICS_URL }}'|g" analytics/config.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
