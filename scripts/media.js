@@ -5,9 +5,9 @@
 //
 // YouTube Playlist Support:
 //   Set "playlistId" in your index.json to auto-fetch videos from a YouTube playlist.
-//   The system tries three methods in order:
+//   The system tries two methods in order:
 //     1. YouTube Data API v3 (requires YOUTUBE_API_KEY below)
-//     2. RSS feed via CORS proxy (no key needed, but less reliable)
+//     2. RSS feed (direct fetch — YouTube RSS supports CORS)
 //     3. Manual "videos" array in index.json (always takes precedence)
 //
 //   Manual entries can sit before (default) or after the playlist by
@@ -22,13 +22,8 @@
   if (!container) return;
 
   // ── Configuration ──────────────────────────────────────────────────
-  // Set your YouTube Data API v3 key here for reliable playlist fetching.
-  // Leave empty to rely on RSS-feed fallback (no key needed).
+  // YouTube API key for playlist fetching. Override via window.__YOUTUBE_API_KEY.
   var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || 'AIzaSyAbKuQszn8X-cdQE17GfJCGVqzlPUB3mOk';
-
-  // Public CORS proxy used as fallback when no API key is configured.
-  // You can override this via window.__CORS_PROXY.
-  var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   var MAX_VISIBLE = 8;
 
@@ -341,18 +336,12 @@
         });
     }
 
-    // Tier 2: RSS feed — try direct first, fall back to CORS proxy
+    // Tier 2: RSS feed — direct fetch (YouTube RSS supports CORS)
     function tryRSSFeed() {
       var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
         encodeURIComponent(playlistId);
-      var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      // YouTube RSS feeds support CORS; fetch directly when possible
-      return fetchWithTimeout(rssUrl, 3000)
-        .catch(function() {
-          // Direct fetch failed (network / CORS) — fall back to proxy
-          return fetchWithTimeout(proxyUrl, 5000);
-        })
+      return fetchWithTimeout(rssUrl, 5000)
         .then(function(res) {
           if (!res.ok) throw new Error('RSS fetch returned HTTP ' + res.status);
           return res.text();

@@ -12,9 +12,8 @@
   var videosList = [];
   var currentIndex = 0;
 
-  // ── Configuration ────────────────────────────────────────────────
+  // Configuration
   var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || 'AIzaSyAbKuQszn8X-cdQE17GfJCGVqzlPUB3mOk';
-  var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   function escapeAttr(str) {
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
@@ -166,18 +165,12 @@
         });
     }
 
-    // Tier 2: RSS feed — try direct first, fall back to CORS proxy
+    // Tier 2: RSS feed — direct fetch (YouTube RSS supports CORS)
     function tryRSSFeed() {
       var rssUrl = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' +
         encodeURIComponent(playlistId);
-      var proxyUrl = CORS_PROXY + encodeURIComponent(rssUrl);
 
-      // YouTube RSS feeds support CORS; fetch directly when possible
-      return fetchWithTimeout(rssUrl, 3000)
-        .catch(function() {
-          // Direct fetch failed (network / CORS) — fall back to proxy
-          return fetchWithTimeout(proxyUrl, 5000);
-        })
+      return fetchWithTimeout(rssUrl, 5000)
         .then(function(res) {
           if (!res.ok) throw new Error('RSS fetch returned HTTP ' + res.status);
           return res.text();
