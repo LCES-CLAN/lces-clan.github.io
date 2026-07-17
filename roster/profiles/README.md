@@ -6,7 +6,6 @@ Each officer profile is a JSON file named by badge number (e.g. `3.json`, `170.j
 
 | Field | Format | Description |
 |---|---|---|
-| `badge` | number | Badge number (must match filename) |
 | `oldGamertag` | string | Old/previous gamertag(s). Use `/` to separate alts. |
 | `newGamertag` | string | Current gamertag(s). Use `/` to separate alts. Primary (most important) goes first. |
 | `steamId` | string | Steam ID(s). Use `/` to separate multiple. |
@@ -18,7 +17,6 @@ Each officer profile is a JSON file named by badge number (e.g. `3.json`, `170.j
 
 ```json
 {
-  "badge": 63,
   "oldGamertag": "",
   "newGamertag": "l33t 0wn3r/Genetically Different",
   "steamId": "",

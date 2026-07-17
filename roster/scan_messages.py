@@ -38,9 +38,9 @@ def main():
             print(f"  [!] Could not read {basename}: {e}")
             continue
 
-        badge = data.get("badge")
+        badge = int(name)  # badge is the filename (e.g., 063.json → 63)
         msg = data.get("message", "")
-        if badge is not None and msg and msg.strip():
+        if msg and msg.strip():
             messages[badge] = msg.strip()
 
     # Write messages-data.js
