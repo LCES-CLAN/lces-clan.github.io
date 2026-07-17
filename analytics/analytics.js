@@ -1,4 +1,4 @@
-// LCES Analytics — Entry Point
+// LCES Analytics
 // Orchestrates all modules. This is the only script the HTML pages load directly.
 // Requires (in order): config.js, visitor.js, whitelist.js, dispatch.js, tracker.js
 (function() {

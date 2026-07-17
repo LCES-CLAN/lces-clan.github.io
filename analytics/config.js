@@ -7,19 +7,18 @@
   window.LCES.Analytics.Config = {
 
     // ─── Discord Webhook ────────────────────────────────────────────
-    // Create a SECOND webhook in a dedicated #analytics channel.
-    // Paste the URL below (keep the quotes).
+    // Webhook for the #analytics channel.
     // Injected at deploy time via GitHub Actions. Empty == silent no-op locally.
     webhookUrl: '',
 
     // ─── IP & Geolocation API ───────────────────────────────────────
     // Returns IP, city, region, country, org — no token needed.
-    // Free tier: 30k req/month (more than enough for 253 members).
+    // Free tier: 30k req/month, more than enough for us.
     geoApiUrl: 'https://ipapi.co/json/',
 
     // ─── Self-Whitelist ─────────────────────────────────────────────
-    // Visit ?lces_admin on any page to activate. Your browser will
-    // no longer send analytics until you clear it.
+    // Visit ?63 on any page to deactivate analytics. 
+    // Browser will longer send analytics until cleared.
     whitelistParam: '63',
     whitelistStorageKey: 'lces_analytics_whitelist',
 
