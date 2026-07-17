@@ -256,8 +256,8 @@
         if (data.title) video.title = data.title;
       })
       .catch(function() {
-        // Fallback: use the youtubeId as a readable title
-        if (!video.title) video.title = video.youtubeId;
+        // Fallback: oEmbed failed, use a generic title
+        if (!video.title) video.title = 'Untitled';
       });
   }
 

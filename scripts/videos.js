@@ -94,7 +94,7 @@
         if (data.title) video.title = data.title;
       })
       .catch(function() {
-        if (!video.title) video.title = video.youtubeId;
+        if (!video.title) video.title = 'Untitled';
       });
   }
 
@@ -188,6 +188,13 @@
   }
 
   function render(videos) {
+    // Ensure every video has a title (fallback if missing)
+    for (var i = 0; i < videos.length; i++) {
+      if (!videos[i].title) {
+        videos[i].title = videos[i].youtubeId || 'Untitled';
+      }
+    }
+
     var valid = [];
     for (var i = 0; i < videos.length; i++) {
       var v = videos[i];
