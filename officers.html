@@ -445,6 +445,16 @@
   color: var(--text-dim);
   opacity: 0.18;
 }
+.gt-message {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--blue-bright);
+  opacity: 0.7;
+  margin-top: 0.2rem;
+  font-style: italic;
+}
 
 @media (max-width: 480px) {
   .desktop-break {
@@ -548,6 +558,7 @@
   <div id="footer"></div>
   <script src="scripts/footer.js"></script>
   <script src="roster/roster-data.js"></script>
+  <script src="roster/messages-data.js"></script>
   <script src="analytics/config.js"></script>
   <script src="analytics/visitor.js"></script>
   <script src="analytics/whitelist.js"></script>
@@ -613,6 +624,13 @@ function renderRoster(data) {
       }
     }
 
+    // Add message from profile data (10-8 officers)
+    var messages = window.__messagesData || {};
+    var msg = messages[entry.badge];
+    if (msg) {
+      altHtml += '<span class="gt-message">' + msg + '</span>';
+    }
+
     gamertagHtml =
       '<div class="gt-row">' +
         '<span class="gt-text truncated ' + tagClass + '">' + mainText + '</span>' +
@@ -660,7 +678,7 @@ function renderRoster(data) {
     var text = gtTexts[g];
     var toggle = text.nextElementSibling;
     var alts = text.parentElement.nextElementSibling;
-    if (text.scrollWidth > text.clientWidth || alts.children.length > 0) {
+    if (text.scrollWidth > text.clientWidth || alts.children.length > 0 || alts.querySelector('.gt-message')) {
       toggle.style.display = 'inline-flex';
     }
   }

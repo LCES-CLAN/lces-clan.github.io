@@ -1,6 +1,8 @@
 # Keep raw roster data off GitHub — contains uncensored gamertags
 # Use roster/roster-data.js (censored) for the live site instead
 roster/roster.json
+roster/profiles/*.json
+!roster/profiles/README.md
 
 # Python cache
 __pycache__/
