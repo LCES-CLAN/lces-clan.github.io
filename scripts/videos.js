@@ -13,7 +13,7 @@
   var currentIndex = 0;
 
   // ── Configuration ────────────────────────────────────────────────
-  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || '';
+  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || 'AIzaSyAbKuQszn8X-cdQE17GfJCGVqzlPUB3mOk';
   var CORS_PROXY = window.__CORS_PROXY || 'https://api.allorigins.win/raw?url=';
 
   function escapeAttr(str) {

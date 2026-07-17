@@ -24,7 +24,7 @@
   // ── Configuration ──────────────────────────────────────────────────
   // Set your YouTube Data API v3 key here for reliable playlist fetching.
   // Leave empty to rely on RSS-feed fallback (no key needed).
-  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || '';
+  var YOUTUBE_API_KEY = window.__YOUTUBE_API_KEY || 'AIzaSyAbKuQszn8X-cdQE17GfJCGVqzlPUB3mOk';
 
   // Public CORS proxy used as fallback when no API key is configured.
   // You can override this via window.__CORS_PROXY.
