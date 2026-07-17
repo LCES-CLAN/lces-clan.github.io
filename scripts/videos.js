@@ -94,7 +94,7 @@
         if (data.title) video.title = data.title;
       })
       .catch(function() {
-        if (!video.title) video.title = 'Untitled';
+        if (!video.title) video.title = video.youtubeId;
       });
   }
 
