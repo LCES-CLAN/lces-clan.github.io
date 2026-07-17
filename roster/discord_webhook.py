@@ -9,12 +9,12 @@ Usage:
     1. Set WEBHOOK_URL below (or pass via --webhook)
     2. python roster/discord_webhook.py
 
-Format per badge:
-    🟢 **#003 — stevenkb6720** `10-8`     (active — green, bold)
-    🔵 **#017 — PTY997/xXPTY997Xx** `10-4`  (replied — blue, bold)
-    🟡 #004 — CALIKILLER33 `10-2`           (detected — yellow)
-    🔴 #001 — Harper HFD/NC... `10-1`       (mia — red, truncated)
-    ⚪ #006 — RESERVED `10-7`               (reserved — white)
+Format per badge (all bold, no 10-code suffix):
+    🟢 **#003 — stevenkb6720**               (active — green)
+    🔵 **#017 — PTY997/xXPTY997Xx**          (replied — blue)
+    🟣 **#004 — CALIKILLER33**               (detected — purple)
+    ⚫ **#001 — Harper HFD/NC…**             (mia — black, truncated)
+    ⚫ **#006 — RESERVED**                   (reserved — white)
 """
 
 import json
@@ -28,14 +28,15 @@ import urllib.error
 # Can also pass via --webhook <url> CLI argument.
 
 CHUNK_SIZE = 25       # badges per message
-MAX_GT_LEN = 55       # max gamertag chars before truncation with "..."
+MAX_CONTENT_LEN = 2000 # Discord webhook character limit
+MAX_GT_LEN = 55       # max gamertag chars before truncation with "…"
 
-# Map status → (emoji, status_label, bold?)
+# Map status → (emoji,)
 STATUS_MAP = {
-    "active":   ("🟢", "10-8", True),
-    "replied":  ("🔵", "10-4", True),
-    "detected": ("🟡", "10-2", False),
-    "mia":      ("🔴", "10-1", False),
+    "active":   "🟢",
+    "replied":  "🔵",
+    "detected": "🟣",
+    "mia":      "⚫",
 }
 
 
@@ -47,26 +48,21 @@ def truncate(text, max_len=MAX_GT_LEN):
 
 
 def format_entry(entry):
-    """Return a single Discord‑formatted line for one badge entry."""
+    """Return a single Discord‑formatted line for one badge entry.
+    All lines are bold, no 10-code suffix — just emoji + badge + name.
+    """
     badge = entry["badge"]
     gamertag = entry.get("gamertag", entry.get("display", ""))
     status = entry.get("status", "")
 
     # Reserved entries
     if entry.get("display") == "RESERVED":
-        return f"⚪ #{badge:03d} — RESERVED `10-7`"
+        return f"⚫ **#{badge:03d} — RESERVED**"
 
-    info = STATUS_MAP.get(status)
-    if not info:
-        return f"⚪ #{badge:03d} — {truncate(gamertag)} `???`"
-
-    emoji, label, bold = info
+    emoji = STATUS_MAP.get(status, "⚫")
     gt_part = truncate(gamertag)
 
-    if bold:
-        return f"{emoji} **#{badge:03d} — {gt_part}** `{label}`"
-    else:
-        return f"{emoji} #{badge:03d} — {gt_part} `{label}`"
+    return f"{emoji} **#{badge:03d} — {gt_part}**"
 
 
 def send_webhook(url, content):
@@ -155,7 +151,20 @@ def main():
 
     # Split into chunks and send
     total = len(lines)
-    chunks = [lines[i: i + CHUNK_SIZE] for i in range(0, total, CHUNK_SIZE)]
+    raw_chunks = [lines[i: i + CHUNK_SIZE] for i in range(0, total, CHUNK_SIZE)]
+
+    # If the last chunk is a tail (< CHUNK_SIZE), try to squeeze it into the
+    # previous chunk if there's enough room within Discord's 2000 char limit.
+    chunks = []
+    for c in raw_chunks:
+        if chunks and len(c) < CHUNK_SIZE:
+            # Check if merging into the previous chunk fits the char limit
+            merged = chunks[-1] + c
+            if len("\n".join(merged)) <= MAX_CONTENT_LEN:
+                chunks[-1] = merged
+                continue
+        chunks.append(c)
+
     print(f"  Sending {total} badges in {len(chunks)} message(s)…")
 
     for i, chunk in enumerate(chunks, 1):
