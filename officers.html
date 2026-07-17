@@ -221,18 +221,41 @@
 /* ─── Status Dot Legend ─── */
 .roster-legend {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 2rem;
+  gap: 3.5rem;
   flex-wrap: wrap;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.85rem;
   color: var(--text);
   margin: 0.25rem 0 0.75rem;
-  padding: 0.4rem 0.6rem;
+  padding: 0.6rem 0.8rem;
   background: rgba(0,0,0,0.15);
   border-radius: 4px;
   border: 1px solid rgba(255,255,255,0.03);
+}
+.legend-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+.legend-group-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.legend-group-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
 }
 .legend-item {
   display: inline-flex;
@@ -419,16 +442,15 @@
     display: none;
   }
   .roster-legend {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    gap: 0.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     padding: 0.5rem 0.4rem;
   }
-  .legend-item:nth-child(1) { order: 1; } /* On Duty → top-left */
-  .legend-item:nth-child(2) { order: 3; } /* Replied → bottom-left */
-  .legend-item:nth-child(3) { order: 2; } /* Online Recently → top-right */
-  .legend-item:nth-child(4) { order: 4; } /* MIA → bottom-right */
+  .legend-group-items {
+    gap: 0.75rem 1.2rem;
+  }
   .roster-table { font-size: 0.9rem; }
   .roster-table th { font-size: 0.7rem; }
   .roster-table th,
@@ -463,10 +485,20 @@
 
     <!-- Status Dot Legend -->
     <div class="roster-legend">
-      <span class="legend-item"><span class="legend-dot dot-active"></span><span class="legend-desc">On Duty</span></span>
-      <span class="legend-item"><span class="legend-dot dot-replied"></span><span class="legend-desc">Replied</span></span>
-      <span class="legend-item"><span class="legend-dot dot-detected"></span><span class="legend-desc">Online Recently</span></span>
-      <span class="legend-item"><span class="legend-dot dot-mia"></span><span class="legend-desc">Pending Response</span></span>
+      <div class="legend-group">
+        <h3 class="legend-group-title">Active</h3>
+        <div class="legend-group-items">
+          <span class="legend-item"><span class="legend-dot dot-active"></span><span class="legend-desc">On Duty</span></span>
+          <span class="legend-item"><span class="legend-dot dot-replied"></span><span class="legend-desc">Replied</span></span>
+        </div>
+      </div>
+      <div class="legend-group">
+        <h3 class="legend-group-title">Pending</h3>
+        <div class="legend-group-items">
+          <span class="legend-item"><span class="legend-dot dot-detected"></span><span class="legend-desc">Online Recently</span></span>
+          <span class="legend-item"><span class="legend-dot dot-mia"></span><span class="legend-desc">Missing in Action</span></span>
+        </div>
+      </div>
     </div>
 
     <table class="roster-table">
