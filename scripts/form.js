@@ -29,7 +29,7 @@
     '.tc-label{font-family:"Share Tech Mono",monospace;font-size:0.55rem;color:var(--text-dim);white-space:nowrap}' +
     '.tc-q{font-family:"Inter",sans-serif;font-size:0.72rem;color:var(--white-dim)}' +
     '.tc-opts{display:flex;gap:0.25rem;flex-wrap:wrap}' +
-    '.tc-opt{padding:0.15rem 0.45rem;cursor:pointer;border:1px solid var(--border);border-radius:3px;background:rgba(0,0,0,0.15);font-family:"Share Tech Mono",monospace;font-size:0.65rem;color:var(--text);transition:background 0.15s,border-color 0.15s}' +
+    '.tc-opt{padding:0.15rem 0.45rem;cursor:pointer;border:1px solid var(--border);border-radius:3px;background:rgba(0,0,0,0.15);font-family:"Share Tech Mono",monospace;font-size:0.65rem;color:var(--white-dim);transition:background 0.15s,border-color 0.15s}' +
     '.tc-opt:hover{border-color:var(--blue-dim)}' +
     '.tc-opt.ok{border-color:var(--green);background:rgba(46,204,64,0.15);color:var(--green)}' +
     '.tc-opt.no{border-color:#c33;background:rgba(204,51,51,0.1);color:#c55}' +
@@ -179,8 +179,7 @@
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional"> — optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
         '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
-        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span></div>' +
-        '<span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span>' +
+        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span><span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span></div>' +
       '</form>';
     var msgEl = document.getElementById('message');
     var countEl = document.getElementById('char-count');

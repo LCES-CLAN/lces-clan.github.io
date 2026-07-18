@@ -825,8 +825,9 @@ body::before {
   font-size: 0.72rem;
   color: var(--text-dim);
   opacity: 0.6;
-  margin-top: 0.75rem;
-  display: block;
+}
+.form-footer .form-note {
+  margin-top: 0;
 }
 
 .form-subtitle {
