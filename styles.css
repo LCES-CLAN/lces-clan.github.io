@@ -449,6 +449,15 @@ body::before {
   filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3));
   transition: filter 0.3s ease, transform 0.3s ease;
 }
+
+.cta-panel .discord-icon {
+  animation: discordPulse 3s ease-in-out infinite;
+}
+
+@keyframes discordPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 35px rgba(88, 101, 242, 0.5)); }
+}
 #discord:hover,
 #media-cta:hover {
   border-color: rgba(26,138,255,0.2);
