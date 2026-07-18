@@ -142,11 +142,14 @@
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.82rem;
   color: var(--text-dim);
-  padding: 0.15rem 0 1.1rem;
+  padding: 0.15rem 1.25rem 1.1rem;
   line-height: 1.5;
   border-radius: 6px;
-  transition: text-shadow 0.3s ease, background 0.3s ease;
+  transition: text-shadow 0.3s ease, background 0.3s ease, opacity 0.35s ease;
   cursor: default;
+}
+.gb-teaser.fading {
+  opacity: 0.2;
 }
 .gb-teaser:hover {
   background: rgba(26,138,255,0.05);
@@ -188,7 +191,7 @@
 .gb-teaser-refresh:hover {
   background: rgba(26,138,255,0.1);
   border-color: var(--blue-bright);
-  transform: rotate(180deg);
+  transform: translateX(2px);
   box-shadow: 0 0 8px rgba(26,138,255,0.2);
 }
 .gb-teaser-badge {
@@ -480,6 +483,23 @@
       }
       renderTeaser();
       window.renderTeaser = renderTeaser;
+
+      // Auto-refresh teaser every 10 seconds, pause on hover
+      var teaserPaused = false;
+      var teaserEl = document.getElementById('gb-teaser');
+      if (teaserEl) {
+        teaserEl.addEventListener('mouseenter', function() { teaserPaused = true; });
+        teaserEl.addEventListener('mouseleave', function() { teaserPaused = false; });
+      }
+      setInterval(function() {
+        if (!teaserPaused) {
+          if (teaserEl) teaserEl.classList.add('fading');
+          setTimeout(function() {
+            renderTeaser();
+            if (teaserEl) teaserEl.classList.remove('fading');
+          }, 350);
+        }
+      }, 10000);
 
       // Build HTML
       var listEl = document.getElementById('gb-entries');
