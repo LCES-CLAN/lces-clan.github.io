@@ -246,6 +246,20 @@ body::before {
   background: var(--bg-card-hover);
 }
 
+/* Guestbook form panels soft green glow on hover */
+#guestbook:hover,
+.guestbook-panel:hover {
+  box-shadow: 0 0 24px rgba(146, 200, 62, 0.30), 0 0 60px rgba(146, 200, 62, 0.10);
+}
+
+/* Touch devices: always-on soft green glow */
+@media (max-width: 768px) {
+  #guestbook,
+  .guestbook-panel {
+    box-shadow: 0 0 20px rgba(146, 200, 62, 0.30), 0 0 50px rgba(146, 200, 62, 0.10);
+  }
+}
+
 .panel-label {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.8rem; font-weight: 400; letter-spacing: 0.12em;
