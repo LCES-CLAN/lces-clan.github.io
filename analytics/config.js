@@ -27,7 +27,7 @@
     pageLabels: {
       '':                'Home',
       'index.html':      'Home',
-      'officers.html':   'Officer Roster',
+      'roster.html':   'Officer Roster',
       'guestbook.html':  'Re-enlistment'
     },
 

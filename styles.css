@@ -121,7 +121,7 @@ body::before {
 .dot-white  { background: var(--white-dim); }
 .blink { animation: blink 0.55s step-end infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
-/* Breathing pulse for 10-8 green dots (canonical from officers.html) */
+/* Breathing pulse for 10-8 green dots (canonical from roster.html) */
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); }
   50% { box-shadow: 0 0 28px rgba(46,204,64,0.80), 0 0 65px rgba(46,204,64,0.55), 0 0 110px rgba(46,204,64,0.30), 0 0 170px rgba(46,204,64,0.15); }

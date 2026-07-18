@@ -29,5 +29,5 @@ Each officer profile is a JSON file named by badge number (e.g. `3.json`, `170.j
 ## Notes
 
 - Fields can be left as empty strings if unknown.
-- The `/` separator is consistent with the format used in `officers.html` for multiple gamertags/alts.
+- The `/` separator is consistent with the format used in `roster.html` for multiple gamertags/alts.
 - Delete `000.json` — it's just a template.
