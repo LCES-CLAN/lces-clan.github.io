@@ -626,10 +626,10 @@ function renderRoster(data) {
 
     // Add message from profile data (10-8 officers)
     var rawMessages = window.__messagesData || [];
-    // Convert array to badge-keyed lookup if needed
+    // Convert array to badge-keyed lookup, skipping default placeholder messages
     var messages = {};
     if (Array.isArray(rawMessages)) {
-      rawMessages.forEach(function(m) { messages[m.badge] = m.message; });
+      rawMessages.forEach(function(m) { if (!m.isDefault) messages[m.badge] = m.message; });
     } else {
       messages = rawMessages;
     }
