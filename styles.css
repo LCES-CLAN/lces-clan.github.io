@@ -409,7 +409,7 @@ body::before {
 .btn:active { transform: translateY(0); }
 
 .btn-discord {
-  background: linear-gradient(180deg, #8899f0, #4a55b0);
+  background: linear-gradient(180deg, #8ea5ff, #4552a8);
   box-shadow: 0 2px 16px rgba(114,137,218,0.40);
 }
 .btn-discord:hover {
