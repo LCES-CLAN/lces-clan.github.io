@@ -1111,7 +1111,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
 /* Purple + green glow always-on on tablet */
 /* Debrief panel: always show hover background on mobile/tablet */
 @media (max-width: 768px) {
-  #debrief-panel {
+  #debrief-panel.centered {
     background: var(--bg-card-hover);
   }
   #discord,

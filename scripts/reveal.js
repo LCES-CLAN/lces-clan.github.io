@@ -12,6 +12,17 @@
 
   document.querySelectorAll('.reveal').forEach(observeReveal);
 
+  // Observe the first debrief panel: light up when centered in viewport (mobile/tablet)
+  var debriefPanel = document.getElementById('debrief-panel');
+  if (debriefPanel) {
+    var centerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        entry.target.classList.toggle('centered', entry.isIntersecting);
+      });
+    }, { rootMargin: '-35% 0px -35% 0px' });
+    centerObserver.observe(debriefPanel);
+  }
+
   // Automatically observe any .reveal elements injected after page load
   // (e.g. the media page's dynamically generated category panels).
   if (window.MutationObserver) {
