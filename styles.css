@@ -210,6 +210,7 @@ body::before {
   box-shadow: 0 0 16px rgba(46, 204, 64, 0.25), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
+
 /* ─── Section Dividers ─── */
 .divider {
   display: flex; align-items: center; gap: 0.75rem;
@@ -402,6 +403,14 @@ body::before {
 .btn:hover  { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(26,138,255,0.35); }
 .btn:active { transform: translateY(0); }
 
+.btn-discord {
+  background: linear-gradient(180deg, #8899f0, #4a55b0);
+  box-shadow: 0 2px 16px rgba(114,137,218,0.40);
+}
+.btn-discord:hover {
+  box-shadow: 0 4px 24px rgba(114,137,218,0.55);
+}
+
 .btn-secondary {
   background: transparent; color: var(--blue-bright);
   border: 1px solid var(--blue-dim); box-shadow: none;
@@ -423,9 +432,11 @@ body::before {
   filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3));
   transition: filter 0.3s ease, transform 0.3s ease;
 }
-#discord:hover {
+#discord:hover,
+#media-cta:hover {
   border-color: rgba(26,138,255,0.2);
   background: var(--bg-card-hover);
+  box-shadow: 0 0 24px rgba(100,120,230,0.30), 0 0 60px rgba(100,120,230,0.10);
 }
 #discord:hover .discord-icon {
   filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
@@ -993,5 +1004,13 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
     justify-content: center;
     gap: 0.5rem 1rem;
     flex-wrap: wrap;
+  }
+}
+
+/* Purple glow also always-on on tablet */
+@media (max-width: 768px) {
+  #discord,
+  #media-cta {
+    box-shadow: 0 0 20px rgba(100,120,230,0.30), 0 0 50px rgba(100,120,230,0.10);
   }
 }

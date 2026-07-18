@@ -8,7 +8,7 @@
     { href: 'roster.html', label: 'Officers' },
     { href: 'media.html', label: 'Evidence' },
     { href: 'https://forums.lcesclan.net', label: 'Archives', external: true },
-    { href: 'https://discord.lcesclan.net', label: 'Discord', external: true }
+    { href: 'https://discord.lcesclan.net', label: 'Discord', external: true, discord: true }
   ];
 
   var html = '<nav class="nav-bar">';
@@ -21,6 +21,7 @@
       if (isActive) cls.push('active');
     }
     if (link.cta) cls.push('nav-cta');
+    if (link.discord) cls.push('nav-discord');
     var classAttr = cls.length ? ' class="' + cls.join(' ') + '"' : '';
     var target = link.external ? ' target="_blank" rel="noopener"' : '';
     html += '<a href="' + link.href + '"' + classAttr + target + '>' + link.label + '</a>';
