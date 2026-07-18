@@ -174,7 +174,7 @@
         '</div>' +
         '<div class="form-row">' +
           '<div class="field"><label for="email">Email Address <span class="optional"> — optional</span></label><input id="email" type="email" maxlength="100" placeholder="e.g. user@example.com"></div>' +
-          '<div class="field"><label>I own GTA IV on: <span class="optional"> — optional</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
+          '<div class="field"><label>I own GTA IV on <span class="optional"> — optional</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional"> — optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
         '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
