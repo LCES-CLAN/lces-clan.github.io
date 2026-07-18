@@ -512,6 +512,7 @@
         if (!window.__teaserPaused) {
           if (teaserEl) teaserEl.classList.add('fading');
           setTimeout(function() {
+            if (window.__teaserPaused) { if (teaserEl) teaserEl.classList.remove('fading'); return; }
             renderTeaser();
             if (teaserEl) teaserEl.classList.remove('fading');
           }, 350);
@@ -562,6 +563,7 @@
         if (b)  b.textContent  = 'MESSAGES';
         if (chev) chev.innerHTML = '&#x25B2;';
         window.__teaserPaused = true;
+        var t = document.getElementById('gb-teaser'); if (t) t.style.display = 'none';
       } else {
         wrap.style.maxHeight = '0px';
         wrap.classList.remove('gb-open');
@@ -570,6 +572,7 @@
         if (b)  b.textContent  = 'MESSAGES';
         if (chev) chev.innerHTML = '&#x25BC;';
         window.__teaserPaused = false;
+        var t = document.getElementById('gb-teaser'); if (t) t.style.display = '';
       }
     }
   </script>
