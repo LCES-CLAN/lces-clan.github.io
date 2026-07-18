@@ -239,16 +239,17 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 8px; padding: 1.5rem;
   margin-bottom: 1.25rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 .panel:hover {
   border-color: rgba(26,138,255,0.2);
   background: var(--bg-card-hover);
 }
 
-/* Guestbook form panels soft green glow on hover */
+/* Guestbook form panels — lighter background + soft green glow on hover */
 #guestbook:hover,
-.guestbook-panel:hover {
+.panel.guestbook-panel:hover {
+  background: var(--bg-card-hover);
   box-shadow: 0 0 24px rgba(146, 200, 62, 0.30), 0 0 60px rgba(146, 200, 62, 0.10);
 }
 
