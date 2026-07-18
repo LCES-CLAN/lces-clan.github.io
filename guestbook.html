@@ -38,12 +38,11 @@
   height: 8rem;
   width: auto;
   margin: 0 auto 0.5rem;
-  filter: drop-shadow(0 0 20px rgba(46,204,64,0.3));
-  animation: badgePulse 3s ease-in-out infinite;
+  animation: badgeGlow 2.5s ease-in-out infinite;
 }
-@keyframes badgePulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(26,138,255,0.3)); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 35px rgba(26,138,255,0.5)); }
+@keyframes badgeGlow {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(26,138,255,0.25)); }
+  50% { filter: drop-shadow(0 0 32px rgba(26,138,255,0.55)); }
 }
 .guestbook-hero h1 {
   font-family: 'Orbitron', monospace;
