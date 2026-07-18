@@ -847,7 +847,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
 .form-section label {
   display: block;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.6rem; color: var(--white-dim);
+  font-size: 0.6rem; color: #a0b4d0;
   margin-bottom: 0.2rem; letter-spacing: 0.05em;
 }
 .form-section label .optional { color: var(--text-dim); opacity: 0.5; font-weight: 400; }

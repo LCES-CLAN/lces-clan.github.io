@@ -91,8 +91,10 @@
   function updateBtn() {
     var btn = document.querySelector('.btn-reenlist');
     if (!btn) return;
-    btn.disabled = !captchaPassed;
-    btn.title = captchaPassed ? '' : 'Answer the captcha first';
+    var gtEl = document.getElementById('gt-original');
+    var hasGt = gtEl && gtEl.value && gtEl.value.trim() !== '';
+    btn.disabled = !hasGt;
+    btn.title = hasGt ? '' : 'Enter your original gamertag first';
   }
 
   // ─── Check extra fields ───
@@ -152,9 +154,8 @@
       btn.textContent = 'Re-enlisted!'; fb.textContent = '10-4. Now get to your beat, rookie.'; fb.style.color = 'var(--green)';
       if (window.LCES && window.LCES.trackFormSubmit) window.LCES.trackFormSubmit();
       setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = true; fb.textContent = ''; form.reset(); captchaPassed = false; curQ = null; renderCaptcha(); updateBtn(); }, 3000);
-    }).catch(function() {
-      btn.textContent = 'Error'; fb.textContent = 'Failed to send.'; fb.style.color = '#c55';
-      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = !captchaPassed; }, 2000);
+    }).catch(function() {        btn.textContent = 'Error'; fb.textContent = 'Failed to send.'; fb.style.color = '#c55';
+      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; updateBtn(); }, 2000);
     });
   };
 
@@ -189,6 +190,10 @@
         countEl.textContent = len + ' / 2800';
         countEl.className = 'char-count' + (len > 2700 ? ' danger' : len > 2400 ? ' warn' : '');
       });
+    }
+    var gtEl = document.getElementById('gt-original');
+    if (gtEl) {
+      gtEl.addEventListener('input', updateBtn);
     }
     renderCaptcha();
   }
