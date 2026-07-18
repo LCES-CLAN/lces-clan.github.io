@@ -86,6 +86,8 @@
   box-shadow: 0 0 0 2px rgba(46,204,64,0.08);
 }
 
+/* Form panel inherits .panel:hover — uniform blue bg/border */
+
 /* ── Guestbook Entries expandable box ── */
 .gb-entries-panel .gb-expand-btn {
   display: inline-flex;
@@ -138,6 +140,8 @@
 .gb-btn-white { color: var(--text-bright); }
 .gb-btn-blue  { color: var(--blue-bright); }
 
+/* Entries panel inherits .panel:hover — uniform blue bg/border */
+
 /* Teaser preview before expanding */
 .gb-teaser {
   font-family: 'Share Tech Mono', monospace;
@@ -152,10 +156,7 @@
 .gb-teaser.fading {
   opacity: 0.2;
 }
-.gb-teaser:hover {
-  background: rgba(26,138,255,0.05);
-  text-shadow: 0 0 8px rgba(26,138,255,0.15);
-}
+/* See #gb-entries-panel:hover for the container glow instead */
 .gb-teaser-header {
   display: flex;
   align-items: center;

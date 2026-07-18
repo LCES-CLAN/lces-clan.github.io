@@ -423,6 +423,10 @@ body::before {
   filter: drop-shadow(0 0 20px rgba(88, 101, 242, 0.3));
   transition: filter 0.3s ease, transform 0.3s ease;
 }
+#discord:hover {
+  border-color: rgba(26,138,255,0.2);
+  background: var(--bg-card-hover);
+}
 #discord:hover .discord-icon {
   filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
   transform: scale(1.1);
