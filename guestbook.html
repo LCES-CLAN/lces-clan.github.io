@@ -502,7 +502,7 @@
         if (!teaser) return;
         var t = '';
         if (pick.submittedAt) t = ' <span class="gb-teaser-time">' + escHTML(relativeTime(pick.submittedAt)) + '</span>';
-        var memoText = pick.memo.length > 130 ? pick.memo.substring(0, 130) + '…' : pick.memo;
+        var memoText = pick.memo.length > 300 ? pick.memo.substring(0, 300) + '…' : pick.memo;
         teaser.innerHTML = '<div class="gb-teaser-header">' +
           '<span class="gb-teaser-label">RANDOM ENTRY</span>' +
           '<button class="gb-teaser-refresh" onclick="renderTeaser()" title="Show another entry">&#x21BB;</button>' +
