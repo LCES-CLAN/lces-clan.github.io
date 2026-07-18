@@ -36,7 +36,7 @@ from datetime import datetime
 
 CHUNK_SIZE = 25       # badges per message
 MAX_CONTENT_LEN = 2000 # Discord webhook character limit
-MAX_GT_LEN = 30       # max gamertag chars before truncation with "…"
+MAX_GT_LEN = 28       # max gamertag chars before truncation with "…"
 
 # Map status → (emoji,)
 STATUS_MAP = {
@@ -75,14 +75,14 @@ def format_entry(entry):
 
     # Reserved entries
     if entry.get("display") == "RESERVED":
-        return f"⚫ {badge_bold} — RESERVED"
+        return f"⚫ {badge_bold} RESERVED"
 
     # 10‑4 (replied) or 10‑8 (active): entire line bold
     if status in ("active", "replied"):
-        return f"**{emoji} {badge_code} — {gt_part}**"
+        return f"**{emoji} {badge_code} {gt_part}**"
 
     # Normal: only badge number is bolded
-    return f"{emoji} {badge_bold} — {gt_part}"
+    return f"{emoji} {badge_bold} {gt_part}"
 
 
 def build_header():
