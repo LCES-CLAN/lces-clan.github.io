@@ -1,9 +1,26 @@
 // LCES Officer Messages — auto-generated from roster/profiles/*.json
 // Regenerate with: python roster/scan_messages.py
-window.__messagesData = {
-  "3": "I am here to see what madness has been created here.",
-  "63": "Unit 63 10-8.",
-  "170": "Curious who went on to become a cop irl.",
-  "172": "So many memories from what seems like such a simpler time. Loved playing as the crooks and coming up with long drawn out scenarios for the detectives to solve."
-};
+// Sorted by submittedAt descending (newest first), badge asc for ties
+window.__messagesData = [
+  {
+    "badge": 172,
+    "message": "So many memories from what seems like such a simpler time. Loved playing as the crooks and coming up with long drawn out scenarios for the detectives to solve.",
+    "submittedAt": "2026-07-17T12:53:00Z"
+  },
+  {
+    "badge": 3,
+    "message": "I am here to see what madness has been created here.",
+    "submittedAt": "2026-07-17T02:48:00Z"
+  },
+  {
+    "badge": 170,
+    "message": "Curious who went on to become a cop irl.",
+    "submittedAt": "2026-07-16T04:35:00Z"
+  },
+  {
+    "badge": 63,
+    "message": "Unit 63 10-8.",
+    "submittedAt": "2026-07-13T00:00:00Z"
+  }
+];
 

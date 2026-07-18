@@ -11,6 +11,7 @@ Each officer profile is a JSON file named by badge number (e.g. `3.json`, `170.j
 | `steamId` | string | Steam ID(s). Use `/` to separate multiple. |
 | `discord` | string | Discord username(s). Use `/` to separate multiple. |
 | `email` | string | Email address(es). Use `/` to separate multiple. |
+| `submittedAt` | string | ISO 8601 timestamp of submission (e.g. `"2026-07-17T14:30:00Z"`). Optional — if omitted, entry sorts to the end. |
 | `message` | string | Freeform message field. |
 
 ## Example

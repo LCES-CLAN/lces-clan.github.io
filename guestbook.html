@@ -86,6 +86,124 @@
   box-shadow: 0 0 0 2px rgba(46,204,64,0.08);
 }
 
+/* ── Guestbook Entries expandable box ── */
+.gb-entries-panel .gb-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--blue-bright);
+  background: rgba(26,138,255,0.06);
+  transition: all 0.2s ease;
+}
+.gb-entries-panel .gb-expand-btn:hover {
+  background: rgba(26,138,255,0.14);
+  border-color: var(--blue-dim);
+  box-shadow: 0 2px 12px var(--blue-glow);
+  transform: translateY(-1px);
+}
+.gb-entries-panel .gb-expand-btn:active {
+  transform: translateY(0);
+}
+.gb-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.35rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  background: var(--blue-dim);
+  border-radius: 10px;
+  line-height: 1;
+}
+.gb-chevron {
+  font-size: 0.55rem;
+  transition: transform 0.2s ease;
+  margin-left: auto;
+}
+
+/* Collapsible entries wrapper */
+.gb-entries-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.gb-entries-wrap.gb-open {
+  max-height: none;
+}
+
+/* Entry rows */
+.gb-entries {
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.gb-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.gb-entry:hover {
+  border-color: rgba(26,138,255,0.2);
+  background: rgba(26,138,255,0.04);
+}
+.gb-badge {
+  flex-shrink: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--blue-bright);
+  min-width: 2.5rem;
+}
+.gb-gt {
+  flex-shrink: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-bright);
+  min-width: 8rem;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gb-memo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.5;
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .gb-entry {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+  .gb-gt {
+    max-width: none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -108,6 +226,20 @@
     <script src="scripts/form.js"></script>
   </div>
 
+  <!-- ── Guestbook Entries (expandable) ── -->
+  <div class="panel gb-entries-panel" id="gb-entries-panel">
+    <div class="panel-label">MESSAGES</div>
+    <h2>GUESTBOOK ENTRIES</h2>
+    <button class="gb-expand-btn" id="gb-expand-btn" onclick="toggleGuestbookEntries()" aria-expanded="false">
+      <span id="gb-expand-text">VIEW GUESTBOOK ENTRIES</span>
+      <span class="gb-count-badge" id="gb-count-badge"></span>
+      <span class="gb-chevron" id="gb-chevron">&#x25BC;</span>
+    </button>
+    <div class="gb-entries-wrap" id="gb-entries-wrap">
+      <div class="gb-entries" id="gb-entries"></div>
+    </div>
+  </div>
+
   <div class="divider"><span class="dot"></span> ENTER THE PRECINCT <span class="dot"></span></div>
 
   <div id="discord-cta"></div>
@@ -117,7 +249,85 @@
   <script src="scripts/footer.js"></script>
   <script src="scripts/reveal.js"></script>
   <script src="roster/roster-data.js"></script>
+  <script src="roster/messages-data.js"></script>
   <script src="roster/badge-count.js"></script>
+  <script>
+    // ── Guestbook entries: cross-reference messages with roster data ──
+    (function() {
+      var messages = window.__messagesData || [];
+      var roster = window.__rosterData || [];
+
+      // Build a badge->gamertag lookup from roster
+      var gtLookup = {};
+      roster.forEach(function(o) {
+        if (o.gamertag) gtLookup[String(o.badge)] = o.gamertag;
+      });
+
+      // Build entry rows with gamertag attached
+      var entries = messages.map(function(m) {
+        return {
+          badge: String(m.badge),
+          gamertag: gtLookup[String(m.badge)] || 'Unknown',
+          memo: m.message,
+          submittedAt: m.submittedAt || null
+        };
+      });
+
+      // Sort by submittedAt descending (newest first), nulls last, then badge asc
+      entries.sort(function(a, b) {
+        if (a.submittedAt && b.submittedAt) return b.submittedAt.localeCompare(a.submittedAt);
+        if (a.submittedAt) return -1;
+        if (b.submittedAt) return 1;
+        return Number(a.badge) - Number(b.badge);
+      });
+
+      // Update count badge
+      var countEl = document.getElementById('gb-count-badge');
+      if (countEl) countEl.textContent = entries.length;
+
+      // Build HTML
+      var listEl = document.getElementById('gb-entries');
+      if (listEl && entries.length) {
+        var html = '';
+        entries.forEach(function(e) {
+          html += '<div class="gb-entry">' +
+            '<span class="gb-badge">#' + escHTML(e.badge) + '</span>' +
+            '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>' +
+            '<span class="gb-memo">' + escHTML(e.memo) + '</span>' +
+          '</div>';
+        });
+        listEl.innerHTML = html;
+      }
+
+      function escHTML(s) {
+        var d = document.createElement('div');
+        d.appendChild(document.createTextNode(s));
+        return d.innerHTML;
+      }
+    })();
+
+    // ── Toggle expand/collapse ──
+    function toggleGuestbookEntries() {
+      var wrap = document.getElementById('gb-entries-wrap');
+      var text = document.getElementById('gb-expand-text');
+      var chev = document.getElementById('gb-chevron');
+      var btn = document.getElementById('gb-expand-btn');
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      if (!expanded) {
+        wrap.style.maxHeight = wrap.scrollHeight + 'px';
+        wrap.classList.add('gb-open');
+        btn.setAttribute('aria-expanded', 'true');
+        if (text) text.textContent = 'HIDE GUESTBOOK ENTRIES';
+        if (chev) chev.innerHTML = '&#x25B2;';
+      } else {
+        wrap.style.maxHeight = '0px';
+        wrap.classList.remove('gb-open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (text) text.textContent = 'VIEW GUESTBOOK ENTRIES';
+        if (chev) chev.innerHTML = '&#x25BC;';
+      }
+    }
+  </script>
   <script src="analytics/config.js"></script>
   <script src="analytics/visitor.js"></script>
   <script src="analytics/whitelist.js"></script>
