@@ -115,7 +115,7 @@ body::before {
 .status-bar .stat { display: flex; align-items: center; gap: 0.35rem; }
 .status-bar .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
 
-.dot-10-8   { background: var(--green); box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); animation: pulse-glow 4s ease-in-out infinite; }
+.dot-10-8   { background: var(--green); box-shadow: 0 0 35px rgba(146,200,62,1), 0 0 90px rgba(146,200,62,0.85), 0 0 160px rgba(146,200,62,0.55), 0 0 240px rgba(146,200,62,0.30); animation: pulse-glow 4s ease-in-out infinite; }
 .dot-10-2   { background: var(--blue); box-shadow: 0 0 10px rgba(77,184,255,0.6), 0 0 25px rgba(77,184,255,0.3); animation: blink 2.5s step-end infinite; }
 .dot-yellow { background: #f0c040; box-shadow: 0 0 5px rgba(240,192,64,0.5); }
 .dot-white  { background: var(--white-dim); }
@@ -123,8 +123,8 @@ body::before {
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
 /* Breathing pulse for 10-8 green dots (canonical from roster.html) */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 35px rgba(46,204,64,1), 0 0 90px rgba(46,204,64,0.85), 0 0 160px rgba(46,204,64,0.55), 0 0 240px rgba(46,204,64,0.30); }
-  50% { box-shadow: 0 0 28px rgba(46,204,64,0.80), 0 0 65px rgba(46,204,64,0.55), 0 0 110px rgba(46,204,64,0.30), 0 0 170px rgba(46,204,64,0.15); }
+  0%, 100% { box-shadow: 0 0 35px rgba(146,200,62,1), 0 0 90px rgba(146,200,62,0.85), 0 0 160px rgba(146,200,62,0.55), 0 0 240px rgba(146,200,62,0.30); }
+  50% { box-shadow: 0 0 28px rgba(146,200,62,0.80), 0 0 65px rgba(146,200,62,0.55), 0 0 110px rgba(146,200,62,0.30), 0 0 170px rgba(146,200,62,0.15); }
 }
 
 /* ─── Navigation Bar ─── */
@@ -206,7 +206,7 @@ body::before {
 }
 .nav-bar a.nav-cta.active {
   border-color: var(--green);
-  background: linear-gradient(180deg, rgba(46,204,64,0.2), rgba(46,204,64,0.08));
+  background: linear-gradient(180deg, rgba(146,200,62,0.2), rgba(146,200,62,0.08));
   box-shadow: 0 0 16px rgba(46, 204, 64, 0.25), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
@@ -257,7 +257,7 @@ body::before {
   letter-spacing: 0.03em;
 }
 .panel h2 .highlight { color: var(--blue-bright); }
-.panel h2.reenlist-heading { color: var(--green); text-shadow: 0 0 12px rgba(46,204,64,0.35); }
+.panel h2.reenlist-heading { color: #92C83E; text-shadow: 0 0 12px rgba(146,200,62,0.35); }
 
 .panel p { margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; color: var(--text); }
 .panel p:last-child { margin-bottom: 0; }
@@ -452,9 +452,9 @@ body::before {
   box-shadow: 0 0 24px rgba(100,120,230,0.30), 0 0 60px rgba(100,120,230,0.10);
 }
 #roster-cta:hover {
-  border-color: rgba(46,204,64,0.25);
+  border-color: rgba(146,200,62,0.25);
   background: var(--bg-card-hover);
-  box-shadow: 0 0 24px rgba(46,204,64,0.30), 0 0 60px rgba(46,204,64,0.10);
+  box-shadow: 0 0 24px rgba(146,200,62,0.30), 0 0 60px rgba(146,200,62,0.10);
 }
 #discord:hover .discord-icon {
   filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
@@ -831,14 +831,14 @@ body::before {
 
 /* Re-enlist form shared styles (loaded on both index.html and guestbook.html via form.js) */
 .btn.btn-reenlist {
-  background: linear-gradient(180deg, #40e854, #156b22);
-  box-shadow: 0 2px 16px rgba(46,204,64,0.3);
+  background: linear-gradient(180deg, #92C83E, #156b22);
+  box-shadow: 0 2px 16px rgba(146,200,62,0.3);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-reenlist:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(46,204,64,0.4);
+  box-shadow: 0 6px 24px rgba(146,200,62,0.4);
 }
 .btn.btn-reenlist:active {
   transform: translateY(0);
@@ -850,14 +850,14 @@ body::before {
 }
 
 .btn.btn-submit {
-  background: linear-gradient(180deg, #40e854, #156b22);
-  box-shadow: 0 2px 18px rgba(46,204,64,0.45), 0 0 36px rgba(46,204,64,0.12);
+  background: linear-gradient(180deg, #92C83E, #156b22);
+  box-shadow: 0 2px 18px rgba(146,200,62,0.45), 0 0 36px rgba(146,200,62,0.12);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 26px rgba(46,204,64,0.60), 0 0 50px rgba(46,204,64,0.20);
+  box-shadow: 0 6px 26px rgba(146,200,62,0.60), 0 0 50px rgba(146,200,62,0.20);
 }
 .btn.btn-submit:active {
   transform: translateY(0);
@@ -866,18 +866,18 @@ body::before {
   opacity: 0.8;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 8px rgba(46,204,64,0.18);
+  box-shadow: 0 2px 8px rgba(146,200,62,0.18);
 }
 
 .btn.btn-guestbook {
-  background: linear-gradient(180deg, #40e854, #156b22);
-  box-shadow: 0 2px 8px rgba(46,204,64,0.15);
+  background: linear-gradient(180deg, #92C83E, #156b22);
+  box-shadow: 0 2px 8px rgba(146,200,62,0.15);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-guestbook:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(46,204,64,0.25);
+  box-shadow: 0 4px 16px rgba(146,200,62,0.25);
 }
 .btn.btn-guestbook:active {
   transform: translateY(0);
@@ -1066,6 +1066,6 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
     box-shadow: 0 0 20px rgba(100,120,230,0.30), 0 0 50px rgba(100,120,230,0.10);
   }
   #roster-cta {
-    box-shadow: 0 0 20px rgba(46,204,64,0.30), 0 0 50px rgba(46,204,64,0.10);
+    box-shadow: 0 0 20px rgba(146,200,62,0.30), 0 0 50px rgba(146,200,62,0.10);
   }
 }
