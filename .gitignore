@@ -2,6 +2,7 @@
 # Use roster/roster-data.js (censored) for the live site instead
 roster/roster.json
 roster/profiles/*.json
+roster/last-run.json
 !roster/profiles/README.md
 
 # Python cache
