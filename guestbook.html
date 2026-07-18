@@ -90,7 +90,7 @@
 .gb-entries-panel .gb-expand-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   padding: 0.55rem 1rem;
   font-family: 'Orbitron', monospace;
   font-size: 0.6rem;
@@ -142,7 +142,7 @@
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.82rem;
   color: var(--text-dim);
-  padding: 0.15rem 0 0.85rem;
+  padding: 0.15rem 0 1.1rem;
   line-height: 1.5;
   border-radius: 6px;
   transition: text-shadow 0.3s ease, background 0.3s ease;
@@ -152,6 +152,13 @@
   background: rgba(26,138,255,0.05);
   text-shadow: 0 0 8px rgba(26,138,255,0.15);
 }
+.gb-teaser-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
 .gb-teaser-label {
   display: inline-block;
   font-family: 'Orbitron', monospace;
@@ -160,14 +167,35 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--blue-bright);
-  margin-bottom: 0.3rem;
   opacity: 0.85;
+}
+.gb-teaser-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 1px solid rgba(26,138,255,0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--blue-bright);
+  font-size: 0.55rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+.gb-teaser-refresh:hover {
+  background: rgba(26,138,255,0.1);
+  border-color: var(--blue-bright);
+  transform: rotate(180deg);
+  box-shadow: 0 0 8px rgba(26,138,255,0.2);
 }
 .gb-teaser-badge {
   font-size: 0.9rem;
-  color: var(--blue-bright);
+  color: #76bcf0;
   font-weight: 700;
-  text-shadow: 0 0 12px rgba(26,138,255,0.4);
+  text-shadow: 0 0 4px rgba(102,204,255,0.25);
 }
 .gb-teaser-time {
   display: inline-block;
@@ -230,8 +258,8 @@
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--blue-bright);
-  text-shadow: 0 0 32px rgba(26,138,255,0.7), 0 0 64px rgba(26,138,255,0.45), 0 0 100px rgba(26,138,255,0.3);
+  color: #76bcf0;
+  text-shadow: 0 0 4px rgba(102,204,255,0.25);
   min-width: 4rem;
 }
 .gb-gt {
@@ -352,7 +380,7 @@
 
   <!-- ── Guestbook Entries (expandable) ── -->
   <div class="panel gb-entries-panel" id="gb-entries-panel">
-    <div class="panel-label">ENTRIES</div>
+    <div class="panel-label">MESSAGES</div>
     <div style="text-align:center">
     <h2><span class="highlight">GUESTBOOK</span> ENTRIES</h2>
     <div class="gb-teaser" id="gb-teaser"></div>
@@ -435,18 +463,23 @@
       var countEl = document.getElementById('gb-count-badge');
       if (countEl) countEl.textContent = entries.length;
 
-      // Pick a random entry for the teaser
-      if (entries.length) {
+      // Render a random entry into the teaser
+      function renderTeaser() {
+        if (!entries.length) return;
         var pick = entries[Math.floor(Math.random() * entries.length)];
         var teaser = document.getElementById('gb-teaser');
-        if (teaser) {
-          var t = '';
-          if (pick.submittedAt) t = ' <span class="gb-teaser-time">' + escHTML(relativeTime(pick.submittedAt)) + '</span>';
-          teaser.innerHTML = '<span class="gb-teaser-label">RANDOM ENTRY</span><br>' +
-            '<span class="gb-teaser-badge">Unit #' + escHTML(pick.badge) + '</span>' + t +
-            '<br><span class="gb-teaser-memo">' + escHTML(pick.memo) + '</span>';
-        }
+        if (!teaser) return;
+        var t = '';
+        if (pick.submittedAt) t = ' <span class="gb-teaser-time">' + escHTML(relativeTime(pick.submittedAt)) + '</span>';
+        teaser.innerHTML = '<div class="gb-teaser-header">' +
+          '<span class="gb-teaser-label">RANDOM ENTRY</span>' +
+          '<button class="gb-teaser-refresh" onclick="renderTeaser()" title="Show another entry">&#x21BB;</button>' +
+          '</div>' +
+          '<span class="gb-teaser-badge">Unit #' + escHTML(pick.badge) + '</span>' + t +
+          '<br><span class="gb-teaser-memo">' + escHTML(pick.memo) + '</span>';
       }
+      renderTeaser();
+      window.renderTeaser = renderTeaser;
 
       // Build HTML
       var listEl = document.getElementById('gb-entries');
@@ -482,10 +515,8 @@
       var b  = document.getElementById('gb-b');
       var chev = document.getElementById('gb-chevron');
       var btn = document.getElementById('gb-expand-btn');
-      var teaser = document.getElementById('gb-teaser');
       var expanded = btn.getAttribute('aria-expanded') === 'true';
       if (!expanded) {
-        if (teaser) teaser.style.display = 'none';
         wrap.style.maxHeight = wrap.scrollHeight + 'px';
         wrap.classList.add('gb-open');
         btn.setAttribute('aria-expanded', 'true');
@@ -493,7 +524,6 @@
         if (b)  b.textContent  = 'MESSAGES';
         if (chev) chev.innerHTML = '&#x25B2;';
       } else {
-        if (teaser) teaser.style.display = '';
         wrap.style.maxHeight = '0px';
         wrap.classList.remove('gb-open');
         btn.setAttribute('aria-expanded', 'false');
