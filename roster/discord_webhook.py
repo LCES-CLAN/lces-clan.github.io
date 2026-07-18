@@ -90,8 +90,8 @@ def build_header():
     now = datetime.now()
     return (
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "📋  **LCES Officer Roster**\n"
-        f"🕐  Generated: {now.strftime('%B %d, %Y at %I:%M %p')}\n"
+        "📋  **List of Badge Numbers**\n"
+        f"🕐  Generated {now.strftime('%B %d, %Y')}\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     )
 
