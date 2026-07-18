@@ -1109,7 +1109,11 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
 }
 
 /* Purple + green glow always-on on tablet */
+/* Debrief panel: always show hover background on mobile/tablet */
 @media (max-width: 768px) {
+  #debrief-panel {
+    background: var(--bg-card-hover);
+  }
   #discord,
   #media-cta {
     box-shadow: 0 0 20px rgba(110,105,235,0.30), 0 0 50px rgba(110,105,235,0.10);
