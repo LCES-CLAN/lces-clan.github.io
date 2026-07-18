@@ -17,7 +17,7 @@
     entries.forEach(function(entry) {
       entry.target.classList.toggle('centered', entry.isIntersecting);
     });
-  }, { rootMargin: '-42.5% 0px -42.5% 0px' });
+  }, { rootMargin: '-38.75% 0px -38.75% 0px' });
   document.querySelectorAll('.panel').forEach(function(el) { centerObserver.observe(el); });
 
   // Automatically observe any .reveal elements injected after page load
