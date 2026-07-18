@@ -367,7 +367,8 @@ window.__rosterData = [
   {
     "badge": 73,
     "display": "Low*Rent*",
-    "status": "detected"
+    "status": "active",
+    "gamertag": "Low Rent9"
   },
   {
     "badge": 74,
