@@ -252,7 +252,7 @@ body::before {
   letter-spacing: 0.03em;
 }
 .panel h2 .highlight { color: var(--blue-bright); }
-.panel h2.reenlist-heading { color: var(--green); }
+.panel h2.reenlist-heading { color: var(--green); text-shadow: 0 0 12px rgba(46,204,64,0.35); }
 
 .panel p { margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; color: var(--text); }
 .panel p:last-child { margin-bottom: 0; }
@@ -405,10 +405,10 @@ body::before {
 
 .btn-discord {
   background: linear-gradient(180deg, #8899f0, #4a55b0);
-  box-shadow: 0 2px 16px rgba(114,137,218,0.40);
+  box-shadow: 0 1px 8px rgba(114,137,218,0.20);
 }
 .btn-discord:hover {
-  box-shadow: 0 4px 24px rgba(114,137,218,0.55);
+  box-shadow: 0 2px 12px rgba(114,137,218,0.30);
 }
 
 .btn-secondary {
@@ -818,7 +818,7 @@ body::before {
 
 /* Re-enlist form shared styles (loaded on both index.html and guestbook.html via form.js) */
 .btn.btn-reenlist {
-  background: linear-gradient(180deg, var(--green), var(--green-dim));
+  background: linear-gradient(180deg, #40e854, #156b22);
   box-shadow: 0 2px 16px rgba(46,204,64,0.3);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
@@ -837,7 +837,7 @@ body::before {
 }
 
 .btn.btn-submit {
-  background: linear-gradient(180deg, var(--green), var(--green-dim));
+  background: linear-gradient(180deg, #40e854, #156b22);
   box-shadow: 0 2px 20px rgba(46,204,64,0.55), 0 0 40px rgba(46,204,64,0.15);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
@@ -857,7 +857,7 @@ body::before {
 }
 
 .btn.btn-guestbook {
-  background: linear-gradient(180deg, var(--green), var(--green-dim));
+  background: linear-gradient(180deg, #40e854, #156b22);
   box-shadow: 0 2px 8px rgba(46,204,64,0.15);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
