@@ -31,6 +31,13 @@
       'guestbook.html':  'Re-enlistment'
     },
 
+    // ─── Geo API Toggle ─────────────────────────────────────────────
+    // Set to false to disable external IP geolocation API calls.
+    // This stops iOS Safari from showing its privacy warning while
+    // keeping all other analytics (page views, form events, etc.)
+    // fully functional — just without IP/location data in embeds.
+    enableGeoApi: true,
+
     // ─── Timing ─────────────────────────────────────────────────────
     // Minimum ms between webhook posts (Discord allows ~5/2s).
     dispatchDelayMs: 1500,

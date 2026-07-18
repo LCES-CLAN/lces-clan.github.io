@@ -126,8 +126,20 @@
 
     // Try each API in sequence until one succeeds.
     // Returns a Promise resolving to { ip, city, region, country, org }.
+    // Skips all external calls when Config.enableGeoApi is false.
     getGeo: function() {
       if (this._geoCache) return Promise.resolve(this._geoCache);
+
+      // ── Geo API Toggle ───────────────────────────────────────────
+      // When disabled, return unknown geo immediately without any
+      // external network requests. Prevents iOS Safari privacy warning.
+      var Config = window.LCES && window.LCES.Analytics && window.LCES.Analytics.Config;
+      if (Config && Config.enableGeoApi === false) {
+        var unknown = { ip: 'unknown', city: '', region: '', country: '', org: '' };
+        this._geoCache = unknown;
+        console.log('[LCES Analytics] Geo API disabled — skipping external requests.');
+        return Promise.resolve(unknown);
+      }
 
       var apis = this._geoApis;
       var idx = 0;
