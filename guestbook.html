@@ -292,6 +292,14 @@
   text-shadow: 0 0 8px rgba(46,204,64,0.25);
   white-space: nowrap;
 }
+.gb-sep {
+  color: rgba(255,255,255,0.15);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 300;
+  margin: 0 0.1rem;
+  user-select: none;
+}
 .gb-aka {
   align-self: stretch;
   font-family: 'Share Tech Mono', monospace;
@@ -536,6 +544,7 @@
             '<div class="gb-id-col">' +
               '<div class="gb-id-row">' +
                 '<span class="gb-badge">' + escHTML(padBadge(e.badge)) + '</span>' +
+                '<span class="gb-sep">|</span>' +
                 '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>' +
               '</div>' +
               akaHtml +
