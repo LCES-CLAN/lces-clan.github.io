@@ -466,10 +466,18 @@
       var countEl = document.getElementById('gb-count-badge');
       if (countEl) countEl.textContent = entries.length;
 
-      // Render a random entry into the teaser
+      // Render a random entry into the teaser (never repeats back-to-back)
+      var lastTeaserIdx = -1;
       function renderTeaser() {
         if (!entries.length) return;
-        var pick = entries[Math.floor(Math.random() * entries.length)];
+        var idx;
+        if (entries.length > 1) {
+          do { idx = Math.floor(Math.random() * entries.length); } while (idx === lastTeaserIdx);
+        } else {
+          idx = 0;
+        }
+        lastTeaserIdx = idx;
+        var pick = entries[idx];
         var teaser = document.getElementById('gb-teaser');
         if (!teaser) return;
         var t = '';
