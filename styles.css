@@ -217,6 +217,7 @@ body::before {
 }
 .nav-bar a.nav-discord:hover {
   color: #7289da;
+  border-color: #7289da;
   box-shadow: 0 4px 16px rgba(114,137,218,0.25);
 }
 
