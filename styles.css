@@ -257,7 +257,7 @@ body::before {
   letter-spacing: 0.03em;
 }
 .panel h2 .highlight { color: var(--blue-bright); }
-.panel h2.reenlist-heading { color: #60ca3f; text-shadow: 0 0 12px rgba(96,202,63,0.35); }
+.panel h2.reenlist-heading { color: var(--green); text-shadow: 0 0 12px rgba(46,204,64,0.35); }
 
 .panel p { margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; color: var(--text); }
 .panel p:last-child { margin-bottom: 0; }
@@ -831,14 +831,14 @@ body::before {
 
 /* Re-enlist form shared styles (loaded on both index.html and guestbook.html via form.js) */
 .btn.btn-reenlist {
-  background: linear-gradient(180deg, #69d849, #549a30);
-  box-shadow: 0 2px 16px rgba(96,202,63,0.3);
+  background: linear-gradient(180deg, #40e854, #156b22);
+  box-shadow: 0 2px 16px rgba(46,204,64,0.3);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-reenlist:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(96,202,63,0.4);
+  box-shadow: 0 6px 24px rgba(46,204,64,0.4);
 }
 .btn.btn-reenlist:active {
   transform: translateY(0);
@@ -850,14 +850,14 @@ body::before {
 }
 
 .btn.btn-submit {
-  background: linear-gradient(180deg, #69d849, #549a30);
-  box-shadow: 0 2px 18px rgba(96,202,63,0.45), 0 0 36px rgba(96,202,63,0.12);
+  background: linear-gradient(180deg, #40e854, #156b22);
+  box-shadow: 0 2px 18px rgba(46,204,64,0.45), 0 0 36px rgba(46,204,64,0.12);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 26px rgba(96,202,63,0.60), 0 0 50px rgba(96,202,63,0.20);
+  box-shadow: 0 6px 26px rgba(46,204,64,0.60), 0 0 50px rgba(46,204,64,0.20);
 }
 .btn.btn-submit:active {
   transform: translateY(0);
@@ -866,18 +866,18 @@ body::before {
   opacity: 0.8;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 8px rgba(96,202,63,0.18);
+  box-shadow: 0 2px 8px rgba(46,204,64,0.18);
 }
 
 .btn.btn-guestbook {
-  background: linear-gradient(180deg, #69d849, #549a30);
-  box-shadow: 0 2px 8px rgba(96,202,63,0.15);
+  background: linear-gradient(180deg, #40e854, #156b22);
+  box-shadow: 0 2px 8px rgba(46,204,64,0.15);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-guestbook:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(96,202,63,0.25);
+  box-shadow: 0 4px 16px rgba(46,204,64,0.25);
 }
 .btn.btn-guestbook:active {
   transform: translateY(0);
