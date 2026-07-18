@@ -183,6 +183,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
+}
+.gb-gt-col {
+  flex-shrink: 0;
+  min-width: 8rem;
+  max-width: 10rem;
+}
+.gb-aka {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+  margin-top: 0.15rem;
+  line-height: 1.3;
+  word-break: break-all;
 }
 .gb-memo {
   font-family: 'Inter', sans-serif;
@@ -198,6 +214,9 @@
     flex-direction: column;
     gap: 0.25rem;
     align-items: flex-start;
+  }
+  .gb-gt-col {
+    max-width: none;
   }
   .gb-gt {
     max-width: none;
@@ -265,9 +284,14 @@
 
       // Build entry rows with gamertag attached
       var entries = messages.map(function(m) {
+        var rawGt = gtLookup[String(m.badge)] || 'Unknown';
+        var parts = rawGt.split('/');
+        var primary = parts[0].trim();
+        var alts = parts.slice(1).map(function(s) { return s.trim(); }).filter(Boolean);
         return {
           badge: String(m.badge),
-          gamertag: gtLookup[String(m.badge)] || 'Unknown',
+          gamertag: primary,
+          alts: alts,
           memo: m.message,
           submittedAt: m.submittedAt || null
         };
@@ -290,9 +314,13 @@
       if (listEl && entries.length) {
         var html = '';
         entries.forEach(function(e) {
+          var gtHtml = '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>';
+          if (e.alts && e.alts.length) {
+            gtHtml += '<span class="gb-aka">AKA: ' + escHTML(e.alts.join(', ')) + '</span>';
+          }
           html += '<div class="gb-entry">' +
             '<span class="gb-badge">#' + escHTML(e.badge) + '</span>' +
-            '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>' +
+            '<div class="gb-gt-col">' + gtHtml + '</div>' +
             '<span class="gb-memo">' + escHTML(e.memo) + '</span>' +
           '</div>';
         });
