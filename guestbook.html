@@ -153,6 +153,7 @@
 }
 .gb-entry {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 0.65rem;
   padding: 0.35rem 0.55rem;
@@ -168,7 +169,7 @@
 .gb-badge {
   flex-shrink: 0;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--blue-bright);
   min-width: 2.5rem;
@@ -176,7 +177,7 @@
 .gb-gt {
   flex-shrink: 0;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   color: var(--text-bright);
   min-width: 8rem;
   max-width: 10rem;
@@ -191,30 +192,43 @@
   max-width: 10rem;
 }
 .gb-aka {
-  display: block;
+  width: calc(100% - 2rem);
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.55rem;
   color: var(--text-dim);
   opacity: 0.7;
-  margin-top: 0.1rem;
+  margin-top: -0.55rem;
+  margin-left: 2rem;
   line-height: 1.3;
   word-break: break-all;
 }
 .gb-memo {
   font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.80rem;
   color: var(--text);
   font-style: italic;
   line-height: 1.5;
   flex: 1;
+  text-wrap: pretty;
 }
 .gb-time {
+  flex-shrink: 0;
+  margin-left: auto;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.55rem;
   font-style: normal;
-  color: var(--text-dim);
-  opacity: 0.55;
+  color: var(--text-bright);
+  background: rgba(26,138,255,0.1);
+  border: 1px solid rgba(26,138,255,0.18);
+  border-radius: 10px;
+  padding: 0.1rem 0.5rem;
+  line-height: 1.4;
   white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+.gb-time:hover {
+  background: rgba(26,138,255,0.22);
+  border-color: rgba(26,138,255,0.35);
 }
 
 @media (max-width: 480px) {
@@ -228,6 +242,14 @@
   }
   .gb-gt {
     max-width: none;
+  }
+  .gb-time {
+    margin-left: 0;
+  }
+  .gb-aka {
+    margin-left: 0;
+    margin-top: 0;
+    width: 100%;
   }
 }
 
@@ -339,17 +361,15 @@
         var html = '';
         entries.forEach(function(e) {
           var gtHtml = '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>';
-          if (e.alts.length) {
-            gtHtml += '<span class="gb-aka">AKA: ' + escHTML(e.alts.join(', ')) + '</span>';
-          }
-          var timeHtml = relativeTime(e.submittedAt);
-          var memoHtml = '<span class="gb-memo">' + escHTML(e.memo);
-          if (timeHtml) memoHtml += ' <span class="gb-time">' + escHTML(timeHtml) + '</span>';
-          memoHtml += '</span>';
+          var akaHtml = e.alts.length ? '<span class="gb-aka">AKA:\u2005' + escHTML(e.alts.join(', ')) + '</span>' : '';
+          var timeStr = relativeTime(e.submittedAt);
+          var timeHtml = timeStr ? '<span class="gb-time">' + escHTML(timeStr) + '</span>' : '';
           html += '<div class="gb-entry">' +
             '<span class="gb-badge">#' + escHTML(e.badge) + '</span>' +
             '<div class="gb-gt-col">' + gtHtml + '</div>' +
-            memoHtml +
+            '<span class="gb-memo">' + escHTML(e.memo) + '</span>' +
+            timeHtml +
+            akaHtml +
           '</div>';
         });
         listEl.innerHTML = html;
