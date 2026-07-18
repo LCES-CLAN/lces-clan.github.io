@@ -836,6 +836,40 @@ body::before {
   transform: none;
 }
 
+.btn.btn-submit {
+  background: linear-gradient(180deg, var(--green), var(--green-dim));
+  box-shadow: 0 2px 20px rgba(46,204,64,0.55), 0 0 40px rgba(46,204,64,0.15);
+  font-size: 0.7rem;
+  padding: 0.75rem 2.2rem;
+}
+.btn.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(46,204,64,0.70), 0 0 60px rgba(46,204,64,0.25);
+}
+.btn.btn-submit:active {
+  transform: translateY(0);
+}
+.btn.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 10px rgba(46,204,64,0.25);
+}
+
+.btn.btn-guestbook {
+  background: linear-gradient(180deg, var(--green), var(--green-dim));
+  box-shadow: 0 2px 8px rgba(46,204,64,0.15);
+  font-size: 0.7rem;
+  padding: 0.75rem 2.2rem;
+}
+.btn.btn-guestbook:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(46,204,64,0.25);
+}
+.btn.btn-guestbook:active {
+  transform: translateY(0);
+}
+
 .form-feedback {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.7rem;
@@ -1012,10 +1046,13 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   }
 }
 
-/* Purple glow also always-on on tablet */
+/* Purple + green glow always-on on tablet */
 @media (max-width: 768px) {
   #discord,
   #media-cta {
     box-shadow: 0 0 20px rgba(100,120,230,0.30), 0 0 50px rgba(100,120,230,0.10);
+  }
+  #roster-cta {
+    box-shadow: 0 0 20px rgba(46,204,64,0.30), 0 0 50px rgba(46,204,64,0.10);
   }
 }

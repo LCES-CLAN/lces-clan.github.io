@@ -89,7 +89,7 @@
 
   // ─── Update submit button ───
   function updateBtn() {
-    var btn = document.querySelector('.btn-reenlist');
+    var btn = document.querySelector('.btn-submit');
     if (!btn) return;
     var gtEl = document.getElementById('gt-original');
     var hasGt = gtEl && gtEl.value && gtEl.value.trim() !== '';
@@ -137,7 +137,7 @@
   window.handleReEnlist = function(e) {
     e.preventDefault();
     if (!validate()) return;
-    var form = e.target, fb = document.getElementById('form-feedback'), btn = form.querySelector('.btn-reenlist'), orig = btn.textContent;
+    var form = e.target, fb = document.getElementById('form-feedback'), btn = form.querySelector('.btn-submit'), orig = btn.textContent;
     btn.textContent = 'Transmitting...'; btn.disabled = true; fb.textContent = 'Sending...'; fb.style.color = '#6680a0';
     var d = {
       gt: (document.getElementById('gt-original') || {}).value || '',
@@ -179,7 +179,7 @@
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional"> — optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
         '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
-        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span><span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span></div>' +
+        '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-submit" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span><span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span></div>' +
       '</form>';
     var msgEl = document.getElementById('message');
     var countEl = document.getElementById('char-count');
