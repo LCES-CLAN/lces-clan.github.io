@@ -166,17 +166,17 @@
         '<p class="form-subtitle">Just fill in what you know &mdash; you can always share more details later.</p>' +
         '<div class="form-row">' +
           '<div class="field"><label for="gt-original">Original Xbox Gamertag(s)<span style="color:var(--green);opacity:0.7">*</span></label><input id="gt-original" type="text" maxlength="75" placeholder="e.g. xX_LCES0ffic3r_Xx" required></div>' +
-          '<div class="field"><label for="gt-current">Current Xbox Gamertag(s)<span class="optional">— optional</span></label><input id="gt-current" type="text" maxlength="50" placeholder="e.g. MyNewGamertag2026"></div>' +
+          '<div class="field"><label for="gt-current">Current Xbox Gamertag(s)<span class="optional"> — optional</span></label><input id="gt-current" type="text" maxlength="50" placeholder="e.g. MyNewGamertag2026"></div>' +
         '</div>' +
         '<div class="form-row">' +
-          '<div class="field"><label for="steam-id">Steam ID/Friend Code <span class="optional">— optional</span></label><input id="steam-id" type="text" maxlength="50" placeholder="e.g. 76561198036277522 or 123456789"></div>' +
-          '<div class="field"><label for="discord-tag">Discord Username <span class="optional">— optional</span></label><input id="discord-tag" type="text" maxlength="50" placeholder="e.g. @username"></div>' +
+          '<div class="field"><label for="steam-id">Steam ID/Friend Code <span class="optional"> — optional</span></label><input id="steam-id" type="text" maxlength="50" placeholder="e.g. 76561198036277522 or 123456789"></div>' +
+          '<div class="field"><label for="discord-tag">Discord Username <span class="optional"> — optional</span></label><input id="discord-tag" type="text" maxlength="50" placeholder="e.g. @username"></div>' +
         '</div>' +
         '<div class="form-row">' +
-          '<div class="field"><label for="email">Email Address <span class="optional">— optional</span></label><input id="email" type="email" maxlength="100" placeholder="e.g. user@example.com"></div>' +
-          '<div class="field"><label>I own GTA IV on: <span class="optional">- optional</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
+          '<div class="field"><label for="email">Email Address <span class="optional"> — optional</span></label><input id="email" type="email" maxlength="100" placeholder="e.g. user@example.com"></div>' +
+          '<div class="field"><label>I own GTA IV on: <span class="optional"> — optional</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
         '</div>' +
-        '<div class="field"><label for="message">Message <span class="optional">— optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
+        '<div class="field"><label for="message">Message <span class="optional"> — optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
         '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
         '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-reenlist" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span></div>' +
         '<span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span>' +
