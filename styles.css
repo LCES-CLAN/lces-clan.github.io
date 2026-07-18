@@ -261,7 +261,7 @@ body::before {
   letter-spacing: 0.03em;
 }
 .panel h2 .highlight { color: var(--blue-bright); }
-.panel h2.reenlist-heading { color: var(--green); text-shadow: 0 0 12px rgba(46,204,64,0.35); }
+.panel h2.reenlist-heading { color: var(--green); text-shadow: 0 0 12px rgba(46,204,64,0.6), 0 0 24px rgba(46,204,64,0.4), 0 0 36px rgba(46,204,64,0.2); }
 
 .panel p { margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; color: var(--text); }
 .panel p:last-child { margin-bottom: 0; }
