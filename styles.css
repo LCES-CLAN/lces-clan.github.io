@@ -410,6 +410,7 @@ body::before {
 #enlist-cta:hover {
   background: var(--bg-card-hover);
   border-color: rgba(26,138,255,0.2);
+  box-shadow: 0 0 12px rgba(26,138,255,0.20), 0 0 30px rgba(26,138,255,0.06);
 }
 
 .cta-panel h2 {
