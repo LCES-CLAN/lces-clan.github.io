@@ -303,10 +303,12 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.80rem;
   color: #b0bcd2;
-  font-style: italic;
   line-height: 1.5;
   flex: 1;
   text-wrap: pretty;
+}
+.gb-memo.gb-default {
+  font-style: italic;
 }
 .gb-time {
   flex-shrink: 0;
@@ -455,7 +457,8 @@
           gamertag: primary,
           alts: alts,
           memo: m.message,
-          submittedAt: m.submittedAt || null
+          submittedAt: m.submittedAt || null,
+          isDefault: !!m.isDefault
         };
       });
 
@@ -523,10 +526,11 @@
           var akaHtml = e.alts.length ? '<span class="gb-aka">AKA:\u2005' + escHTML(e.alts.join(', ')) + '</span>' : '';
           var timeStr = relativeTime(e.submittedAt);
           var timeHtml = timeStr ? '<span class="gb-time">' + escHTML(timeStr) + '</span>' : '';
+          var memoClass = 'gb-memo' + (e.isDefault ? ' gb-default' : '');
           html += '<div class="gb-entry">' +
             '<span class="gb-badge">Unit ' + escHTML(e.badge) + '</span>' +
             '<div class="gb-gt-col">' + gtHtml + '</div>' +
-            '<span class="gb-memo">' + escHTML(e.memo) + '</span>' +
+            '<span class="' + memoClass + '">' + escHTML(e.memo) + '</span>' +
             timeHtml +
             akaHtml +
           '</div>';

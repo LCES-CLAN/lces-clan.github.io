@@ -1,6 +1,7 @@
-// LCES Officer Messages — auto-generated from roster/profiles/*.json
+// LCES Officer Messages -- auto-generated from roster/profiles/*.json
 // Regenerate with: python roster/scan_messages.py
 // Sorted by submittedAt descending (newest first), badge asc for ties
+// isDefault: true -> frontend should render in italics (placeholder message)
 window.__messagesData = [
   {
     "badge": 170,
