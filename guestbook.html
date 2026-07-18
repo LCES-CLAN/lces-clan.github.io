@@ -315,7 +315,7 @@
         var html = '';
         entries.forEach(function(e) {
           var gtHtml = '<span class="gb-gt">' + escHTML(e.gamertag) + '</span>';
-          if (e.alts && e.alts.length) {
+          if (e.alts.length) {
             gtHtml += '<span class="gb-aka">AKA: ' + escHTML(e.alts.join(', ')) + '</span>';
           }
           html += '<div class="gb-entry">' +
