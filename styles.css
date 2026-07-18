@@ -211,9 +211,7 @@ body::before {
 }
 
 
-/* Discord button in nav glows blurple */
-.nav-bar a.nav-discord {
-}
+
 .nav-bar a.nav-discord:hover {
   color: #7289da;
   border-color: #7289da;
