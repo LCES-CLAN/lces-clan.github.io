@@ -19,6 +19,7 @@
     });
   }, { rootMargin: '-40.375% 0px -40.375% 0px' });
   document.querySelectorAll('.panel').forEach(function(el) { centerObserver.observe(el); });
+  document.querySelectorAll('.cta-panel').forEach(function(el) { centerObserver.observe(el); });
 
   // Automatically observe any .reveal elements injected after page load
   // (e.g. the media page's dynamically generated category panels).
