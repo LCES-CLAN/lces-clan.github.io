@@ -625,7 +625,14 @@ function renderRoster(data) {
     }
 
     // Add message from profile data (10-8 officers)
-    var messages = window.__messagesData || {};
+    var rawMessages = window.__messagesData || [];
+    // Convert array to badge-keyed lookup if needed
+    var messages = {};
+    if (Array.isArray(rawMessages)) {
+      rawMessages.forEach(function(m) { messages[m.badge] = m.message; });
+    } else {
+      messages = rawMessages;
+    }
     var msg = messages[entry.badge];
     if (msg) {
       altHtml += '<span class="gt-message">' + msg + '</span>';
