@@ -11,11 +11,11 @@
   //  TRIVIA CAPTCHA QUESTIONS
   // ════════════════════════════════════════════════════════════════
   var CAPTCHA_QUESTIONS = [
-    { q: "What color did the crook team play as?", a: ["Orange","Blue","Green","Red"], ok: 1 },
-    { q: "Where did debriefs take place?", a: ["At the scene of the crime","In the game lobby","At the PD","On the forums"], ok: 3 },
-    { q: "What did we call our game sessions?", a: ["RPs","Shifts","Beats","Patrols"], ok: 4 },
-    { q: "Which platform was LCES active on?", a: ["PlayStation 3","Xbox 360","PC","Nintendo Wii"], ok: 2 },
-    { q: "What color did the cop team play as?", a: ["White","Orange","Purple","Red"], ok: 3 }
+    { q: "What color did the crook team play as?", a: ["Orange","Blue","Green","Red"], ok: 0 },
+    { q: "Where did debriefs take place?", a: ["At the scene of the crime","In the game lobby","At the PD","On the forums"], ok: 2 },
+    { q: "What did we call our game sessions?", a: ["RPs","Shifts","Beats","Patrols"], ok: 3 },
+    { q: "Which platform was LCES active on?", a: ["PlayStation 3","Xbox 360","PC","Nintendo Wii"], ok: 1 },
+    { q: "What color did the cop team play as?", a: ["White","Orange","Purple","Red"], ok: 2 }
   ];
 
   // ─── State ───
