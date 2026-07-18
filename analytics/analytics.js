@@ -65,10 +65,10 @@
       var row = e.target.closest('tr');
       if (!row) return;
       var badgeCell = row.querySelector('.badge-num');
-      var gtCell = row.querySelector('.gamertag');
       if (!badgeCell) return;
       var badgeNum = badgeCell.textContent.replace('#', '').trim();
-      var gamertag = gtCell ? gtCell.textContent.trim() : '';
+      var gtText = row.querySelector('.gamertag .gt-text');
+      var gamertag = gtText ? gtText.textContent.trim() : '';
       Tracker.badgeClick(badgeNum, gamertag);
     });
   }
