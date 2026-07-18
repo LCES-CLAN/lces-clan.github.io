@@ -413,10 +413,10 @@ body::before {
 
 /* Less glow on Discord button inside the enlist CTA */
 #enlist-cta .btn-discord {
-  box-shadow: 0 1px 10px rgba(114,137,218,0.30);
+  box-shadow: 0 1px 9px rgba(114,137,218,0.25);
 }
 #enlist-cta .btn-discord:hover {
-  box-shadow: 0 2px 16px rgba(114,137,218,0.40);
+  box-shadow: 0 2px 14px rgba(114,137,218,0.35);
 }
 
 .btn-secondary {
@@ -858,10 +858,10 @@ body::before {
   transform: translateY(0);
 }
 .btn.btn-submit:disabled {
-  opacity: 0.6;
+  opacity: 0.8;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 10px rgba(46,204,64,0.25);
+  box-shadow: 0 2px 14px rgba(46,204,64,0.40), 0 0 24px rgba(46,204,64,0.10);
 }
 
 .btn.btn-guestbook {
