@@ -484,15 +484,15 @@
       renderTeaser();
       window.renderTeaser = renderTeaser;
 
-      // Auto-refresh teaser every 10 seconds, pause on hover
-      var teaserPaused = false;
+      // Auto-refresh teaser every 15 seconds, pause on hover or when expanded
+      window.__teaserPaused = false;
       var teaserEl = document.getElementById('gb-teaser');
       if (teaserEl) {
-        teaserEl.addEventListener('mouseenter', function() { teaserPaused = true; });
-        teaserEl.addEventListener('mouseleave', function() { teaserPaused = false; });
+        teaserEl.addEventListener('mouseenter', function() { window.__teaserPaused = true; });
+        teaserEl.addEventListener('mouseleave', function() { window.__teaserPaused = false; });
       }
       setInterval(function() {
-        if (!teaserPaused) {
+        if (!window.__teaserPaused) {
           if (teaserEl) teaserEl.classList.add('fading');
           setTimeout(function() {
             renderTeaser();
@@ -543,6 +543,7 @@
         if (w1) w1.textContent = 'HIDE';
         if (b)  b.textContent  = 'MESSAGES';
         if (chev) chev.innerHTML = '&#x25B2;';
+        window.__teaserPaused = true;
       } else {
         wrap.style.maxHeight = '0px';
         wrap.classList.remove('gb-open');
@@ -550,6 +551,7 @@
         if (w1) w1.textContent = 'VIEW';
         if (b)  b.textContent  = 'MESSAGES';
         if (chev) chev.innerHTML = '&#x25BC;';
+        window.__teaserPaused = false;
       }
     }
   </script>
