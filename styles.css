@@ -239,14 +239,22 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 8px; padding: 1.5rem;
   margin-bottom: 1.25rem;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 .panel:hover {
   border-color: rgba(26,138,255,0.2);
   background: var(--bg-card-hover);
 }
 
-/* Guestbook form panels — lighter background + soft green glow on hover */
+/* Glowing panels: instant hover — no transition */
+#guestbook,
+.panel.guestbook-panel,
+#discord,
+#media-cta,
+#roster-cta {
+  transition: none;
+}
+
 #guestbook:hover,
 .panel.guestbook-panel:hover {
   background: var(--bg-card-hover);
