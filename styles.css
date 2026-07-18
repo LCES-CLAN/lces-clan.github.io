@@ -438,6 +438,11 @@ body::before {
   background: var(--bg-card-hover);
   box-shadow: 0 0 24px rgba(100,120,230,0.30), 0 0 60px rgba(100,120,230,0.10);
 }
+#roster-cta:hover {
+  border-color: rgba(46,204,64,0.25);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 24px rgba(46,204,64,0.30), 0 0 60px rgba(46,204,64,0.10);
+}
 #discord:hover .discord-icon {
   filter: drop-shadow(0 0 30px rgba(88, 101, 242, 0.6));
   transform: scale(1.1);
