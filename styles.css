@@ -492,7 +492,7 @@ body::before {
 #media-cta:hover {
   border-color: rgba(26,138,255,0.2);
   background: var(--bg-card-hover);
-  box-shadow: 0 0 24px rgba(100,120,230,0.30), 0 0 60px rgba(100,120,230,0.10);
+  box-shadow: 0 0 24px rgba(110,105,235,0.30), 0 0 60px rgba(110,105,235,0.10);
 }
 #roster-cta:hover {
   border-color: rgba(46,204,64,0.25);
@@ -1112,7 +1112,7 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
 @media (max-width: 768px) {
   #discord,
   #media-cta {
-    box-shadow: 0 0 20px rgba(100,120,230,0.30), 0 0 50px rgba(100,120,230,0.10);
+    box-shadow: 0 0 20px rgba(110,105,235,0.30), 0 0 50px rgba(110,105,235,0.10);
   }
   #roster-cta {
     box-shadow: 0 0 20px rgba(46,204,64,0.30), 0 0 50px rgba(46,204,64,0.10);
