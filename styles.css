@@ -851,13 +851,13 @@ body::before {
 
 .btn.btn-submit {
   background: linear-gradient(180deg, #40e854, #156b22);
-  box-shadow: 0 2px 20px rgba(46,204,64,0.55), 0 0 40px rgba(46,204,64,0.15);
+  box-shadow: 0 2px 18px rgba(46,204,64,0.45), 0 0 36px rgba(46,204,64,0.12);
   font-size: 0.7rem;
   padding: 0.75rem 2.2rem;
 }
 .btn.btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 30px rgba(46,204,64,0.70), 0 0 60px rgba(46,204,64,0.25);
+  box-shadow: 0 6px 26px rgba(46,204,64,0.60), 0 0 50px rgba(46,204,64,0.20);
 }
 .btn.btn-submit:active {
   transform: translateY(0);
@@ -866,7 +866,7 @@ body::before {
   opacity: 0.8;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 14px rgba(46,204,64,0.40), 0 0 24px rgba(46,204,64,0.10);
+  box-shadow: 0 2px 8px rgba(46,204,64,0.18);
 }
 
 .btn.btn-guestbook {
