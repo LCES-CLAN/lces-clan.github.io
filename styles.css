@@ -161,7 +161,7 @@ body::before {
   border-color: var(--blue-dim);
   background: rgba(26, 138, 255, 0.12);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--blue-glow);
+  box-shadow: 0 3px 10px rgba(26,138,255,0.18);
 }
 .nav-bar a:active {
   transform: translateY(0);
@@ -198,7 +198,7 @@ body::before {
 .nav-bar a.nav-cta:hover {
   border-color: var(--green);
   background: rgba(46, 204, 64, 0.15);
-  box-shadow: 0 4px 16px rgba(46, 204, 64, 0.25);
+  box-shadow: 0 4px 20px rgba(46, 204, 64, 0.35);
   color: #5ee070;
 }
 .nav-bar a.nav-cta:active {
@@ -210,6 +210,11 @@ body::before {
   box-shadow: 0 0 16px rgba(46, 204, 64, 0.25), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
+
+/* Discord button in nav keeps original glow */
+.nav-bar a.nav-discord:hover {
+  box-shadow: 0 4px 16px var(--blue-glow);
+}
 
 /* ─── Section Dividers ─── */
 .divider {
