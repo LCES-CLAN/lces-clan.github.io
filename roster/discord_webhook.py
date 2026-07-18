@@ -6,7 +6,7 @@ Reads roster/roster.json (the master file with uncensored gamertags)
 and sends the roster in batches of 25 badges per message.
 
 Usage:
-    1. Set WEBHOOK_URL in .env (or pass via --webhook)
+    1. Set ROSTER_WEBHOOK_URL in .env (or pass via --webhook)
     2. python roster/discord_webhook.py
 
 The first message includes a header with a generation timestamp.
@@ -31,7 +31,7 @@ import urllib.error
 from datetime import datetime
 
 # ── Configuration ──────────────────────────────────────────────────
-# Webhook URL is loaded from .env (WEBHOOK_URL) — see .env.example.
+# Webhook URL is loaded from .env (ROSTER_WEBHOOK_URL) — see .env.example.
 # Can also pass via --webhook <url> CLI argument.
 
 CHUNK_SIZE = 25       # badges per message
@@ -148,12 +148,12 @@ def load_webhook_url():
         with open(env_path, "r") as f:
             for line in f:
                 line = line.strip()
-                if line.startswith("WEBHOOK_URL=") or line.startswith("export WEBHOOK_URL="):
+                if line.startswith("ROSTER_WEBHOOK_URL=") or line.startswith("export ROSTER_WEBHOOK_URL="):
                     prefix = "export " if line.startswith("export ") else ""
-                    return line[len(prefix + "WEBHOOK_URL="):].strip().strip('"').strip("'")
+                    return line[len(prefix + "ROSTER_WEBHOOK_URL="):].strip().strip('"').strip("'")
 
     # Priority 3: environment variable
-    env_url = os.environ.get("WEBHOOK_URL") or os.environ.get("DISCORD_WEBHOOK_URL")
+    env_url = os.environ.get("ROSTER_WEBHOOK_URL") or os.environ.get("DISCORD_ROSTER_WEBHOOK_URL")
     if env_url:
         return env_url
 
@@ -176,7 +176,7 @@ def main():
         print("  [!] No Discord webhook URL configured.")
         print()
         print("  Create a .env file in the project root with:")
-        print("    WEBHOOK_URL=https://discord.com/api/webhooks/...")
+        print("    ROSTER_WEBHOOK_URL=https://discord.com/api/webhooks/...")
         print()
         print("  See .env.example for the format, then:")
         print("    cp .env.example .env")
@@ -237,7 +237,7 @@ def main():
         print(f"  [{i}/{len(chunks)}] Sending {len(chunk)} lines…")
         status = send_webhook(url, content)
         if status == 204 or status == 200:
-            print(f"    OK")
+            print("    OK")
         else:
             print(f"    Failed (status {status})")
             # Continue sending remaining chunks anyway
