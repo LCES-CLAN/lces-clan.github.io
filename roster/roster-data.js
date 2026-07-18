@@ -4,7 +4,7 @@
 window.__rosterData = [
   {
     "badge": 1,
-    "display": "HARPER****/N**Sheriff/Nozzleman***/**H*RP*R**/many more",
+    "display": "Harper****/N**Sheriff/Nozzleman***/**H*RP*R**/many more",
     "status": "mia"
   },
   {
