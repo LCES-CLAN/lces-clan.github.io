@@ -413,10 +413,10 @@ body::before {
 
 /* Less glow on Discord button inside the enlist CTA */
 #enlist-cta .btn-discord {
-  box-shadow: 0 1px 8px rgba(114,137,218,0.20);
+  box-shadow: 0 1px 10px rgba(114,137,218,0.30);
 }
 #enlist-cta .btn-discord:hover {
-  box-shadow: 0 2px 12px rgba(114,137,218,0.30);
+  box-shadow: 0 2px 16px rgba(114,137,218,0.40);
 }
 
 .btn-secondary {
