@@ -27,7 +27,7 @@
   s.textContent = '.trivia-captcha{margin:0.5rem 0;padding:0.35rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}' +
     '.tc-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}' +
     '.tc-label{font-family:"Share Tech Mono",monospace;font-size:0.55rem;color:var(--text-dim);white-space:nowrap}' +
-    '.tc-q{font-family:"Inter",sans-serif;font-size:0.72rem;color:var(--white-dim)}' +
+    '.tc-q{font-family:"Inter",sans-serif;font-size:0.72rem;color:#8ea2bc}' +
     '.tc-opts{display:flex;gap:0.25rem;flex-wrap:wrap}' +
     '.tc-opt{padding:0.15rem 0.45rem;cursor:pointer;border:1px solid var(--border);border-radius:3px;background:rgba(0,0,0,0.15);font-family:"Share Tech Mono",monospace;font-size:0.65rem;color:var(--white-dim);transition:background 0.15s,border-color 0.15s}' +
     '.tc-opt:hover{border-color:var(--blue-dim)}' +
