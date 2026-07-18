@@ -356,9 +356,19 @@
       font-size: 0.6rem;
     }
     .gb-entry {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr auto;
       gap: 0.25rem;
-      align-items: flex-start;
+      align-items: start;
+      padding: 0.35rem 0.55rem;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .gb-id-col {
+      grid-column: 1;
+      grid-row: 1;
     }
     .gb-id-row {
       justify-content: flex-start;
@@ -366,8 +376,15 @@
     .gb-aka {
       text-align: left;
     }
+    .gb-memo {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
     .gb-time {
+      grid-column: 2;
+      grid-row: 1;
       margin-left: 0;
+      align-self: start;
     }
   }
 
