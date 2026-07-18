@@ -405,9 +405,17 @@ body::before {
 
 .btn-discord {
   background: linear-gradient(180deg, #8899f0, #4a55b0);
-  box-shadow: 0 1px 8px rgba(114,137,218,0.20);
+  box-shadow: 0 2px 16px rgba(114,137,218,0.40);
 }
 .btn-discord:hover {
+  box-shadow: 0 4px 24px rgba(114,137,218,0.55);
+}
+
+/* Less glow on Discord button inside the enlist CTA */
+#enlist-cta .btn-discord {
+  box-shadow: 0 1px 8px rgba(114,137,218,0.20);
+}
+#enlist-cta .btn-discord:hover {
   box-shadow: 0 2px 12px rgba(114,137,218,0.30);
 }
 
