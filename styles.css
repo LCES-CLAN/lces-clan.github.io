@@ -211,9 +211,9 @@ body::before {
 }
 
 
-/* Discord button in nav keeps original glow */
+/* Discord button in nav glows blurple */
 .nav-bar a.nav-discord:hover {
-  box-shadow: 0 4px 16px var(--blue-glow);
+  box-shadow: 0 4px 16px rgba(114,137,218,0.25);
 }
 
 /* ─── Section Dividers ─── */
