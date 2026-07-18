@@ -3,7 +3,7 @@
 // Sorted by submittedAt descending (newest first), badge asc for ties
 window.__messagesData = [
   {
-    "badge": 172,
+    "badge": 170,
     "message": "So many memories from what seems like such a simpler time. Loved playing as the crooks and coming up with long drawn out scenarios for the detectives to solve.",
     "submittedAt": "2026-07-17T12:53:00Z"
   },
@@ -13,7 +13,7 @@ window.__messagesData = [
     "submittedAt": "2026-07-17T02:48:00Z"
   },
   {
-    "badge": 170,
+    "badge": 172,
     "message": "Curious who went on to become a cop irl.",
     "submittedAt": "2026-07-16T04:35:00Z"
   },
