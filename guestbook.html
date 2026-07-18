@@ -146,16 +146,16 @@
 
 /* Entry rows */
 .gb-entries {
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 .gb-entry {
   display: flex;
   align-items: flex-start;
   gap: 0.65rem;
-  padding: 0.5rem 0.65rem;
+  padding: 0.35rem 0.55rem;
   background: rgba(0,0,0,0.2);
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -196,7 +196,7 @@
   font-size: 0.55rem;
   color: var(--text-dim);
   opacity: 0.7;
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
   line-height: 1.3;
   word-break: break-all;
 }
@@ -207,6 +207,14 @@
   font-style: italic;
   line-height: 1.5;
   flex: 1;
+}
+.gb-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  font-style: normal;
+  color: var(--text-dim);
+  opacity: 0.55;
+  white-space: nowrap;
 }
 
 @media (max-width: 480px) {
@@ -282,6 +290,22 @@
         if (o.gamertag) gtLookup[String(o.badge)] = o.gamertag;
       });
 
+      var NOW = new Date();
+
+      function relativeTime(iso) {
+        if (!iso) return '';
+        var then = new Date(iso);
+        if (isNaN(then.getTime())) return '';
+        var diff = (NOW - then) / 1000;
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+        if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+        if (diff < 2592000) return Math.floor(diff / 604800) + 'w ago';
+        if (diff < 31536000) return Math.floor(diff / 2592000) + 'mo ago';
+        return Math.floor(diff / 31536000) + 'y ago';
+      }
+
       // Build entry rows with gamertag attached
       var entries = messages.map(function(m) {
         var rawGt = gtLookup[String(m.badge)] || 'Unknown';
@@ -318,10 +342,14 @@
           if (e.alts.length) {
             gtHtml += '<span class="gb-aka">AKA: ' + escHTML(e.alts.join(', ')) + '</span>';
           }
+          var timeHtml = relativeTime(e.submittedAt);
+          var memoHtml = '<span class="gb-memo">' + escHTML(e.memo);
+          if (timeHtml) memoHtml += ' <span class="gb-time">' + escHTML(timeHtml) + '</span>';
+          memoHtml += '</span>';
           html += '<div class="gb-entry">' +
             '<span class="gb-badge">#' + escHTML(e.badge) + '</span>' +
             '<div class="gb-gt-col">' + gtHtml + '</div>' +
-            '<span class="gb-memo">' + escHTML(e.memo) + '</span>' +
+            memoHtml +
           '</div>';
         });
         listEl.innerHTML = html;
