@@ -32,7 +32,22 @@ from datetime import datetime, timezone
 # ── Paths ────────────────────────────────────────────────────────────
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROFILES_DIR = os.path.join(_SCRIPT_DIR, "profiles")
+ROSTER_PATH = os.path.join(_SCRIPT_DIR, "roster.json")
 STATE_FILE = os.path.join(_SCRIPT_DIR, "last-run.json")
+
+DEFAULT_MESSAGE = "Signed the guestbook."
+
+
+# ── Roster helpers ─────────────────────────────────────────────────
+
+def load_roster_status():
+    """Return dict {badge: status} from roster.json."""
+    if not os.path.exists(ROSTER_PATH):
+        print(f"  [!] Roster not found: {ROSTER_PATH}")
+        return {}
+    with open(ROSTER_PATH, "r") as f:
+        data = json.load(f)
+    return {e["badge"]: e.get("status", "mia") for e in data}
 
 
 # ── State management ─────────────────────────────────────────────────
@@ -132,6 +147,9 @@ def main():
         print(f"  [!] Profiles directory not found: {PROFILES_DIR}")
         sys.exit(1)
 
+    # ── Load roster for active-officer default messages ──────────────
+    roster_status = load_roster_status()
+
     # ── Gather messages ──────────────────────────────────────────────
     files = sorted(glob.glob(os.path.join(PROFILES_DIR, "*.json")))
     entries = []
@@ -154,9 +172,13 @@ def main():
         message = (data.get("message") or "").strip()
         submitted_at = data.get("submittedAt")
 
-        # Skip entries with no message
+        # Handle entries with no message
         if not message:
-            continue
+            status = roster_status.get(badge, "mia")
+            if status == "active":
+                message = DEFAULT_MESSAGE
+            else:
+                continue  # non-active + no message → skip
 
         # Only pick up entries newer than the last run
         if last_ts and submitted_at and submitted_at <= last_ts:
