@@ -19,7 +19,7 @@
       '</header>' +
       '<div class="status-bar">' +
         '<span class="stat"><span class="dot dot-yellow blink"></span> System booting</span>' +
-        // '<span class="stat"><span class="dot dot-10-2"></span> Badges issued: <strong style="color:var(--text-bright)" id="badge-count">...</strong></span>' +
+        '<span class="stat"><span class="dot dot-10-2"></span> Badges issued: <strong style="color:var(--text-bright)" id="badge-count">...</strong></span>' +
         '<span class="stat"><span class="dot dot-10-8"></span> Officers 10-8</span>' +
         '<span class="stat"><span class="dot dot-10-2"></span> Recruiting old friends</span>' +
       '</div>' +
