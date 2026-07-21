@@ -247,7 +247,7 @@ window.__rosterData = [
   {
     "badge": 49,
     "display": "infamous****",
-    "status": "detected"
+    "status": "replied"
   },
   {
     "badge": 50,
