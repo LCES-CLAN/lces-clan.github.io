@@ -4,6 +4,12 @@
 // isDefault: true -> frontend should render in italics (placeholder message)
 window.__messagesData = [
   {
+    "badge": 49,
+    "message": "Signed the guestbook.",
+    "submittedAt": "2026-07-21T23:42:00Z",
+    "isDefault": true
+  },
+  {
     "badge": 194,
     "message": "Signed the guestbook.",
     "submittedAt": "2026-07-21T23:29:00Z",
