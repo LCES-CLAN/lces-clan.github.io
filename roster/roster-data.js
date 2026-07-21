@@ -247,7 +247,8 @@ window.__rosterData = [
   {
     "badge": 49,
     "display": "infamous****",
-    "status": "detected"
+    "status": "active",
+    "gamertag": "infamousdirt"
   },
   {
     "badge": 50,
