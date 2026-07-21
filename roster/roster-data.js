@@ -236,7 +236,8 @@ window.__rosterData = [
   {
     "badge": 47,
     "display": "Killa****",
-    "status": "detected"
+    "status": "active",
+    "gamertag": "Killa0611"
   },
   {
     "badge": 48,
