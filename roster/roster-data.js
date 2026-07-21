@@ -460,7 +460,8 @@ window.__rosterData = [
   {
     "badge": 91,
     "display": "****Ramirez**",
-    "status": "mia"
+    "status": "active",
+    "gamertag": "x O Ramirez x"
   },
   {
     "badge": 92,
