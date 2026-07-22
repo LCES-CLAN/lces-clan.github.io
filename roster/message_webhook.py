@@ -239,8 +239,14 @@ def main():
         }
 
         # Use the submittedAt as the embed timestamp (shows in Discord UI)
+        # Discord requires a valid ISO 8601 timestamp; normalize the source
+        # timestamp in case it has a non-zero-padded hour like T2:01 instead of T02:01.
         if submitted_at:
-            embed["timestamp"] = submitted_at
+            try:
+                dt = datetime.fromisoformat(submitted_at.replace("Z", "+00:00"))
+                embed["timestamp"] = dt.isoformat()
+            except (ValueError, AttributeError):
+                embed["timestamp"] = submitted_at
 
         # Add Discord username as a field if available
         if discord:
@@ -265,8 +271,9 @@ def main():
             else:
                 print(f"FAILED (status {status})")
                 fail_count += 1
+                continue  # skip tracking newest_ts for failed sends
 
-        # ── Track the newest submittedAt ─────────────────────────────
+        # ── Track the newest submittedAt (only for successfully sent messages) ──
         if submitted_at and (newest_ts is None or submitted_at > newest_ts):
             newest_ts = submitted_at
 
