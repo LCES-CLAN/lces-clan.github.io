@@ -6,7 +6,13 @@ window.__messagesData = [
   {
     "badge": 91,
     "message": "Ohh it's been a while. I may have forgotten how to drive.",
-    "submittedAt": "2026-07-22T02:01:00Z"
+    "submittedAt": "2026-07-22T00:01:00Z"
+  },
+  {
+    "badge": 49,
+    "message": "Signed the guestbook.",
+    "submittedAt": "2026-07-21T23:42:00Z",
+    "isDefault": true
   },
   {
     "badge": 194,
@@ -21,15 +27,9 @@ window.__messagesData = [
     "isDefault": true
   },
   {
-    "badge": 49,
-    "message": "Signed the guestbook.",
-    "submittedAt": "2026-07-21T00:01:00Z",
-    "isDefault": true
-  },
-  {
     "badge": 73,
     "message": "I was told there would be free snacks.",
-    "submittedAt": "2026-07-18T08:01:00Z"
+    "submittedAt": "2026-07-18T12:01:00Z"
   },
   {
     "badge": 170,
