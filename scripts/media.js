@@ -42,19 +42,19 @@
     var origin = window.location.origin;
     return 'https://www.youtube-nocookie.com/embed/' +
       encodeURIComponent(videoId) +
-      '?autoplay=1&rel=0&modestbranding=1&origin=' +
+      '?autoplay=0&rel=0&modestbranding=1&origin=' +
       encodeURIComponent(origin);
   }
 
   function buildPlayerContent(video) {
     if (video.source === 'local' && video.localPath) {
-      return '<video controls autoplay playsinline preload="auto">' +
+      return '<video controls playsinline preload="auto">' +
         '<source src="' + escapeAttr(video.localPath) + '" type="video/mp4">' +
         'Your browser does not support the video element.' +
         '</video>';
     }
     return '<iframe src="' + getEmbedUrl(video.youtubeId) + '"' +
-      ' allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+      ' allow="encrypted-media; fullscreen" allowfullscreen></iframe>';
   }
 
   // Returns the best available title for a video, falling back to the
