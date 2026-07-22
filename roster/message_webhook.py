@@ -246,7 +246,7 @@ def main():
                 dt = datetime.fromisoformat(submitted_at.replace("Z", "+00:00"))
                 embed["timestamp"] = dt.isoformat()
             except (ValueError, AttributeError):
-                embed["timestamp"] = submitted_at
+                pass  # omit timestamp rather than risk a malformed one
 
         # Add Discord username as a field if available
         if discord:
