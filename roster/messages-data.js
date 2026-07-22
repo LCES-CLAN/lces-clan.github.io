@@ -10,15 +10,15 @@ window.__messagesData = [
     "isDefault": true
   },
   {
-    "badge": 91,
-    "message": "Ohh it's been a while. I may have forgotten how to drive.",
-    "submittedAt": "2026-07-21T23:01:00Z"
-  },
-  {
     "badge": 47,
     "message": "Signed the guestbook.",
     "submittedAt": "2026-07-21T22:49:00Z",
     "isDefault": true
+  },
+  {
+    "badge": 91,
+    "message": "Ohh it's been a while. I may have forgotten how to drive.",
+    "submittedAt": "2026-07-21T02:01:00Z"
   },
   {
     "badge": 49,
