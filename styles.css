@@ -1097,12 +1097,12 @@ form.form-section { display: flex; flex-direction: column; gap: 0.75rem; margin-
   .cta-panel { padding: 1.25rem 1rem; }
   .form-row { flex-direction: column; }
 
-  /* Flexible wrap on mobile */
+  /* 2×2 grid on mobile for clean alignment */
   .status-bar {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem 1rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.5rem;
+    justify-items: center;
   }
 }
 
