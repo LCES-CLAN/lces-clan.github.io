@@ -16,7 +16,7 @@ Usage:
 Status values: active, mia, replied, detected
 
 Examples:
-    python roster/roster.py add "xX_LCES_Own3r_Xx"
+    python roster/roster.py add "xX_LCES_0wn3r_Xx"
     python roster/roster.py bulk-import old_roster.txt --reclaim 1
     python roster/roster.py reclaim 1 --gamertag "xX_LCES_Own3r_Xx"
     python roster/roster.py edit 2 --display "LCES_***_2008" --status replied
