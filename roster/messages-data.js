@@ -5,7 +5,7 @@
 window.__messagesData = [
   {
     "badge": 90,
-    "message": "I used to be head of the ACU unit (I think that\u00e2\u20ac\u2122s the name lol) I\u00e2\u20ac\u2122ve been married for 16 years and I\u00e2\u20ac\u2122m firefighter/paramedic.",
+    "message": "I used to be head of the ACU unit (I think that's the name lol) I've been married for 16 years and I'm firefighter/paramedic.",
     "submittedAt": "2026-07-23T01:12:00Z"
   },
   {
