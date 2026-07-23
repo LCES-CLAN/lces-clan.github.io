@@ -455,7 +455,8 @@ window.__rosterData = [
   {
     "badge": 90,
     "display": "BLAZ*D 8**",
-    "status": "mia"
+    "status": "active",
+    "gamertag": "BLAZ3D 863"
   },
   {
     "badge": 91,
