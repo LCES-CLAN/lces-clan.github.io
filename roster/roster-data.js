@@ -161,7 +161,7 @@ window.__rosterData = [
   {
     "badge": 32,
     "display": "pow**h**s3",
-    "status": "mia"
+    "status": "replied"
   },
   {
     "badge": 33,
