@@ -1,0 +1,30 @@
+# Auto-detect text files and normalize them to LF
+* text=auto
+
+# Explicitly mark these as text (auto will handle it, but being explicit is fine)
+*.html text
+*.css text
+*.js text
+*.json text
+*.md text
+*.yml text
+*.yaml text
+*.py text
+*.txt text
+*.xml text
+
+# Binary files — don't touch line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.webp binary
+*.mp4 binary
+*.webm binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
