@@ -31,7 +31,7 @@
 
       if (onlineCount >= 3) {
         statsEl.innerHTML += '<span class="discord-stat online-stat">' +
-          onlineCount + ' members online now!</span>';
+          onlineCount + (onlineCount === 1 ? ' member' : ' members') + ' online now!</span>';
       }
       if (voiceCount > 0) {
         statsEl.innerHTML += '<span class="discord-stat voice-stat">' +
