@@ -89,24 +89,24 @@ def build_header():
     """Return the roster header with generation timestamp."""
     now = datetime.now()
     return (
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━\n"
         "📋  **List of Badge Numbers**\n"
         f"🕐  Generated {now.strftime('%B %d, %Y')}\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        "━━━━━━━━━━━━━━━━━━"
     )
 
 
 def build_legend():
     """Return the status legend explaining each emoji."""
     return (
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━\n"
         "**Status Legend:**\n"
         "🟢  **Active**   — 10-8 (On duty)\n"
         "🔵  **Replied**  — 10-4 (Acknowledged)\n"
         "🟣  **Detected** — Spotted in-game (not yet contacted)\n"
         "⚫  **MIA**      — Missing in action / no contact\n"
         "⚫  **Reserved** — Badge is reserved / unused\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        "━━━━━━━━━━━━━━━━━━"
     )
 
 
