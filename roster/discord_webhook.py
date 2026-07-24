@@ -98,15 +98,13 @@ def build_header():
 
 def build_legend():
     """Return the status legend explaining each emoji."""
-    return (
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "**Status Legend:**\n"
-        "🟢  **10-8**   — Badge reclaimed, on-duty\n"
-        "🔵  **10-4**  — Acknowledged, replied\n"
-        "🟣  **10-2** — Spotted online, no contact yet\n"
-        "⚫  **10-1**      — Missing in action or reserved\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    )
+    return ("━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            "**Status Legend:**\n"
+            "🟢  **10-8**   — Badge reclaimed, on-duty\n"
+            "🔵  **10-4**  — Acknowledged, replied\n"
+            "🟣  **10-2** — Spotted online, no contact yet\n"
+            "⚫  **10-1**      — Missing in action or reserved\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 
 def build_footer():
@@ -193,11 +191,13 @@ def main():
         print("    python roster/discord_webhook.py --webhook https://discord.com/api/webhooks/...")
         sys.exit(1)
 
-    # Build lines, filtering out RESERVED entries (or keep them — your call).
+    # Build lines, filtering out RESTRICTED (10-7 / RESERVED) badges.
     # Sort by badge number to maintain roster order.
     sorted_data = sorted(data, key=lambda e: e["badge"])
     lines = []
     for entry in sorted_data:
+        if entry.get("display") == "RESERVED":
+            continue
         lines.append(format_entry(entry))
 
     # Split into chunks and send
