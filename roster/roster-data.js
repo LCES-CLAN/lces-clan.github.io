@@ -243,7 +243,7 @@ window.__rosterData = [
   {
     "badge": 48,
     "display": "Born A S*****/BornA********/No*Surviv*****",
-    "status": "detected"
+    "status": "replied"
   },
   {
     "badge": 49,
