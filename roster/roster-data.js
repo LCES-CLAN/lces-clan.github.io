@@ -518,7 +518,7 @@ window.__rosterData = [
   {
     "badge": 102,
     "display": "xla**",
-    "status": "detected"
+    "status": "replied"
   },
   {
     "badge": 103,
