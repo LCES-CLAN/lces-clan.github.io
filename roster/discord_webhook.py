@@ -10,8 +10,7 @@ Usage:
     2. python roster/discord_webhook.py
 
 The first message includes a header with a generation timestamp.
-The last message includes a legend explaining the status emojis
-and a "GO TO TOP" button.
+The last message includes a legend explaining the status emojis.
 
 Format per badge:
     🟢 **`#  3`** — stevenkb6720               (active — green, only badge bold)
@@ -90,31 +89,30 @@ def build_header():
     """Return the roster header with generation timestamp."""
     now = datetime.now()
     return (
-        "━━━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
         "📋  **List of Badge Numbers**\n"
         f"🕐  Generated {now.strftime('%B %d, %Y')}\n"
-        "━━━━━━━━━━━━━━━━━━━━"
+        "━━━━━━━━━━━━━━━━━━━━━━━━"
     )
 
 
 def build_legend():
     """Return the status legend explaining each emoji."""
     return (
-        "━━━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         "**Status Legend:**\n"
         "🟢  **10-8**   — Badge reclaimed, on-duty\n"
         "🔵  **10-4**  — Acknowledged, replied\n"
         "🟣  **10-2** — Spotted online, no contact yet\n"
         "⚫  **10-1**      — Missing in action or reserved\n"
-        "━━━━━━━━━━━━━━━━━━━━"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━"
     )
 
 
 def build_footer():
-    """Return the footer with a GO TO TOP arrow."""
+    """Return the footer (empty)."""
     return (
-        "━━━━━━━━━━━━━━━━━━━━\n"
-        "↗️  **GO TO TOP**"
+        "\n_ _"
     )
 
 
