@@ -969,7 +969,7 @@ window.__rosterData = [
   },
   {
     "badge": 192,
-    "display": "Jake***",
+    "display": "Jake****",
     "status": "mia"
   },
   {
