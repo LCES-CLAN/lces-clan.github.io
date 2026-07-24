@@ -467,6 +467,39 @@ body::before {
 
 .cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; position: relative; }
 
+/* ─── Discord Live Stats ─── */
+.discord-stats {
+  display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 0.75rem; position: relative;
+}
+.discord-stats:empty { display: none; }
+
+.discord-stat {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  animation: statFadeIn 0.4s ease-out;
+}
+@keyframes statFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.discord-stat.online-stat {
+  color: #5ee070;
+  background: rgba(46, 204, 64, 0.1);
+  border: 1px solid var(--green-dim);
+  box-shadow: 0 0 8px rgba(46, 204, 64, 0.15);
+}
+.discord-stat.voice-stat {
+  color: #4db8ff;
+  background: rgba(26, 138, 255, 0.1);
+  border: 1px solid var(--blue-dim);
+  box-shadow: 0 0 8px rgba(26, 138, 255, 0.15);
+}
+
 /* ─── Discord Icon (shared across guestbook and 404 pages) ─── */
 .discord-icon {
   width: 5rem;
