@@ -474,6 +474,8 @@ body::before {
 }
 .discord-stats:empty { display: none; }
 
+#discord p { margin-bottom: 0.75rem; }
+
 .discord-stat {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem; font-weight: 700;

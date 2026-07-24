@@ -35,7 +35,7 @@
       }
       if (voiceCount > 0) {
         statsEl.innerHTML += '<span class="discord-stat voice-stat">' +
-          voiceCount + ' in voice chat</span>';
+          voiceCount + (voiceCount === 1 ? ' member' : ' members') + ' in voice chat</span>';
       }
     })
     .catch(function() {
