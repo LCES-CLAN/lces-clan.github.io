@@ -1,17 +1,17 @@
 {
-  "1528164169034236045": {
-    "guild_id": 1528164169034236045,
-    "guild_name": "LCES Test Server",
-    "members": 0,
-    "online_members": 1,
+  "1526033606349426798": {
+    "guild_id": 1526033606349426798,
+    "guild_name": "Liberty City Emergency Services",
+    "members": 10,
+    "online_members": 3,
     "bot_members": 1,
     "voice_members": 0,
     "presence": {
-      "online": 0,
+      "online": 2,
       "idle": 1,
       "dnd": 0,
-      "offline": 0
+      "offline": 7
     },
-    "last_updated": "2026-07-24T01:33:29.482409+00:00"
+    "last_updated": "2026-07-24T01:34:17.609809+00:00"
   }
 }
