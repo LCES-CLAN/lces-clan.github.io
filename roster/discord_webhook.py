@@ -89,29 +89,23 @@ def build_header():
     """Return the roster header with generation timestamp."""
     now = datetime.now()
     return (
-        "━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "📋  **List of Badge Numbers**\n"
-        f"🕐  Generated {now.strftime('%B %d, %Y')}\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━━"
+        "### ━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "## 📋  **List of Badge Numbers**\n"
+        f"### 🕐  Generated {now.strftime('%B %d, %Y')}\n"
+        "### ━━━━━━━━━━━━━━━━━━━━━━━━━"
     )
 
 
-def build_legend():
-    """Return the status legend explaining each emoji."""
-    return ("━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            "**Status Legend:**\n"
+def build_footer():
+    """Return the footer containing the legend and reserved notice."""
+    return ("_ _\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            "*Unused/RESERVED badge #'s not shown.*\n"
+            "**__LEGEND:__**\n"
             "🟢  **10-8**   — Badge reclaimed, on-duty\n"
             "🔵  **10-4**  — Acknowledged, replied\n"
             "🟣  **10-2** — Spotted online, no contact yet\n"
             "⚫  **10-1**      — Missing in action, no contact\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━━")
-
-
-def build_footer():
-    """Return the footer (empty)."""
-    return (
-        "\n_ _"
-    )
 
 
 def send_webhook(url, content):
@@ -216,9 +210,8 @@ def main():
                 continue
         chunks.append(c)
 
-    # ── Decorate first and last chunks with header, legend, and footer ──
+    # ── Decorate first and last chunks with header and footer ──
     header = build_header()
-    legend = build_legend()
     footer = build_footer()
 
     if chunks:
@@ -230,12 +223,11 @@ def main():
             # Header alone should always fit, but just in case
             chunks.insert(0, [header])
 
-        # Append legend + footer to the last chunk
-        last_with_legend_and_footer = "\n".join(chunks[-1]) + "\n" + legend + "\n" + footer
-        if len(last_with_legend_and_footer) <= MAX_CONTENT_LEN:
-            chunks[-1] = chunks[-1] + [legend, footer]
+        # Append footer to the last chunk (or as its own chunk if it doesn't fit)
+        last_with_footer = "\n".join(chunks[-1]) + "\n" + footer
+        if len(last_with_footer) <= MAX_CONTENT_LEN:
+            chunks[-1].append(footer)
         else:
-            chunks[-1] = chunks[-1] + [legend]
             chunks.append([footer])
 
     print(f"  Sending {total} badges in {len(chunks)} message(s)…")
