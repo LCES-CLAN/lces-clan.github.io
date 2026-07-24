@@ -10,7 +10,8 @@ Usage:
     2. python roster/discord_webhook.py
 
 The first message includes a header with a generation timestamp.
-The last message includes a legend explaining the status emojis.
+The last message includes a legend explaining the status emojis
+and a "GO TO TOP" button.
 
 Format per badge:
     🟢 **`#  3`** — stevenkb6720               (active — green, only badge bold)
@@ -89,24 +90,31 @@ def build_header():
     """Return the roster header with generation timestamp."""
     now = datetime.now()
     return (
-        "━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
         "📋  **List of Badge Numbers**\n"
         f"🕐  Generated {now.strftime('%B %d, %Y')}\n"
-        "━━━━━━━━━━━━━━━━━━"
+        "━━━━━━━━━━━━━━━━━━━━"
     )
 
 
 def build_legend():
     """Return the status legend explaining each emoji."""
     return (
-        "━━━━━━━━━━━━━━━━━━\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
         "**Status Legend:**\n"
-        "🟢  **Active**   — 10-8 (On duty)\n"
-        "🔵  **Replied**  — 10-4 (Acknowledged)\n"
-        "🟣  **Detected** — Spotted in-game (not yet contacted)\n"
-        "⚫  **MIA**      — Missing in action / no contact\n"
-        "⚫  **Reserved** — Badge is reserved / unused\n"
-        "━━━━━━━━━━━━━━━━━━"
+        "🟢  **10-8**   — Badge reclaimed, on-duty\n"
+        "🔵  **10-4**  — Acknowledged, replied\n"
+        "🟣  **10-2** — Spotted online, no contact yet\n"
+        "⚫  **10-1**      — Missing in action or reserved\n"
+        "━━━━━━━━━━━━━━━━━━━━"
+    )
+
+
+def build_footer():
+    """Return the footer with a GO TO TOP arrow."""
+    return (
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        "↗️  **GO TO TOP**"
     )
 
 
@@ -210,9 +218,10 @@ def main():
                 continue
         chunks.append(c)
 
-    # ── Decorate first and last chunks with header and legend ──
+    # ── Decorate first and last chunks with header, legend, and footer ──
     header = build_header()
     legend = build_legend()
+    footer = build_footer()
 
     if chunks:
         # Prepend header to the first chunk
@@ -223,12 +232,13 @@ def main():
             # Header alone should always fit, but just in case
             chunks.insert(0, [header])
 
-        # Append legend to the last chunk
-        last_with_legend = "\n".join(chunks[-1]) + "\n" + legend
-        if len(last_with_legend) <= MAX_CONTENT_LEN:
-            chunks[-1] = chunks[-1] + [legend]
+        # Append legend + footer to the last chunk
+        last_with_legend_and_footer = "\n".join(chunks[-1]) + "\n" + legend + "\n" + footer
+        if len(last_with_legend_and_footer) <= MAX_CONTENT_LEN:
+            chunks[-1] = chunks[-1] + [legend, footer]
         else:
-            chunks.append([legend])
+            chunks[-1] = chunks[-1] + [legend]
+            chunks.append([footer])
 
     print(f"  Sending {total} badges in {len(chunks)} message(s)…")
 
