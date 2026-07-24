@@ -1,0 +1,17 @@
+{
+  "1528164169034236045": {
+    "guild_id": 1528164169034236045,
+    "guild_name": "LCES Test Server",
+    "members": 0,
+    "online_members": 1,
+    "bot_members": 1,
+    "voice_members": 0,
+    "presence": {
+      "online": 0,
+      "idle": 1,
+      "dnd": 0,
+      "offline": 0
+    },
+    "last_updated": "2026-07-24T01:28:39.251051+00:00"
+  }
+}
