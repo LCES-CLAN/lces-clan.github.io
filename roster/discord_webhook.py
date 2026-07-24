@@ -103,7 +103,7 @@ def build_legend():
             "🟢  **10-8**   — Badge reclaimed, on-duty\n"
             "🔵  **10-4**  — Acknowledged, replied\n"
             "🟣  **10-2** — Spotted online, no contact yet\n"
-            "⚫  **10-1**      — Missing in action or reserved\n"
+            "⚫  **10-1**      — Missing in action, no contact\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 
