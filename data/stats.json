@@ -2,7 +2,7 @@
   "1526033606349426798": {
     "guild_id": 1526033606349426798,
     "guild_name": "Liberty City Emergency Services",
-    "members": 10,
+    "members": 11,
     "online_members": 4,
     "bot_members": 1,
     "voice_members": 0,
@@ -12,6 +12,6 @@
       "dnd": 1,
       "offline": 7
     },
-    "last_updated": "2026-07-28T18:04:50.198360+00:00"
+    "last_updated": "2026-07-28T18:19:30.723039+00:00"
   }
 }
