@@ -518,7 +518,8 @@ window.__rosterData = [
   {
     "badge": 102,
     "display": "xla**",
-    "status": "replied"
+    "status": "active",
+    "gamertag": "xlair"
   },
   {
     "badge": 103,
