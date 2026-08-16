@@ -1,0 +1,18 @@
+# LCES Guestbook relay — Cloudflare Worker
+#
+# Deploy with:
+#   npx wrangler deploy
+#
+# Set the two secrets BEFORE deploying (or set them in the Cloudflare
+# dashboard → Workers → lces-guestbook → Settings → Variables & Secrets):
+#   npx wrangler secret put DISCORD_WEBHOOK_URL
+#   npx wrangler secret put TURNSTILE_SECRET_KEY
+#
+# See README.md in this directory for the full setup.
+
+name = "lces-guestbook"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# The public Turnstile site key is injected into the site at deploy time
+# (GitHub Actions variable TURNSTILE_SITE_KEY), not needed here.

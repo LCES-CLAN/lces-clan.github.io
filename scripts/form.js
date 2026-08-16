@@ -2,90 +2,66 @@
 (function() {
 
   // ════════════════════════════════════════════════════════════════
-  //  Discord Webhook URL
+  //  Form endpoint + Turnstile site key
   // ════════════════════════════════════════════════════════════════
-  // Injected at deploy time via GitHub Actions. Empty == fake submit locally.
-  var WEBHOOK_URL = '';
-
-  // ════════════════════════════════════════════════════════════════
-  //  TRIVIA CAPTCHA QUESTIONS
-  // ════════════════════════════════════════════════════════════════
-  var CAPTCHA_QUESTIONS = [
-    { q: "What color did the crook team play as?", a: ["Orange","Blue","Green","Red"], ok: 0 },
-    { q: "Where did debriefs take place?", a: ["At the scene of the crime","In the game lobby","At the PD","On the forums"], ok: 2 },
-    { q: "What did we call our game sessions?", a: ["RPs","Shifts","Beats","Patrols"], ok: 3 },
-    { q: "Which platform was LCES active on?", a: ["PlayStation 3","Xbox 360","PC","Nintendo Wii"], ok: 1 },
-    { q: "What color did the cop team play as?", a: ["White","Orange","Purple","Red"], ok: 2 }
-  ];
+  // Injected at deploy time via GitHub Actions. These are PUBLIC values.
+  // The form posts to a Cloudflare Worker, which verifies the Turnstile
+  // CAPTCHA server-side and forwards to a private Discord webhook. The
+  // webhook URL itself never appears here.
+  var FORM_ENDPOINT = '';
+  var TURNSTILE_SITE_KEY = '';
 
   // ─── State ───
-  var captchaPassed = false;
-  var curQ = null;
+  var turnstileLoaded = false;
 
-  // ─── Inject captcha styles ───
+  // ─── Inject styles ───
   var s = document.createElement('style');
-  s.textContent = '.trivia-captcha{margin:0.5rem 0;padding:0.35rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}' +
-    '.tc-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}' +
-    '.tc-label{font-family:"Share Tech Mono",monospace;font-size:0.55rem;color:var(--text-dim);white-space:nowrap}' +
-    '.tc-q{font-family:"Inter",sans-serif;font-size:0.72rem;color:#8ea2bc}' +
-    '.tc-opts{display:flex;gap:0.25rem;flex-wrap:wrap}' +
-    '.tc-opt{padding:0.15rem 0.45rem;cursor:pointer;border:1px solid var(--border);border-radius:3px;background:rgba(0,0,0,0.15);font-family:"Share Tech Mono",monospace;font-size:0.65rem;color:var(--white-dim);transition:background 0.15s,border-color 0.15s}' +
-    '.tc-opt:hover{border-color:var(--blue-dim)}' +
-    '.tc-opt.ok{border-color:var(--green);background:rgba(46,204,64,0.15);color:var(--green)}' +
-    '.tc-opt.no{border-color:#c33;background:rgba(204,51,51,0.1);color:#c55}' +
-    '.tc-opt.dis{pointer-events:none;opacity:0.5}' +
-    '.tc-fb{font-family:"Share Tech Mono",monospace;font-size:0.6rem}' +
-    '.tc-fb.ok{color:var(--green)}' +
-    '.tc-fb.no{color:#c55}' +
+  s.textContent = '.turnstile-row{margin:0.5rem 0;display:flex;justify-content:center}' +
+    '.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0}' +
     '.char-count{display:block;font-family:"Share Tech Mono",monospace;font-size:0.55rem;color:var(--text-dim);text-align:right;margin-top:0.15rem}' +
     '.char-count.warn{color:#e8a040}' +
     '.char-count.danger{color:#c55}';
   document.head.appendChild(s);
 
-  // ─── Pick a random question ───
-  function pickQ() {
-    if (!CAPTCHA_QUESTIONS || CAPTCHA_QUESTIONS.length === 0) return null;
-    return CAPTCHA_QUESTIONS[Math.floor(Math.random() * CAPTCHA_QUESTIONS.length)];
+  // ─── Load Turnstile script (once) and render the widget ───
+  function loadTurnstile(cb) {
+    if (turnstileLoaded && window.turnstile && window.turnstile.render) { cb(); return; }
+    if (window.__tsLoading) return; // already loading; cb fires via onload below
+    window.__tsLoading = true;
+    var el = document.createElement('script');
+    el.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    el.async = true;
+    el.onload = function() {
+      turnstileLoaded = true;
+      cb();
+    };
+    el.onerror = function() { window.__tsLoading = false; };
+    document.head.appendChild(el);
   }
 
-  // ─── Render captcha ───
-  function renderCaptcha() {
-    var el = document.getElementById('trivia-captcha');
-    if (!el) return;
-    curQ = pickQ();
-    captchaPassed = false;
-    if (!curQ) { el.innerHTML = '<span class="tc-fb no">No questions loaded.</span>'; return; }
-    var h = '<div class="tc-row"><span class="tc-label">&#x1F512; CAPTCHA</span><span class="tc-q">' + esc(curQ.q) + '</span></div>' +
-      '<div class="tc-row"><span class="tc-opts" id="tc-opts">';
-    curQ.a.forEach(function(o, i) { h += '<span class="tc-opt" data-i="' + i + '" onclick="window.__ans(' + i + ')">' + esc(o) + '</span>'; });
-    h += '</span><span class="tc-fb" id="tc-fb"></span></div>';
-    el.innerHTML = h;
-    updateBtn();
-  }
-
-  // ─── Escape HTML ───
-  function esc(s) { var d = document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
-
-  // ─── Handle answer ───
-  window.__ans = function(i) {
-    if (captchaPassed || !curQ) return;
-    var opts = document.querySelectorAll('.tc-opt');
-    var fb = document.getElementById('tc-fb');
-    opts.forEach(function(o) { o.classList.add('dis'); });
-    if (i === curQ.ok) {
-      opts[i].classList.add('ok');
-      captchaPassed = true;
-      if (fb) { fb.innerHTML = '&#x2713; Correct'; fb.className = 'tc-fb ok'; }
-      updateBtn();
-    } else {
-      opts[i].classList.add('no');
-      if (fb) { fb.innerHTML = '&#x2717; Try again'; fb.className = 'tc-fb no'; }
-      setTimeout(function() {
-        opts.forEach(function(o) { o.classList.remove('dis', 'no', 'ok'); });
-        if (fb) { fb.textContent = ''; fb.className = 'tc-fb'; }
-      }, 800);
+  function renderTurnstile() {
+    var container = document.getElementById('turnstile-container');
+    if (!container) return;
+    if (!TURNSTILE_SITE_KEY) {
+      container.innerHTML = '<span style="font-family:\'Share Tech Mono\',monospace;font-size:0.6rem;color:#c55">Security check not configured.</span>';
+      return;
     }
-  };
+    loadTurnstile(function() {
+      if (window.turnstile && window.turnstile.render && !container.hasChildNodes()) {
+        window.turnstile.render(container, { sitekey: TURNSTILE_SITE_KEY, theme: 'dark' });
+      }
+    });
+  }
+
+  function getTurnstileToken() {
+    return (window.turnstile && window.turnstile.getResponse) ? (window.turnstile.getResponse() || '') : '';
+  }
+
+  function resetTurnstile() {
+    if (window.turnstile && window.turnstile.reset) {
+      try { window.turnstile.reset(); } catch (e) {}
+    }
+  }
 
   // ─── Update submit button ───
   function updateBtn() {
@@ -112,23 +88,27 @@
   // ─── Validate ───
   function validate() {
     var fb = document.getElementById('form-feedback');
-    if (!captchaPassed) { fb.textContent = 'Answer the captcha first.'; fb.style.color = '#c55'; return false; }
+    if (TURNSTILE_SITE_KEY && !getTurnstileToken()) { fb.textContent = 'Complete the security check first.'; fb.style.color = '#c55'; return false; }
     if (!hasExtra()) { fb.textContent = 'Fill in at least one extra field.'; fb.style.color = '#c55'; return false; }
     fb.textContent = ''; fb.style.color = ''; return true;
   }
 
-  // ─── Submit to Discord ───
-  function submitDiscord(d) {
-    if (!WEBHOOK_URL) return fakeSubmit(d);
-    var emb = { title: 'New Guestbook Submission', color: 3066993, fields: [], timestamp: new Date().toISOString(), footer: { text: 'Re-enlistment Form' } };
-    if (d.gt) emb.fields.push({ name: 'OG Gamertag', value: d.gt, inline: true });
-    if (d.cur) emb.fields.push({ name: 'New Gamertag', value: d.cur, inline: true });
-    if (d.steam) emb.fields.push({ name: 'Steam', value: d.steam, inline: true });
-    if (d.disc) emb.fields.push({ name: 'Discord', value: d.disc, inline: true });
-    if (d.email) emb.fields.push({ name: 'Email', value: d.email, inline: true });
-    if (d.plat) emb.fields.push({ name: 'Platforms', value: d.plat, inline: true });
-    if (d.msg) emb.fields.push({ name: 'Message', value: d.msg });
-    return fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [emb] }) }).then(function(r) { if (!r.ok) throw Error('Webhook ' + r.status); return true; });
+  // ─── Submit to the Worker ───
+  function submitForm(d) {
+    if (!FORM_ENDPOINT) return fakeSubmit(d);
+    return fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(d)
+    }).then(function(r) {
+      return r.json().catch(function() { return {}; }).then(function(body) {
+        if (!r.ok || body.ok !== true) {
+          var msg = (body && body.error) ? body.error : ('HTTP ' + r.status);
+          throw new Error(msg);
+        }
+        return true;
+      });
+    });
   }
 
   function fakeSubmit(d) { return new Promise(function(r) { setTimeout(r, 1200, true); }); }
@@ -145,17 +125,21 @@
       steam: (document.getElementById('steam-id') || {}).value || '',
       disc: (document.getElementById('discord-tag') || {}).value || '',
       email: (document.getElementById('email') || {}).value || '',
-      plat: [], msg: (document.getElementById('message') || {}).value || ''
+      plat: [], msg: (document.getElementById('message') || {}).value || '',
+      turnstile: getTurnstileToken(),
+      website: (document.getElementById('hp-website') || {}).value || ''
     };
     if (document.getElementById('platform-xbox') && document.getElementById('platform-xbox').checked) d.plat.push('Xbox');
     if (document.getElementById('platform-pc') && document.getElementById('platform-pc').checked) d.plat.push('PC');
     if (d.plat.length) d.plat = d.plat.join(' + '); else d.plat = '';
-    submitDiscord(d).then(function() {
+    submitForm(d).then(function() {
       btn.textContent = 'Re-enlisted!'; fb.textContent = '10-4. Now get to your beat, rookie.'; fb.style.color = 'var(--green)';
       if (window.LCES && window.LCES.trackFormSubmit) window.LCES.trackFormSubmit();
-      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = true; fb.textContent = ''; form.reset(); captchaPassed = false; curQ = null; renderCaptcha(); updateBtn(); }, 3000);
-    }).catch(function() {        btn.textContent = 'Error'; fb.textContent = 'Failed to send.'; fb.style.color = '#c55';
-      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; updateBtn(); }, 2000);
+      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; btn.disabled = true; fb.textContent = ''; form.reset(); resetTurnstile(); updateBtn(); }, 3000);
+    }).catch(function(err) {
+      btn.textContent = 'Error'; fb.textContent = 'Failed to send' + (err && err.message ? ' (' + err.message + ')' : '') + '.'; fb.style.color = '#c55';
+      resetTurnstile();
+      setTimeout(function() { btn.textContent = orig || 'SUBMIT'; updateBtn(); }, 2500);
     });
   };
 
@@ -178,7 +162,8 @@
           '<div class="field"><label>I own GTA IV on <span class="optional"> — optional</span></label><div class="checkbox-group"><label><input type="checkbox" id="platform-xbox"> Xbox</label><label><input type="checkbox" id="platform-pc"> PC</label></div></div>' +
         '</div>' +
         '<div class="field"><label for="message">Message <span class="optional"> — optional</span></label><textarea id="message" maxlength="2800" placeholder="Memories, stories, what you&rsquo;ve been up to the last 15 years&hellip;"></textarea><span class="char-count" id="char-count">0 / 2800</span></div>' +
-        '<div class="trivia-captcha" id="trivia-captcha"><span class="tc-fb">Loading...</span></div>' +
+        '<div class="turnstile-row"><div id="turnstile-container"></div></div>' +
+        '<div class="hp-field" aria-hidden="true"><label for="hp-website">Website</label><input id="hp-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
         '<div class="form-footer" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;margin-top:0.25rem;"><button type="submit" class="btn btn-submit" disabled>SUBMIT</button><span class="form-feedback" id="form-feedback"></span><span class="form-note">&#x1f512; Your info will be sent to the clan Discord and used to contact you about patrols.</span></div>' +
       '</form>';
     var msgEl = document.getElementById('message');
@@ -194,7 +179,7 @@
     if (gtEl) {
       gtEl.addEventListener('input', updateBtn);
     }
-    renderCaptcha();
+    renderTurnstile();
   }
 
 })();

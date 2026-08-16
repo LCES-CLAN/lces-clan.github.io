@@ -1,10 +1,17 @@
 # Deploy LCES Clan site to GitHub Pages
-# Injects Discord webhook URLs from GitHub Secrets at deploy time
-# so they don't live in the public repo.
+# Injects the public form endpoint + Turnstile site key from GitHub Variables
+# (and the analytics webhook from Secrets) at deploy time so secrets don't
+# live in the public repo.
 #
 # Required Secrets:
-#   WEBHOOK_FORM_URL      — Discord webhook for re-enlistment form submissions
 #   WEBHOOK_ANALYTICS_URL — Discord webhook for analytics tracking
+#
+# Required Variables (Settings → Secrets and variables → Actions → Variables):
+#   FORM_ENDPOINT_URL     — Cloudflare Worker URL for guestbook submissions
+#   TURNSTILE_SITE_KEY    — Cloudflare Turnstile site key (public)
+#
+# NOTE: The guestbook Discord webhook URL lives ONLY in Cloudflare as a Worker
+# secret (DISCORD_WEBHOOK_URL). It is never injected into the public site.
 #
 # Set them in: https://github.com/{owner}/{repo}/settings/secrets/actions
 
@@ -34,34 +41,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Inject webhook URLs from Secrets
+      - name: Inject endpoint + keys
         env:
-          FORM_URL: ${{ secrets.WEBHOOK_FORM_URL }}
+          FORM_ENDPOINT_URL: ${{ vars.FORM_ENDPOINT_URL }}
+          TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
           ANALYTICS_URL: ${{ secrets.WEBHOOK_ANALYTICS_URL }}
         run: |
-          # Replace empty-string placeholders with the real webhook URLs.
-          # Written to a temp file and executed to avoid bash mangling quotes.
+          # Replace empty-string placeholders with the real values.
           python3 << 'EOF'
           import os, pathlib
 
           replacements = [
-              (pathlib.Path('scripts/form.js'),      'WEBHOOK_URL',   os.environ.get('FORM_URL', '')),
-              (pathlib.Path('analytics/config.js'),  'webhookUrl',    os.environ.get('ANALYTICS_URL', '')),
+              (pathlib.Path('scripts/form.js'),     "var FORM_ENDPOINT = ''",      "var FORM_ENDPOINT = '" + os.environ.get('FORM_ENDPOINT_URL', '') + "'"),
+              (pathlib.Path('scripts/form.js'),     "var TURNSTILE_SITE_KEY = ''", "var TURNSTILE_SITE_KEY = '" + os.environ.get('TURNSTILE_SITE_KEY', '') + "'"),
+              (pathlib.Path('analytics/config.js'), "webhookUrl: ''",              "webhookUrl: '" + os.environ.get('ANALYTICS_URL', '') + "'"),
           ]
 
-          for path, key, val in replacements:
+          for path, old, new in replacements:
               content = path.read_text()
-              old = key + " = ''" if key == 'WEBHOOK_URL' else key + ": ''"
-              new = key + " = '" + val + "'" if key == 'WEBHOOK_URL' else key + ": '" + val + "'"
               if old not in content:
                   print('  [WARN] Pattern "' + old + '" not found in ' + str(path))
                   continue
               content = content.replace(old, new)
               path.write_text(content)
-              if val:
-                  print('  [OK] ' + str(path) + ' — injected')
-              else:
-                  print('  [WARN] ' + str(path) + ' — EMPTY secret, placeholder unchanged')
+              print('  [OK] ' + str(path))
           EOF
 
       - name: Setup Pages
