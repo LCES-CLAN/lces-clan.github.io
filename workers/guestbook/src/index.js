@@ -55,18 +55,20 @@ function allowedOrigin(request) {
   return ALLOWED_ORIGINS.includes(origin) ? origin : null;
 }
 
-async function verifyTurnstile(token, ip, secret) {
+async function verifyTurnstile(token, secret) {
   const body = new URLSearchParams();
   body.set('secret', secret);
   body.set('response', token);
-  if (ip) body.set('remoteip', ip);
+  // Note: no remoteip on purpose. Cloudflare recommends omitting it — if a
+  // visitor's IP changes between page load and submit (Wi-Fi → mobile, etc.)
+  // verification fails even for real humans.
   const res = await fetch(TURNSTILE_VERIFY, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: body.toString(),
   });
   const data = await res.json().catch(() => ({}));
-  return !!(data && data.success === true);
+  return data;
 }
 
 function rateLimited(ip) {
@@ -104,6 +106,18 @@ export default {
   async fetch(request, env) {
     const origin = allowedOrigin(request);
 
+    try {
+      return await this.handle(request, env, origin);
+    } catch (e) {
+      // Never crash without CORS headers — that shows up as an opaque
+      // "NetworkError" in the browser. Convert any exception into a
+      // readable JSON error so the form can show what actually happened.
+      const msg = (e && e.message) ? String(e.message).slice(0, 200) : 'unknown';
+      return json({ ok: false, error: 'worker error (' + msg + ')' }, 500, origin);
+    }
+  },
+
+  async handle(request, env, origin) {
     // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: cors(origin) });
@@ -147,9 +161,12 @@ export default {
     // Server-side CAPTCHA verification — this is the real bot gate.
     const token = String(d.turnstile || '');
     const ip = request.headers.get('CF-Connecting-IP') || '';
-    const human = await verifyTurnstile(token, ip, env.TURNSTILE_SECRET_KEY);
-    if (!human) {
-      return json({ ok: false, error: 'captcha failed' }, 400, origin);
+    const check = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY);
+    if (!(check && check.success === true)) {
+      const codes = (check && check['error-codes'] && check['error-codes'].length)
+        ? check['error-codes'].join(', ')
+        : 'unknown';
+      return json({ ok: false, error: 'captcha failed (' + codes + ')' }, 400, origin);
     }
 
     // Content filter
@@ -167,11 +184,17 @@ export default {
       return json({ ok: false, error: 'server not configured' }, 500, origin);
     }
 
-    const resp = await fetch(env.DISCORD_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ embeds: [buildEmbed(d)] }),
-    });
+    let resp;
+    try {
+      resp = await fetch(env.DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [buildEmbed(d)] }),
+      });
+    } catch (e) {
+      const msg = (e && e.message) ? String(e.message).slice(0, 200) : 'unknown';
+      return json({ ok: false, error: 'discord unreachable (' + msg + ')' }, 502, origin);
+    }
 
     if (!resp.ok) {
       return json({ ok: false, error: 'discord ' + resp.status }, 502, origin);
