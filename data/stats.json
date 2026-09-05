@@ -8,10 +8,10 @@
     "voice_members": 0,
     "presence": {
       "online": 1,
-      "idle": 2,
-      "dnd": 1,
+      "idle": 1,
+      "dnd": 2,
       "offline": 7
     },
-    "last_updated": "2026-09-05T03:49:30.251498+00:00"
+    "last_updated": "2026-09-05T04:09:29.001486+00:00"
   }
 }
