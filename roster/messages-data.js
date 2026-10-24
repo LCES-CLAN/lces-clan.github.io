@@ -4,6 +4,11 @@
 // isDefault: true -> frontend should render in italics (placeholder message)
 window.__messagesData = [
   {
+    "badge": 245,
+    "message": "Hope everyone is doing well!",
+    "submittedAt": "2026-10-24T22:57:00Z"
+  },
+  {
     "badge": 102,
     "message": "102 to dispatch, there is someone taking a shit on the sidewalk, over",
     "submittedAt": "2026-07-28T15:47:00Z"
