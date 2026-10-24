@@ -1236,8 +1236,9 @@ window.__rosterData = [
   },
   {
     "badge": 245,
-    "display": "Byz******95",
-    "status": "detected"
+    "display": "Byzantine95",
+    "status": "active",
+    "gamertag": "Byzantine95"
   },
   {
     "badge": 246,
