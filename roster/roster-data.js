@@ -1133,7 +1133,7 @@ window.__rosterData = [
   {
     "badge": 224,
     "display": "BLUEelmo*****",
-    "status": "active",
+    "status": "replied",
     "gamertag": "BLUEelmoZZZZZ"
   },
   {
