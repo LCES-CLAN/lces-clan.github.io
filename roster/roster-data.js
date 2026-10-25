@@ -309,7 +309,8 @@ window.__rosterData = [
   {
     "badge": 61,
     "display": "F**TFIREFIGHTER/F**T*8",
-    "status": "active"
+    "status": "active",
+    "gamertag": "FDMTFIREFIGHTER/FDMT18"
   },
   {
     "badge": 62,
@@ -1132,7 +1133,8 @@ window.__rosterData = [
   {
     "badge": 224,
     "display": "BLUEelmo*****",
-    "status": "active"
+    "status": "active",
+    "gamertag": "BLUEelmoZZZZZ"
   },
   {
     "badge": 225,
