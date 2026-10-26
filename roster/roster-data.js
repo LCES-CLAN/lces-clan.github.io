@@ -1132,8 +1132,9 @@ window.__rosterData = [
   },
   {
     "badge": 224,
-    "display": "BLUEelmo*****",
-    "status": "replied"
+    "display": "BLUEelmoZZZZZ",
+    "status": "active",
+    "gamertag": "BLUEelmoZZZZZ"
   },
   {
     "badge": 225,
@@ -1268,8 +1269,9 @@ window.__rosterData = [
   },
   {
     "badge": 251,
-    "display": "groom***",
-    "status": "mia"
+    "display": "groom112",
+    "status": "active",
+    "gamertag": "groom112"
   },
   {
     "badge": 252,
