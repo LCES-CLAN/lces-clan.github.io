@@ -7,11 +7,11 @@
     "bot_members": 1,
     "voice_members": 0,
     "presence": {
-      "online": 1,
-      "idle": 2,
+      "online": 2,
+      "idle": 1,
       "dnd": 0,
       "offline": 13
     },
-    "last_updated": "2026-11-06T17:40:52.537590+00:00"
+    "last_updated": "2026-11-06T18:00:52.537540+00:00"
   }
 }
