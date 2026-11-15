@@ -3,6 +3,9 @@
   var el = document.getElementById('discord-cta');
   if (!el) return;
 
+  // Discord invite comes from scripts/site-config.js
+  var invite = (window.LCES_SITE || {}).discordInvite || '';
+
   var html =
     '<section id="discord" class="cta-panel panel reveal">' +
       '<img src="assets/discord.png" alt="Discord" class="badge-icon discord-icon">' +
@@ -10,7 +13,7 @@
       '<p>LCES operations are coordinated over Discord. <br>Join the server to collect your badge and gun.</p>' +
       '<div class="discord-stats" id="discord-stats"></div>' +
       '<div class="cta-buttons">' +
-        '<a href="https://discord.gg/gn2ASjNZc4" target="_blank" rel="noopener" class="btn btn-discord">LCES Discord</a>' +
+        '<a href="' + invite + '" target="_blank" rel="noopener" class="btn btn-discord">LCES Discord</a>' +
       '</div>' +
     '</section>';
 

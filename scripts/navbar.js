@@ -1,15 +1,20 @@
 // Shared navigation bar
 (function() {
   var page = window.location.pathname.split('/').pop() || 'index.html';
+  var site = window.LCES_SITE || {};
 
   var links = [
     { href: './',   label: 'Home' },
     { href: 'guestbook.html', label: 'Re-enlist', cta: true },
     { href: 'roster.html', label: 'Officers' },
     { href: 'media.html', label: 'Evidence' },
-    { href: 'https://forums.lcesclan.net', label: 'Archives', external: true },
-    { href: 'https://discord.lcesclan.net', label: 'Discord', external: true, discord: true }
+    { href: 'https://forums.lcesclan.net', label: 'Archives', external: true }
   ];
+
+  // Discord invite comes from scripts/site-config.js
+  if (site.discordInvite) {
+    links.push({ href: site.discordInvite, label: 'Discord', external: true, discord: true });
+  }
 
   var html = '<nav class="nav-bar">';
   for (var i = 0; i < links.length; i++) {

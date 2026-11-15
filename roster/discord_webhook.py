@@ -12,6 +12,23 @@ Usage:
 The first message includes a header with a generation timestamp.
 The last message includes a legend explaining the status emojis.
 
+"Go to Top" link (two passes):
+    The link to the top of the channel doesn't exist until the roster has
+    been posted, so it can't be supplied during that run. Do it afterwards:
+
+        python roster/discord_webhook.py                 pass 1: post roster
+        # → copy the message link in Discord (right-click → Copy Message Link)
+        python roster/discord_webhook.py --gototop     pass 2: post just:
+            # ⤴️ [Go to Top](<message-link>)
+
+    --gototop posts ONLY that one message; the roster is not re-sent.
+    Leave it bare to paste the link when prompted, or pass it inline:
+        python roster/discord_webhook.py --gototop --go-to-top <message-link>
+
+    --go-to-top on its own (without --gototop) still works during a full
+    run, for cases where the link already exists — a pinned message, or the
+    previous run's header.
+
 Format per badge:
     🟢 **`#  3`** — stevenkb6720               (active — green, only badge bold)
     🔵 **`# 17`** — PTY997/xXPTY997Xx          (replied — blue, only badge bold)
@@ -37,6 +54,9 @@ from datetime import datetime
 CHUNK_SIZE = 25       # badges per message
 MAX_CONTENT_LEN = 2000 # Discord webhook character limit
 MAX_GT_LEN = 28       # max gamertag chars before truncation with "…"
+
+# Posted as a standalone message after the roster with --go-to-top <link>.
+GO_TO_TOP_TEMPLATE = "# ⤴️ [Go to Top]({link})"
 
 # Map status → (emoji,)
 STATUS_MAP = {
@@ -132,11 +152,97 @@ def send_webhook(url, content):
         return -1
 
 
+def build_go_to_top(link):
+    """Return the 'Go to Top' message body for a pasted Discord message link.
+
+    The link is supplied by the user (right-click the message → Copy Message
+    Link) because a fresh webhook post cannot know its own message URL.
+    Returns None when `link` is blank, so callers can skip sending anything.
+    """
+    link = (link or "").strip().strip("<>").strip()
+    if not link:
+        return None
+    return GO_TO_TOP_TEMPLATE.format(link=link)
+
+
+def send_go_to_top(url, link):
+    """Post the 'Go to Top' message after the roster.  Returns HTTP status/None."""
+    content = build_go_to_top(link)
+    if content is None:
+        return None
+    return send_webhook(url, content)
+
+
+def get_arg_value(flag):
+    """Read `--flag value` or `--flag=value` out of sys.argv.
+
+    Returns None when the flag is absent, "" when it is present without a value.
+    """
+    for i, arg in enumerate(sys.argv):
+        if arg == flag:
+            if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--"):
+                return sys.argv[i + 1]
+            return ""
+        if arg.startswith(flag + "="):
+            return arg[len(flag) + 1:]
+    return None
+
+
+def collect_go_to_top_link(force_prompt=False):
+    """Return the pasted 'Go to Top' message link, or None when there isn't one.
+
+    Reads --go-to-top / --go-to-top=<link>. A bare flag (or `force_prompt`)
+    prompts for the link, since the user copies it out of Discord by hand.
+    Angle brackets from Discord's "Copy Message Link" are stripped.
+    """
+    link = get_arg_value("--go-to-top")
+    if link is None:
+        if not force_prompt:
+            return None
+        link = ""
+
+    if link == "":
+        try:
+            link = input("  Paste the 'Go to Top' message link (Enter to skip): ")
+        except EOFError:
+            link = ""
+
+    link = (link or "").strip().strip("<>").strip()
+    return link or None
+
+
+def send_only_go_to_top():
+    """Post just the 'Go to Top' message. Returns a process exit code.
+
+    Used by --gototop as a second pass, once the roster is already up and
+    the message link can finally be copied. Sends nothing else.
+    """
+    link = collect_go_to_top_link(force_prompt=True)
+    if not link:
+        print("  [!] No message link given — nothing to send.")
+        return 1
+
+    url = load_webhook_url()
+    if not url or "YOUR_WEBHOOK" in url:
+        print("  [!] No Discord webhook URL configured.")
+        print("    Set ROSTER_WEBHOOK_URL in .env, or pass --webhook <url>.")
+        return 1
+
+    print("  Posting 'Go to Top' link…", end=" ")
+    status = send_go_to_top(url, link)
+    if status in (200, 204):
+        print("OK")
+        return 0
+    print(f"Failed (status {status})")
+    return 1
+
+
 def load_webhook_url():
     """Read webhook URL from .env, env var, or --webhook CLI arg."""
     # Priority 1: CLI --webhook argument
-    if len(sys.argv) > 1 and sys.argv[1] == "--webhook" and len(sys.argv) > 2:
-        return sys.argv[2]
+    cli_url = get_arg_value("--webhook")
+    if cli_url:
+        return cli_url
 
     # Priority 2: .env file in project root
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -159,6 +265,11 @@ def load_webhook_url():
 
 
 def main():
+    # ── Pass 2: post only the "Go to Top" message ───────────────────
+    # Checked first so the roster is never re-sent in this mode.
+    if get_arg_value("--gototop") is not None:
+        sys.exit(send_only_go_to_top())
+
     script_dir = os.path.dirname(os.path.abspath(__file__))
     data_file = os.path.join(script_dir, "roster.json")
 
@@ -241,6 +352,20 @@ def main():
         else:
             print(f"    Failed (status {status})")
             # Continue sending remaining chunks anyway
+
+    # ── Optional "Go to Top" link message ────────────────────────────
+    # The link points at the first message of the run, so the script can't
+    # build it itself (a webhook post doesn't return its own message URL).
+    # Pass it with --go-to-top <link>, or leave the flag bare to paste it now.
+    top_link = collect_go_to_top_link()
+
+    if top_link:
+        print("  Posting 'Go to Top' link…", end=" ")
+        status = send_go_to_top(url, top_link)
+        if status in (200, 204):
+            print("OK")
+        elif status is not None:
+            print(f"Failed (status {status})")
 
 
 if __name__ == "__main__":

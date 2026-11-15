@@ -27,6 +27,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="scripts/head.js"></script>
+<script src="scripts/site-config.js"></script>
 <style>
 /* 404 specific styles */
 .error-hero {
@@ -143,7 +144,17 @@
 
   <div class="divider"><span class="dot"></span> ENTER THE PRECINCT <span class="dot"></span></div>
 
-  <div id="discord-cta"></div>
+  <div id="discord-cta">
+    <noscript>
+      <section class="cta-panel panel">
+        <h2>CODE 3, CLEAR THE COMMS!!</h2>
+        <p>LCES operations are coordinated over Discord. Join the server to collect your badge and gun.</p>
+        <div class="cta-buttons">
+          <a data-discord-link href="https://discord.gg/pq2WMBCzEF" class="btn btn-discord">LCES Discord</a>
+        </div>
+      </section>
+    </noscript>
+  </div>
   <script src="scripts/discord.js"></script>
 
   <div id="footer"></div>
