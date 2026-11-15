@@ -166,8 +166,9 @@ window.__rosterData = [
   },
   {
     "badge": 33,
-    "display": "Dev**OB",
-    "status": "mia"
+    "display": "DevenOB",
+    "status": "active",
+    "gamertag": "DevenOB"
   },
   {
     "badge": 34,
