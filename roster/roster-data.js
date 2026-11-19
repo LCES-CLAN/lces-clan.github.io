@@ -1219,8 +1219,9 @@ window.__rosterData = [
   },
   {
     "badge": 241,
-    "display": "Co*****Carlton",
-    "status": "mia"
+    "display": "Combat Carlton",
+    "status": "active",
+    "gamertag": "Combat Carlton"
   },
   {
     "badge": 242,
