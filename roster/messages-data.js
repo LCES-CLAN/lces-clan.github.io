@@ -4,6 +4,11 @@
 // isDefault: true -> frontend should render in italics (placeholder message)
 window.__messagesData = [
   {
+    "badge": 37,
+    "message": "LCES is what keeps the memories alive of GTA IV being the best GTA ever. It was so disappointing that V was what it was, here\u2019s to hopes that VI will open the door to a modernized revival of LCES 2.0. Here is to hoping everyone is doing well and finding success with their lives. Much love, Unit 37. \u201cBlack Ghost\u201d",
+    "submittedAt": "2026-11-22T01:04:00Z"
+  },
+  {
     "badge": 33,
     "message": "33David",
     "submittedAt": "2026-11-15T04:51:00Z"

@@ -1,5 +1,5 @@
-// LCES Roster Data — public snapshot (gamertag shown only for active officers)
-// roster.json is the master file — NOT deployed to GitHub Pages.
+// LCES Roster Data ï¿½ public snapshot (gamertag shown only for active officers)
+// roster.json is the master file ï¿½ NOT deployed to GitHub Pages.
 // Regenerate this file with: python roster/roster.py export
 window.__rosterData = [
   {
@@ -187,8 +187,9 @@ window.__rosterData = [
   },
   {
     "badge": 37,
-    "display": "Cow***D ***6ine",
-    "status": "mia"
+    "display": "**YoshiSuzu***/Cowboy**Eng***e",
+    "status": "active",
+    "gamertag": "RMYoshiSuzuki1/CowboyD Eng6ine"
   },
   {
     "badge": 38,
@@ -309,7 +310,7 @@ window.__rosterData = [
   },
   {
     "badge": 61,
-    "display": "FDMTFIREFIGHTER/FDMT18",
+    "display": "F***FIREFIGHTER/F***18",
     "status": "active",
     "gamertag": "FDMTFIREFIGHTER/FDMT18"
   },
@@ -371,7 +372,7 @@ window.__rosterData = [
   },
   {
     "badge": 73,
-    "display": "Low Rent9",
+    "display": "Low ****9",
     "status": "active",
     "gamertag": "Low Rent9"
   },
@@ -1133,7 +1134,7 @@ window.__rosterData = [
   },
   {
     "badge": 224,
-    "display": "BLUEelmoZZZZZ",
+    "display": "****elmo***ZZ",
     "status": "active",
     "gamertag": "BLUEelmoZZZZZ"
   },
@@ -1219,7 +1220,7 @@ window.__rosterData = [
   },
   {
     "badge": 241,
-    "display": "Combat Carlton",
+    "display": "*******Carlton",
     "status": "active",
     "gamertag": "Combat Carlton"
   },
@@ -1240,7 +1241,7 @@ window.__rosterData = [
   },
   {
     "badge": 245,
-    "display": "Byzantine95",
+    "display": "**zantine*5",
     "status": "active",
     "gamertag": "Byzantine95"
   },
@@ -1271,7 +1272,7 @@ window.__rosterData = [
   },
   {
     "badge": 251,
-    "display": "groom112",
+    "display": "groom***",
     "status": "active",
     "gamertag": "groom112"
   },
