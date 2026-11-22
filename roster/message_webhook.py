@@ -45,7 +45,7 @@ def load_roster_status():
     if not os.path.exists(ROSTER_PATH):
         print(f"  [!] Roster not found: {ROSTER_PATH}")
         return {}
-    with open(ROSTER_PATH, "r") as f:
+    with open(ROSTER_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
     return {e["badge"]: e.get("status", "mia") for e in data}
 
@@ -161,7 +161,7 @@ def main():
             continue  # skip README.md landing here, etc.
 
         try:
-            with open(filepath, "r") as f:
+            with open(filepath, "r", encoding="utf-8") as f:
                 data = json.load(f)
         except (json.JSONDecodeError, OSError) as e:
             print(f"  [!] Skipping {basename}: {e}")
