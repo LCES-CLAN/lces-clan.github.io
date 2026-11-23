@@ -3,16 +3,16 @@
     "guild_id": 1526033606349426798,
     "guild_name": "Liberty City Emergency Services",
     "members": 18,
-    "online_members": 5,
+    "online_members": 4,
     "bot_members": 1,
     "voice_members": 0,
     "presence": {
       "online": 2,
-      "idle": 2,
+      "idle": 1,
       "dnd": 1,
-      "offline": 13
+      "offline": 14
     },
-    "last_updated": "2026-11-23T01:01:38.886538+00:00",
+    "last_updated": "2026-11-23T01:21:38.885541+00:00",
     "invite_url": "https://discord.gg/W3SWDpRxbn"
   }
 }
