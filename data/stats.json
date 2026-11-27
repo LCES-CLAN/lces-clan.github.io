@@ -8,11 +8,11 @@
     "voice_members": 0,
     "presence": {
       "online": 5,
-      "idle": 2,
-      "dnd": 0,
+      "idle": 1,
+      "dnd": 1,
       "offline": 11
     },
-    "last_updated": "2026-11-27T19:59:07.704047+00:00",
+    "last_updated": "2026-11-27T20:19:07.704411+00:00",
     "invite_url": "https://discord.gg/q6XP5tv5S3"
   }
 }
