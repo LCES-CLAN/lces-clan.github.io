@@ -7,12 +7,12 @@
     "bot_members": 1,
     "voice_members": 0,
     "presence": {
-      "online": 4,
+      "online": 5,
       "idle": 2,
-      "dnd": 1,
+      "dnd": 0,
       "offline": 11
     },
-    "last_updated": "2026-11-27T19:39:07.704567+00:00",
+    "last_updated": "2026-11-27T19:59:07.704047+00:00",
     "invite_url": "https://discord.gg/q6XP5tv5S3"
   }
 }
